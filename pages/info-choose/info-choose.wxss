@@ -1,0 +1,57 @@
+.choose-page {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	background: #415261;
+}
+.choose-page .c-item .c-header{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 25rpx 30rpx 25rpx 40rpx;
+	color: #fff;
+	border-top: 1rpx solid #34424e;
+	background: #4e6070;
+}
+.choose-page .c-item .c-header .type {
+	width: 50rpx;
+	height: 50rpx;
+}
+.choose-page .c-item .c-header .show {
+	width: 24rpx;
+	height: 12rpx;
+}
+.choose-page .c-item .c-header .rotate {
+	transform: rotate(180deg);
+}
+.choose-page .c-item .c-header .c-nums {
+	flex: 1;
+	font-size: 28rpx;
+}
+.choose-page .c-item .c-header .c-title {
+	margin: 0 45rpx;
+	font-size: 28rpx;
+}
+.choose-page .c-item .c-list-item {
+	display: flex;
+	align-items: center;
+	color: #fff;
+	padding: 30rpx 45rpx;
+	font-size: 28rpx;
+}
+.choose-page .c-item .c-list-item image {
+	width: 40rpx;
+	height: 40rpx;
+	margin-right: 20rpx;
+}
+.choose-page .c-item .c-list-item .choose {
+	width: 40rpx;
+	height: 40rpx;
+	background: red;
+	border-radius: 50%;
+	margin-right: 20rpx;
+}
+.choose-page .c-item .c-list-item .active {
+	background: #99cc33;
+}

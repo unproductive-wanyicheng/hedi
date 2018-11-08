@@ -1,0 +1,111 @@
+<view class="warning-page full-page flex">
+	<view class="w-header">
+		<view class="h-type">
+			<view class="t-item fixed">
+				<view class="t-i-inner ">
+					<view class="t-num">0</view>
+					<view class="t-title">已处理</view>
+				</view>
+			</view>
+			<view class="t-item denger">
+				<view class="t-i-inner ">
+					<view class="t-num">0</view>
+					<view class="t-title">严重预警</view>
+				</view>
+			</view>
+			<view class="t-item general">
+				<view class="t-i-inner ">
+					<view class="t-num">1</view>
+					<view class="t-title">一般预警</view>
+				</view>
+			</view>
+			<view class="t-item normal">
+				<view class="t-i-inner ">
+					<view class="t-num">0</view>
+					<view class="t-title">硬件故障</view>
+				</view>
+			</view>
+		</view>
+		<view class="h-time">
+			<view class="{{timeActive === index ? 'h-t-item active' : 'h-t-item'}}" wx:for="{{timeList}}" wx:key="index" wx:for-index="index" wx:for-item="item" bindtap="selectTime" data-index="{{index}}">{{item}}</view>
+			<view class="h-date"><view bindtap="togglePicker" data-type="start">{{startDate}}</view>-<view bindtap="togglePicker" data-type="end">{{endDate}}</view></view>
+			<view class="h-icon">
+				<image src="../../assets/imgs/ChevronUP.png" />
+			</view>
+		</view>
+		<view class="w-scroll-title">预警列表</view>
+	</view>
+	<view class="w-list">
+		<view class="w-l-item" bindtap="goWarningDetail">
+			<view class="w-l-item-inner">
+				<image class="inner-type" src="../../assets/imgs/red-warning.png" />
+				<view class="w-l-item-message">
+					<view class="w-l-m-type">偏移位移WY_G09999</view>
+					<view class="w-l-m-time">2018/05/06 18:00</view>
+				</view>
+			</view>
+			<view class="w-l-item-inner">
+				<view class="w-l-item-message warning">
+					<view class="w-l-m-type">监测值 -300</view>
+					<view class="w-l-m-data">设计值 300</view>
+				</view>
+				<image class="inner-arrow" src="../../assets/imgs/ChevronUP.png" />
+			</view>
+		</view>
+		<view class="w-l-item" bindtap="goWarningDetail">
+			<view class="w-l-item-inner">
+				<image class="inner-type" src="../../assets/imgs/nor-warning.png" />
+				<view class="w-l-item-message">
+					<view class="w-l-m-type">偏移位移WY_G09999</view>
+					<view class="w-l-m-time">2018/05/06 18:00</view>
+				</view>
+			</view>
+			<view class="w-l-item-inner">
+				<view class="w-l-item-message normal">
+					<view class="w-l-m-type">监测值 -300</view>
+					<view class="w-l-m-data">设计值 300</view>
+				</view>
+				<image class="inner-arrow" src="../../assets/imgs/ChevronUP.png" />
+			</view>
+		</view>
+		<view class="w-l-item" bindtap="goWarningDetail">
+			<view class="w-l-item-inner">
+				<image class="inner-type" src="../../assets/imgs/hard-problem.png" />
+				<view class="w-l-item-message">
+					<view class="w-l-m-type">偏移位移WY_G09999</view>
+					<view class="w-l-m-time">2018/05/06 18:00</view>
+				</view>
+			</view>
+			<view class="w-l-item-inner">
+				<view class="w-l-item-message bad">
+					<view class="w-l-m-type">监测值 -300</view>
+					<view class="w-l-m-data">设计值 300</view>
+				</view>
+				<image class="inner-arrow" src="../../assets/imgs/ChevronUP.png" />
+			</view>
+		</view>
+		<view class="w-l-item" bindtap="goWarningDetail">
+			<view class="w-l-item-inner">
+				<image class="inner-type" src="../../assets/imgs/resoved-warning.png" />
+				<view class="w-l-item-message">
+					<view class="w-l-m-type">偏移位移WY_G09999</view>
+					<view class="w-l-m-time">2018/05/06 18:00</view>
+				</view>
+			</view>
+			<view class="w-l-item-inner">
+				<view class="w-l-item-message fixed">
+					<view class="w-l-m-type">监测值 -300</view>
+					<view class="w-l-m-data">设计值 300</view>
+				</view>
+				<image class="inner-arrow" src="../../assets/imgs/ChevronUP.png" />
+			</view>
+		</view>
+	</view>
+	<view class="time-picker" wx:if="{{showPicker}}">
+	  <picker mode="date" value="{{date}}" start="2000-01" end="2888-09-01" bindchange="bindDateChange" bindcancel="bindcancel">
+	    <view class="picker" style="display: flex; align-items: center;">
+	      <view style="margin-right: 50rpx;">请点击时间:</view> {{date}}
+	    </view>
+	  </picker>
+	</view>
+</view>

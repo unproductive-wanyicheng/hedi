@@ -1,0 +1,3 @@
+<view class="video-detail">
+	<video id="myVideo" class="v-video" autoplay="{{auto}}" src="../../assets/video/test.mp4" ></video>
+</view>

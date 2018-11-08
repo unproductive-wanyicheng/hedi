@@ -1,0 +1,23 @@
+.monitor-page {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	background: #EEEEEE;
+	padding-top: 40rpx;
+}
+.item {
+	padding: 0 10rpx;
+	background: #fff;
+}
+.inner {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 36rpx;
+	padding: 44rpx 66rpx;
+	border-bottom: 2rpx solid #E5E5E5;
+}
+.inner .last {
+	border-bottom: none;
+}

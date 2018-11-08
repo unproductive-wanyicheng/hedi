@@ -1,0 +1,18 @@
+<view class="login">
+	<view class="box">
+		<view class="inputs">
+			<view class="item">
+				<view class="title">账号</view>
+				<input value="{{account}}" bindinput="setAccount"/>
+			</view>
+			<view class="item">
+				<view class="title">账号</view>
+				<input password value="{{password}}" bindinput="setPassword" />
+			</view>
+		</view>
+		<view class="btn" bindtap="doLogin">登录</view>
+	</view>
+	<view class="icon">
+		<image src="../../assets/imgs/login.png"></image>
+	</view>
+</view>

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "[一般报警] GNS_8011",
+  "usingComponents": {
+    "ec-canvas": "../../ec-canvas/ec-canvas"
+  }
+}

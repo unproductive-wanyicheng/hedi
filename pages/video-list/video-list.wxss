@@ -1,0 +1,38 @@
+.v-list-page {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	background: #34424E;
+	overflow-y: auto;
+}
+.v-list-page .v-item {
+	width: 50%;
+	height: 396rpx;
+	overflow: hidden;
+	float: left;
+	position: relative;
+}
+.v-list-page .v-item .v-thumbnail {
+	width: 100%;
+	height: 100%;
+}
+.v-list-page .v-item .v-modal {
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 56rpx;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12rpx 20rpx;
+	color: #fff;
+	font-size: 22rpx;
+	background: rgba(0,0,0,.5);
+	box-sizing: border-box;
+}
+.v-list-page .v-item .v-modal .full-icon {
+	width: 44rpx;
+	height: 34rpx;
+}

@@ -1,0 +1,9 @@
+<view class="v-list-page">
+	<view wx:for="{{videoList}}" wx:for-index="index" wx:for-item="item" wx:key="index" class="v-item">
+		<image src="{{item.thumbnail}}" class="v-thumbnail" />
+		<view class="v-modal">
+			<view class="v-title">{{item.title}}</view>
+			<image class="full-icon" src="../../assets/imgs/full-screen.png" bindtap="goFullScreen" data-index="{{index}}"/>
+		</view>
+	</view>
+</view>

@@ -1,0 +1,19 @@
+<view class="take-warning full-page flex">
+	<view class="t-w-up">
+		<view class="up-chooses">
+			<view class="u-c-item" bindtap="chooseActive" data-active="0">
+				<image wx:if="{{active === 1}}" src="../../assets/imgs/un-choose.png" />
+				<image wx:if="{{active === 0}}" src="../../assets/imgs/multi-choose.png" />
+				<view>通知管理人员</view>
+			</view>
+			<view class="u-c-item" bindtap="chooseActive" data-active="1">
+				<image wx:if="{{active === 0}}" src="../../assets/imgs/un-choose.png" />
+				<image wx:if="{{active === 1}}" src="../../assets/imgs/multi-choose.png" />
+				<view>现场已经处理</view>
+			</view>
+		</view>
+		<view class="input-title">输入处理情况(非必填)</view>
+		<textarea placeholder="点击输入文字…" />
+	</view>
+	<view class="t-w-down flex" bindtap="confirm">提交</view>
+</view>

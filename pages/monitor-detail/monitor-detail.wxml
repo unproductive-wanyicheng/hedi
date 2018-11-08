@@ -1,0 +1,47 @@
+<view class="moni-detail">
+	<view class="choose">
+		<view class="pre" bindtap="selectMonitor" data-direction="pre">
+			<view class="p-icon"></view>
+			<view class="p-title" >上一个</view>
+		</view>
+		<view class="status">
+			<view class=" {{monitorData.PointStatus === 1 ? 'active s-icon' : 's-icon'}}"></view>
+			<view class="s-title">{{monitorData.PointStatus === 1 ? '状态正常' : '状态异常'}}</view>
+		</view>
+		<view class="next" bindtap="selectMonitor" data-direction="next">
+			<view class="n-title" >下一个</view>
+			<view class="n-icon"></view>
+		</view>
+	</view>
+	<view class="info-wrapper">
+		<view class="time">
+			<view class="{{timeActive === index ? 't-item active' : 't-item'}}" wx:for="{{timeList}}" wx:key="index" wx:for-index="index" wx:for-item="item" bindtap="selectTime" data-index="{{index}}">{{item}}</view>
+			<view class="refresh">
+				<image src="../../assets/imgs/refresh.png" bindtap="refreshPage" />
+			</view>
+		</view>
+		<view class="chart">
+          <ec-canvas class="m-chart-item" id="mychart-dom-bar-1" canvas-id="mychart-bar" ec="{{ ec_1 }}"></ec-canvas>
+		</view>
+		<view class="info">
+			<view class="i-item">
+				<view class="i-title">当前实时数据</view>
+				<view class="i-data">13mm</view>
+				<view class="i-title">阈值</view>
+				<view class="i-data">{{monitorData.ThresholdValue}}</view>
+			</view>
+			<view class="i-item">
+				<view class="i-title">15分钟平均值</view>
+				<view class="i-data">{{monitorData.AvgValue}}</view>
+			</view>
+			<view class="i-item">
+				<view class="i-title">15分钟最大值</view>
+				<view class="i-data">{{monitorData.MaxValue}}</view>
+			</view>
+			<view class="i-item">
+				<view class="i-title">15分钟最小值</view>
+				<view class="i-data">{{monitorData.MinValue}}</view>
+			</view>
+		</view>
+	</view>
+</view>

@@ -1,0 +1,17 @@
+<view class="choose-page">
+	<view class="c-item" wx:for="{{monitorList}}" wx:key="index" wx:for-index="moIndex" wx:for-item="monitor">
+		<view class="c-header" bindtap="showChoose" data-index="{{moIndex}}">
+			<image class="type" src="{{monitor.WhiteIcon}}" />
+			<view class="c-title">{{monitor.ShowText}}</view>
+			<view class="c-nums">{{monitor.OnlinePointCount}}/{{monitor.PointCount}}</view>
+			<image class="{{ !showList[moIndex] ? 'show rotate' : 'show'}}" src="../../assets/imgs/ChevronUP.png" />
+		</view>
+		<blockquote wx:if="{{showList[moIndex]}}">
+			<view class="c-list-item" wx:for="{{monitor.Points}}" wx:key="pindex" wx:for-index="pIndex" wx:for-item="pItem">
+				<!-- <image src="../../assets/imgs/un-choose.png" /> -->
+				<view class="{{ pItem.PointStatus === 1 ? 'active choose' : 'choose' }} choose"></view>
+				<view class="c-list-data" bindtap="goMonitorDetail" data-id="{{pItem.PointId}}" data-type="{{pItem.PointType}}" data-index="{{pIndex}}" data-listIndex="{{pindex}}">{{pItem.ShowText}}</view>
+			</view>
+		</blockquote>
+	</view>
+</view>

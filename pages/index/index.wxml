@@ -1,0 +1,128 @@
+<!--index.wxml-->
+<view class="home">
+  <view class="river-wall-select">
+    <view class="selector" bindtap="selectMonitor">
+      <view class="left">
+        <image src="../../assets/imgs/index-location.png"></image>
+      </view>
+      <view class="text">选择监测项目</view>
+      <view class="down">
+        <image src="../../assets/imgs/right-w-arrow.png"></image>
+      </view>
+    </view>
+    <view class="icon" bindtap="showModal">
+      <image src="../../assets/imgs/selector.png"></image>
+    </view>
+  </view>
+  <view class="wrapper">
+    <view class="scroll-area">
+      <map wx:if="{{!showModal}}"  id="map" subkey="XKLBZ-J753U-PORVZ-2GPCZ-2LUM2-3CF4T" polygons="{{mapParams}}" scale="14" style="width: 100%; height: 560rpx;"></map>
+      <view wx:if="{{showModal}}" style="width: 100%; height: 560rpx; background: #4E6070;"></view>
+    </view>
+    <view class="main-monitor-info">
+      <view class="left">总体监测情况</view>
+      <view class="mid">
+        <view class="text">{{mainMonitorInfo.Status === 0 ? '异常' : '正常'}}</view>
+        <view class="english">Noramal</view>
+      </view>
+      <view class="right">
+        <view class="num">{{mainMonitorInfo.BadGoodCount}}</view>
+        <view class="sign">异常</view>
+      </view>
+    </view>
+    <view wx:if="{{!showModal}}" class="h-chart">
+        <ec-canvas class="h-chart-item" id="mychart-dom-bar-1" canvas-id="mychart-bar" ec="{{ ec_1 }}"></ec-canvas>
+    </view>
+    <view wx:if="{{showModal}}" class="h-chart">
+        
+    </view>
+    <view class="h-chart">
+        <ec-canvas class="h-chart-item" id="mychart-dom-bar-2" canvas-id="mychart-bar" ec="{{ ec_2 }}"></ec-canvas>
+    </view>
+    <view class="h-chart no-border">
+        <ec-canvas class="h-chart-item" id="mychart-dom-bar-3" canvas-id="mychart-bar" ec="{{ ec_3 }}"></ec-canvas>
+    </view>
+    <view class="sp-lists">
+      <view class="s-item no-border" bindtap="goSpDetail" data-index="1">
+        <view class="item-title char-margin-top">
+          <view class="item-nums">{{mainMonitorInfo.GoodCount}} / {{mainMonitorInfo.AllPointCount}}</view>
+          <view class="item-nums-desc">传感器(正常/总数)</view>
+        </view>
+        <view class="item-data">
+          异常传感器<view class="i-d-num">{{mainMonitorInfo.BadGoodCount}}</view>
+        </view>
+      </view>
+      <view class="s-i-border"></view>
+      <view class="s-item" bindtap="goSpDetail">
+       <view class="data-chart">
+        <ec-canvas class="h-chart-item-4" id="mychart-dom-bar-4" canvas-id="mychart-bar" ec="{{ ec_4 }}"></ec-canvas>
+       </view>
+      <!--  <view wx:if="{{showModal}}" class="data-chart">
+       </view> -->
+       <view class="data-chart-title">传感器成功采样率</view>
+      </view>
+    </view>
+    <view class="sp-lists">
+      <view class="s-item" bindtap="goSpDetail" data-index="1">
+        <image src="../../assets/imgs/high-shift.png" />
+        <view class="item-title">高程位移</view>
+        <view class="item-data">32.69mm</view>
+      </view>
+      <view class="s-item" bindtap="goSpDetail">
+        <image src="../../assets/imgs/row-shift.png" />
+        <view class="item-title">水平位移</view>
+        <view class="item-data">-8mm</view>
+      </view>
+      <view class="s-item" bindtap="goSpDetail">
+        <image src="../../assets/imgs/deep-shift.png" />
+        <view class="item-title">深部位移</view>
+        <view class="item-data">3mm</view>
+      </view>
+    </view>
+    <view class="sp-lists">
+      <view class="s-item" bindtap="goSpDetail">
+        <image src="../../assets/imgs/rain-fall.png" />
+        <view class="item-title">降雨量</view>
+        <view class="item-data">200mm</view>
+      </view>
+      <view class="s-item" bindtap="goSpDetail">
+        <image src="../../assets/imgs/water-line.png" />
+        <view class="item-title">水位</view>
+        <view class="item-data">24mm</view>
+      </view>
+    </view>
+  </view>
+  <view class="modal" wx:if="{{showModal}}" catchtouchmove='true'>
+    <view class="inner">
+      <view class="header">
+        <view class="title">宝象河-河岸村河堤</view>
+        <view class="share" >
+          <button class="button" open-type="share" plain="true">
+             <image src="../../assets/imgs/share.png"></image>
+            </button>
+        </view>
+      </view>
+      <view class="map">
+        <map id="map" longitude="113" latitude="28.21" scale="14" style="width: 100%; height: 350rpx;"></map>
+      </view>
+      <view class="info">
+        <view class="message">象河-河岸村河堤位于汕昆高速（经开区段）与S101省道交界处，宝象河经过河岸村。经现场调研，2016年夏季暴雨涨水时，河水经常漫过河堤，对河岸村的村民造成影响。</view>
+        <view class="location">
+          <view class="l-title">地理位置 :</view>
+          <view class="l-desc">象河-河岸村河堤位于汕昆高速（经开区段）与S101省道交界处</view>
+        </view>
+        <view class="data">
+          <view class="item">
+            <view class="i-top">200m</view>
+            <view class="i-down">最大水位</view>
+          </view>
+          <view class="item">
+            <view class="i-top">300m/h</view>
+            <view class="i-down">历史最大降雨量</view>
+          </view>
+        </view>
+        <view class="btn" bindtap="showModal">关闭</view>
+      </view>
+    </view>
+  </view>
+</view>

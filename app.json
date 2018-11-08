@@ -1,0 +1,51 @@
+{
+  "pages":[
+    "pages/login/login",
+    "pages/index/index",
+    "pages/warning-detail/warning-detail",
+    "pages/monitor-detail/monitor-detail",
+    "pages/take-warning/take-warning",
+    "pages/warning/warning",
+    "pages/video-detail/video-detail",
+    "pages/video-list/video-list",
+    "pages/info-choose/info-choose",
+    "pages/monitor/monitor",
+    "pages/logs/logs"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "backgroundColor": "#546776",
+    "color": "#fff",
+    "selectedColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "概括",
+        "iconPath": "/assets/imgs/main-message.png",
+        "selectedIconPath": "/assets/imgs/main-message-selected.png"
+      }, 
+      {
+        "pagePath": "pages/info-choose/info-choose",
+        "text": "监测点",
+        "iconPath": "/assets/imgs/monitor.png",
+        "selectedIconPath": "/assets/imgs/monitor-selected.png"
+      },
+      {
+        "pagePath": "pages/video-list/video-list",
+        "text": "视频",
+        "iconPath": "/assets/imgs/video.png",
+        "selectedIconPath": "/assets/imgs/video-selected.png"
+      }, 
+      {
+        "pagePath": "pages/warning/warning",
+        "text": "预警",
+        "iconPath": "/assets/imgs/warning.png",
+        "selectedIconPath": "/assets/imgs/warning-selected.png"
+      }]
+  }
+}

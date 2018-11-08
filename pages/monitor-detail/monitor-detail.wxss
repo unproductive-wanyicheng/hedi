@@ -1,0 +1,119 @@
+.moni-detail {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.moni-detail .choose {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	color: #fff;
+	font-size: 28rpx;
+	background: #4E6070;
+	padding: 44rpx 22rpx;
+	border-bottom: 1rpx solid #34424e;
+}
+.moni-detail .choose .pre,.next {
+	flex: 0 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.moni-detail .choose .pre .p-icon {
+	margin-right: 20rpx;
+	width:0;
+    height:0;
+    border-width:18rpx 24rpx 18rpx 0;
+    border-style:solid;
+    border-color:transparent #fff transparent transparent;/*透明 灰 透明 透明 */
+    position:relative;
+}
+.moni-detail .choose .next .n-icon {
+	margin-left: 20rpx;
+	width:0;
+    height:0;
+    border-width:18rpx 0 18rpx 24rpx;
+    border-style:solid;
+    border-color:transparent transparent transparent #fff;/*透明 灰 透明 透明 */
+    position:relative;
+}
+.moni-detail .choose .status {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 1;
+}
+.moni-detail .choose .status .s-icon {
+	width: 30rpx;
+	height: 30rpx;
+	background: red;
+	border-radius: 50%;
+}
+.moni-detail .choose .status .active{
+	background: #99CC33;
+}
+.moni-detail .choose .status .s-title {
+	margin-left: 10rpx;
+}
+.moni-detail .info-wrapper {
+	flex: 1;
+	overflow-y: auto;
+}
+.moni-detail .info-wrapper .time{
+	display: flex;
+	align-items: center;
+	color: #fff;
+	background: #4E6070;
+	font-size: 24rpx;
+	padding: 22rpx 22rpx;
+}
+.moni-detail .info-wrapper .time .t-item {
+	flex: 0 0 auto;
+	margin-right: 30rpx;
+	display: flex;
+	align-items: center;
+	padding-bottom: 10rpx;
+}
+.moni-detail .info-wrapper .time .active {
+	color: #FF9900;
+}
+.moni-detail .info-wrapper .time .refresh {
+	flex: 1;
+	text-align: right;
+}
+.moni-detail .info-wrapper .time .refresh image {
+	width: 44rpx;
+	height: 44rpx;
+	font-size: 0;
+}
+.moni-detail .chart {
+	height: 440rpx;
+	border-bottom: 1rpx solid #34424e;
+}
+.moni-detail .chart .m-chart-item {
+	width: 100%;
+	height: 100%;
+}
+.moni-detail .info {
+	padding: 0 24rpx;
+}
+.moni-detail .info .i-item {
+	border-bottom: 1rpx solid #EEEEEE;
+	display: flex;
+	padding: 20rpx 0;
+	align-items: flex-end;
+}
+.moni-detail .info .i-item .i-title {
+	font-size: 26rpx;
+	color: #999999;
+	margin-right: 30rpx;
+	padding-bottom: 4rpx;
+	white-space: nowrap;
+}
+.moni-detail .info .i-item .i-data {
+	margin-right: 50rpx;
+	font-size: 32rpx;
+}

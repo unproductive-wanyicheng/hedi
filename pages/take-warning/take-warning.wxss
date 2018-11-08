@@ -1,0 +1,46 @@
+.take-warning {
+	flex-direction: column;
+	background: #EEEEEE;
+}
+.take-warning .t-w-up {
+	flex: 1;
+	padding-top: 20rpx;
+	width: 100%;
+}
+.take-warning .t-w-up .up-chooses {
+	padding: 0 20rpx;
+	background: #fff;
+}
+.take-warning .t-w-up .up-chooses .u-c-item {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 20rpx 0;
+	border-bottom: 1rpx solid #EEEEEE;
+	font-size: 30rpx;
+}
+.take-warning .t-w-up .up-chooses .u-c-item image {
+	width: 46rpx;
+	height: 46rpx;
+	margin-right: 20rpx;
+}
+.take-warning .t-w-up textarea {
+	height: 176rpx;
+	font-size: 26rpx;
+	background: #fff;
+	width: 100%;
+	padding: 20rpx;
+}
+.take-warning .t-w-up .input-title {
+	padding: 40rpx 20rpx;
+	font-size: 24rpx;
+	color: #999999;
+}
+.take-warning .t-w-down {
+	flex: 0 0 auto;
+	background: #0076FF;
+	color: #fff;
+	font-size: 30rpx;
+	width: 100%;
+	padding: 28rpx 0;
+}

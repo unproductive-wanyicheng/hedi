@@ -1,0 +1,5 @@
+<view class="monitor-page">
+	<view class="item" wx:for="{{monitorList}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+		<view class="inner" bindtap="chooseMonitor" data-index="{{index}}">{{item.Name}}</view>
+	</view>
+</view>
