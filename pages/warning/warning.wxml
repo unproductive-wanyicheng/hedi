@@ -36,26 +36,28 @@
 		<view class="w-scroll-title">预警列表</view>
 	</view>
 	<view class="w-list">
-		<view class="w-l-item" bindtap="goWarningDetail" wx:for="{{warningList}}" wx:key="index">
-			<view class="w-l-item-inner">
-				<image class="inner-type" wx:if="{{item.WarningType === 2}}" src="../../assets/imgs/red-warning.png" />
-				<image class="inner-type" wx:if="{{item.WarningType === 1}}" src="../../assets/imgs/nor-warning.png" />
-				<image class="inner-type" wx:if="{{item.WarningType === 3}}" src="../../assets/imgs/hard-problem.png" />
-				<image class="inner-type" wx:if="{{item.WarningType === 0}}" src="../../assets/imgs/resoved-warning.png" />
-				
-				<view class="w-l-item-message">
-					<view class="w-l-m-type">{{item.PointName}}</view>
-					<view class="w-l-m-time">{{item.DateTime}}</view>
+		<scroll-view scroll-y style="flex: 1;" bindscrolltolower="lower">
+	    <view class="w-l-item" bindtap="goWarningDetail" wx:for="{{warningList}}" wx:key="index">
+				<view class="w-l-item-inner">
+					<image class="inner-type" wx:if="{{item.WarningType === 2}}" src="../../assets/imgs/red-warning.png" />
+					<image class="inner-type" wx:if="{{item.WarningType === 1}}" src="../../assets/imgs/nor-warning.png" />
+					<image class="inner-type" wx:if="{{item.WarningType === 3}}" src="../../assets/imgs/hard-problem.png" />
+					<image class="inner-type" wx:if="{{item.WarningType === 0}}" src="../../assets/imgs/resoved-warning.png" />
+					
+					<view class="w-l-item-message">
+						<view class="w-l-m-type">{{item.PointName}}</view>
+						<view class="w-l-m-time">{{item.DateTime}}</view>
+					</view>
+				</view>
+				<view class="w-l-item-inner">
+					<view class="w-l-item-message warning">
+						<view class="w-l-m-type"><text decode="{{true}}">监测值&ensp;{{item.WarningValue}}</text></view>
+						<view class="w-l-m-data"><text decode="{{true}}">设计值&ensp;{{item.NowRoughMultipleValue}}</text></view>
+					</view>
+					<image class="inner-arrow" src="../../assets/imgs/ChevronUP.png" />
 				</view>
 			</view>
-			<view class="w-l-item-inner">
-				<view class="w-l-item-message warning">
-					<view class="w-l-m-type"><text decode="{{true}}">监测值&ensp;{{item.WarningValue}}</text></view>
-					<view class="w-l-m-data"><text decode="{{true}}">设计值&ensp;{{item.NowRoughMultipleValue}}</text></view>
-				</view>
-				<image class="inner-arrow" src="../../assets/imgs/ChevronUP.png" />
-			</view>
-		</view>
+	 	</scroll-view>
 	</view>
 	<view class="time-picker" wx:if="{{showPicker}}">
 	  <picker mode="date" value="{{date}}" start="2000-01" end="2888-09-01" bindchange="bindDateChange" bindcancel="bindcancel">

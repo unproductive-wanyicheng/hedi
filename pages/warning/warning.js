@@ -6,7 +6,7 @@ Page({
   data: {
     warningInfo: null,
     warningList: null,
-    allPage: 0,
+    allPage: 1,
     timeActive: 0,
     timeList: ['今天', '一周', '一月'],
     showPicker: false,
@@ -24,7 +24,7 @@ Page({
   },
   onLoad: function () {
     this.getWarningInfo()
-    this.getWarningList()
+    this.getWarningList({})
   },
   closeLoading: function () {
     if (this.data.asycDownNums === this.data.asycMaxNums) {
@@ -52,24 +52,37 @@ Page({
   },
   getWarningList: function (params) {
     const _this = this
+    const { type = 'init', nowPage = 1 } = params
+
+    if (nowPage > _this.data.allPage) {
+      return false
+    }
+    _this.setData({
+      nowPage: nowPage
+    })
+
     const id = app.globalData.defaultMonitor.Id
     const warningtype = _this.data.activeType
     const starttime = _this.data.activeTimeStart
     const endtime = _this.data.activeTimeEnd
-    const nowPage = _this.data.nowPage
+    const page = _this.data.nowPage
     app.globalData.fetch({
-      url: `sk/mobile/getwarninginfo/${id}/warningtype/${warningtype}/starttime/${starttime}/endtime/${endtime}/nowPage/${nowPage}`,
+      url: `sk/mobile/getwarninginfo/${id}/warningtype/${warningtype}/starttime/${starttime}/endtime/${endtime}/nowPage/${page}`,
       cb: (res) => {
         console.log(res)
         if (res.data.Result) {
+           const array = type === 'init' ?  res.data.Result.DataList : _this.data.warningList.concat(res.data.Result.DataList)
            _this.setData({
-            warningList: res.data.Result.DataList,
+            warningList: array,
             allPage: res.data.Result.AllPage
           })
           _this.setData({
             asycDownNums: ++_this.data.asycDownNums
           })
           _this.closeLoading()
+          if (nowPage > 1) {
+            wx.hideLoading()
+          }
         }
       }
     })
@@ -95,6 +108,13 @@ Page({
   bindcancel: function () {
     this.setData({
       showPicker: !this.data.showPicker
+    })
+  },
+  lower: function () {
+    console.log('//...')
+    this.getWarningList({
+      type: 'update',
+      nowPage: ++this.data.nowPage
     })
   },
   bindDateChange: function (e) {
