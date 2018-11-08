@@ -1,30 +1,25 @@
+const app = getApp()
 Page({
   data: {
-    videoList: [
-      {
-        url: '../../assets/video/test.mp4',
-        thumbnail: '../../assets/video/1.png',
-        title: '北桥头'
-      },
-      {
-        url: '../../assets/video/test.mp4',
-        thumbnail: '../../assets/video/2.png',
-        title: '南桥头'
-      },
-      {
-        url: '../../assets/video/test.mp4',
-        thumbnail: '../../assets/video/3.png',
-        title: '桥头十字路口A'
-      },
-      {
-        url: '../../assets/video/test.mp4',
-        thumbnail: '../../assets/video/1.png',
-        title: '桥头十字路口B'
-      }
-    ]
+    videoList: []
   },
   onLoad: function () {
-    
+    const _this = this
+    const id = app.globalData.defaultMonitor.Id
+    const url = `sk/mobile/videoinfolist/${id}`
+    wx.showLoading()
+    app.globalData.fetch({
+      url: url,
+      closeLoading: true,
+      cb: (res) => {
+        console.log(res)
+        if (res.data.Result && res.data.Result.length) {
+          _this.setData({
+            videoList: res.data.Result
+          })
+        }
+      }
+    })
   },
   goFullScreen: function (e) {
     const index = parseInt(e.currentTarget.dataset.index)

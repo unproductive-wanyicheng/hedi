@@ -90,6 +90,7 @@
 }
 .warning-page  .w-list {
 	flex: 1;
+	overflow-y: auto;
 }
 .warning-page  .w-list .w-l-item {
 	display: flex;

@@ -42,6 +42,7 @@ App({
   			const baseUrl = 'https://mapi.aeroiot.cn/'
   			const { access_token, token_type } = res
   			const { url, query = '', data = null, cb, method = 'GET',successMessage = '', successCode = 200, closeLoading = false } = originParams
+  			wx.showLoading()
   			wx.request({
 		      url: baseUrl + url + query,
 		      data: data,
@@ -51,7 +52,6 @@ App({
 		      },
 		      method : method,
 		      success (res) {
-		      	closeLoading && wx.hideLoading()
 		      	if (!res) {
 		      		wx.showToast({
 							  title: '后台数据报错',
@@ -79,6 +79,7 @@ App({
 								}, 1500)
 		      		}
 		      	}
+		      	closeLoading && wx.hideLoading()
 		      }
 		    })
   		}

@@ -80,7 +80,7 @@ Page({
       // console.log(util.formatTime(time, 'yyyy-MM-dd hh:mm:ss'))
       x_data.push(util.formatTime(time, 'hh:mm'))
       y_data.push(item[1])
-      x_interval = Math.floor(_this.data.chartData[_this.data.activeIndex].data / 7)
+      x_interval = Math.floor(_this.data.chartData[_this.data.activeIndex].data.length / 7)
     })
 
     const option = {
@@ -111,7 +111,7 @@ Page({
         },
         axisLabel: {
           align: 'center',
-          interval: 3,
+          interval: x_interval,
           color: '#000',
           fontSize: 10
         }
@@ -145,11 +145,12 @@ Page({
           }
         }
       ],
-      visualMap: {
-        show: false,
+      visualMap: [
+        {
+          show: false,
+          type: 'piecewise',
           pieces: [
           {
-              gt: 0,
               lte: ThresholdValue,
               color: '#FF5890'
           },
@@ -157,7 +158,8 @@ Page({
               gt: ThresholdValue,
               color: '#0071FF'
           }]
-        },
+        }
+      ],
       series: [{
         name: '水平位移(mm)',
         type: 'line',
@@ -174,24 +176,25 @@ Page({
           },  
           data: [
             {
-              name: 'Y 轴值为 55 的水平线',
+              type: 'max',
+              name: '阈值',
               yAxis: ThresholdValue
-          },
+            },
           ]
         },
-        
         areaStyle: {
           color: {
             type: 'linear',
-          x: 0,
-          y: 0,
-          x2: 0,
-          y2: 1,
-          colorStops: [{
-              offset: 0, color: '#C68874' // 0% 处的颜色
-          }, {
-              offset: 1, color: '#C76D89' // 100% 处的颜色
-          }],
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              {
+                  offset: 0, color: '#C68874' // 0% 处的颜色
+              }, {
+                  offset: 1, color: '#C76D89' // 100% 处的颜色
+            }],
           }
         },
         lineStyle: {
@@ -257,7 +260,7 @@ Page({
         activeIndex: this.data.activeIndex - 1
       })
       wx.setNavigationBarTitle({
-        title:  this.data.chartData[this.data.activeIndex]
+        title:  this.data.chartData[this.data.activeIndex].name
       })
     } else {
       if (this.data.activeIndex === this.data.chartData.length -1) {
@@ -267,7 +270,7 @@ Page({
         activeIndex: this.data.activeIndex + 1
       })
       wx.setNavigationBarTitle({
-        title:  this.data.chartData[this.data.activeIndex]
+        title:  this.data.chartData[this.data.activeIndex].name
       })
     }
     this.updateChart()
@@ -280,12 +283,6 @@ Page({
     this.getChartsData({type: 'update'})
   },
   refreshPage: function () {
-    wx.showLoading({
-      title: '加载中',
-    })
-
-    setTimeout(function(){
-      wx.hideLoading()
-    },2000)
+   this.getChartsData({type: 'update'})
   }
 })

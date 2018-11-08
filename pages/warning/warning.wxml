@@ -3,25 +3,25 @@
 		<view class="h-type">
 			<view class="t-item fixed">
 				<view class="t-i-inner ">
-					<view class="t-num">0</view>
+					<view class="t-num">{{warningInfo.PointCount}}</view>
 					<view class="t-title">已处理</view>
 				</view>
 			</view>
 			<view class="t-item denger">
 				<view class="t-i-inner ">
-					<view class="t-num">0</view>
+					<view class="t-num">{{warningInfo.RedWarningCount}}</view>
 					<view class="t-title">严重预警</view>
 				</view>
 			</view>
 			<view class="t-item general">
 				<view class="t-i-inner ">
-					<view class="t-num">1</view>
+					<view class="t-num">{{warningInfo.YellowWarningCount}}</view>
 					<view class="t-title">一般预警</view>
 				</view>
 			</view>
 			<view class="t-item normal">
 				<view class="t-i-inner ">
-					<view class="t-num">0</view>
+					<view class="t-num">{{warningInfo.HardwareWarningCount}}</view>
 					<view class="t-title">硬件故障</view>
 				</view>
 			</view>
@@ -36,66 +36,22 @@
 		<view class="w-scroll-title">预警列表</view>
 	</view>
 	<view class="w-list">
-		<view class="w-l-item" bindtap="goWarningDetail">
+		<view class="w-l-item" bindtap="goWarningDetail" wx:for="{{warningList}}" wx:key="index">
 			<view class="w-l-item-inner">
-				<image class="inner-type" src="../../assets/imgs/red-warning.png" />
+				<image class="inner-type" wx:if="{{item.WarningType === 2}}" src="../../assets/imgs/red-warning.png" />
+				<image class="inner-type" wx:if="{{item.WarningType === 1}}" src="../../assets/imgs/nor-warning.png" />
+				<image class="inner-type" wx:if="{{item.WarningType === 3}}" src="../../assets/imgs/hard-problem.png" />
+				<image class="inner-type" wx:if="{{item.WarningType === 0}}" src="../../assets/imgs/resoved-warning.png" />
+				
 				<view class="w-l-item-message">
-					<view class="w-l-m-type">偏移位移WY_G09999</view>
-					<view class="w-l-m-time">2018/05/06 18:00</view>
+					<view class="w-l-m-type">{{item.PointName}}</view>
+					<view class="w-l-m-time">{{item.DateTime}}</view>
 				</view>
 			</view>
 			<view class="w-l-item-inner">
 				<view class="w-l-item-message warning">
-					<view class="w-l-m-type">监测值 -300</view>
-					<view class="w-l-m-data">设计值 300</view>
-				</view>
-				<image class="inner-arrow" src="../../assets/imgs/ChevronUP.png" />
-			</view>
-		</view>
-		<view class="w-l-item" bindtap="goWarningDetail">
-			<view class="w-l-item-inner">
-				<image class="inner-type" src="../../assets/imgs/nor-warning.png" />
-				<view class="w-l-item-message">
-					<view class="w-l-m-type">偏移位移WY_G09999</view>
-					<view class="w-l-m-time">2018/05/06 18:00</view>
-				</view>
-			</view>
-			<view class="w-l-item-inner">
-				<view class="w-l-item-message normal">
-					<view class="w-l-m-type">监测值 -300</view>
-					<view class="w-l-m-data">设计值 300</view>
-				</view>
-				<image class="inner-arrow" src="../../assets/imgs/ChevronUP.png" />
-			</view>
-		</view>
-		<view class="w-l-item" bindtap="goWarningDetail">
-			<view class="w-l-item-inner">
-				<image class="inner-type" src="../../assets/imgs/hard-problem.png" />
-				<view class="w-l-item-message">
-					<view class="w-l-m-type">偏移位移WY_G09999</view>
-					<view class="w-l-m-time">2018/05/06 18:00</view>
-				</view>
-			</view>
-			<view class="w-l-item-inner">
-				<view class="w-l-item-message bad">
-					<view class="w-l-m-type">监测值 -300</view>
-					<view class="w-l-m-data">设计值 300</view>
-				</view>
-				<image class="inner-arrow" src="../../assets/imgs/ChevronUP.png" />
-			</view>
-		</view>
-		<view class="w-l-item" bindtap="goWarningDetail">
-			<view class="w-l-item-inner">
-				<image class="inner-type" src="../../assets/imgs/resoved-warning.png" />
-				<view class="w-l-item-message">
-					<view class="w-l-m-type">偏移位移WY_G09999</view>
-					<view class="w-l-m-time">2018/05/06 18:00</view>
-				</view>
-			</view>
-			<view class="w-l-item-inner">
-				<view class="w-l-item-message fixed">
-					<view class="w-l-m-type">监测值 -300</view>
-					<view class="w-l-m-data">设计值 300</view>
+					<view class="w-l-m-type"><text decode="{{true}}">监测值&ensp;{{item.WarningValue}}</text></view>
+					<view class="w-l-m-data"><text decode="{{true}}">设计值&ensp;{{item.NowRoughMultipleValue}}</text></view>
 				</view>
 				<image class="inner-arrow" src="../../assets/imgs/ChevronUP.png" />
 			</view>

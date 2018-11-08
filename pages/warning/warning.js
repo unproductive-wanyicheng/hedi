@@ -1,19 +1,78 @@
 //logs.js
 const util = require('../../utils/util.js')
+const app = getApp()
 
 Page({
   data: {
-    logs: [],
+    warningInfo: null,
+    warningList: null,
+    allPage: 0,
     timeActive: 0,
     timeList: ['今天', '一周', '一月'],
     showPicker: false,
     date: '2018/05/06',
     startDate: '2018/05/05',
     endDate: '2018/05/06',
-    typeActive: 'start'
+    typeActive: 'start',
+    asycDownNums: 0,
+    asycMaxNums: 2,
+    activeType: 0, // 0, 1, 2, 3
+    activeDate: 0,
+    activeTimeStart: '2018-11-8',
+    activeTimeEnd: '2018-11-8',
+    nowPage: 1
   },
   onLoad: function () {
-    
+    this.getWarningInfo()
+    this.getWarningList()
+  },
+  closeLoading: function () {
+    if (this.data.asycDownNums === this.data.asycMaxNums) {
+      wx.hideLoading()
+    }
+  },
+  getWarningInfo: function () {
+    const id = app.globalData.defaultMonitor.Id
+    const _this = this
+    app.globalData.fetch({
+      url: `sk/mobile/getwarningstaticinfo/${id}`,
+      cb: (res) => {
+        console.log(res)
+        if (res.data.Result) {
+           _this.setData({
+            warningInfo: res.data.Result
+          })
+          _this.setData({
+            asycDownNums: ++_this.data.asycDownNums
+          })
+          _this.closeLoading()
+        }
+      }
+    })
+  },
+  getWarningList: function (params) {
+    const _this = this
+    const id = app.globalData.defaultMonitor.Id
+    const warningtype = _this.data.activeType
+    const starttime = _this.data.activeTimeStart
+    const endtime = _this.data.activeTimeEnd
+    const nowPage = _this.data.nowPage
+    app.globalData.fetch({
+      url: `sk/mobile/getwarninginfo/${id}/warningtype/${warningtype}/starttime/${starttime}/endtime/${endtime}/nowPage/${nowPage}`,
+      cb: (res) => {
+        console.log(res)
+        if (res.data.Result) {
+           _this.setData({
+            warningList: res.data.Result.DataList,
+            allPage: res.data.Result.AllPage
+          })
+          _this.setData({
+            asycDownNums: ++_this.data.asycDownNums
+          })
+          _this.closeLoading()
+        }
+      }
+    })
   },
   goWarningDetail: function () {
     wx.navigateTo({
