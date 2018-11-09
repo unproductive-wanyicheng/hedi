@@ -9,11 +9,6 @@ Page({
     allPage: 1,
     timeActive: 0,
     timeList: ['今天', '一周', '一月'],
-    showPicker: false,
-    date: '2018/05/06',
-    startDate: '2018/05/05',
-    endDate: '2018/05/06',
-    typeActive: 'start',
     asycDownNums: 0,
     asycMaxNums: 2,
     activeType: 0, // 0, 1, 2, 3
@@ -52,7 +47,7 @@ Page({
   },
   getWarningList: function (params) {
     const _this = this
-    const { type = 'init', nowPage = 1 } = params
+    const { type = 'init', nowPage = 1, closeLoading = false } = params
 
     if (nowPage > _this.data.allPage) {
       return false
@@ -80,29 +75,30 @@ Page({
             asycDownNums: ++_this.data.asycDownNums
           })
           _this.closeLoading()
-          if (nowPage > 1) {
+          if (nowPage > 1 || closeLoading) {
             wx.hideLoading()
+          }
+          if (!_this.data.warningList.length) {
+            wx.showToast({
+              title: '当前选择区间暂无数据',
+              icon: 'none',
+              duration: 1500
+            })
           }
         }
       }
     })
   },
-  goWarningDetail: function () {
+  goWarningDetail: function (e) {
+    const id = e.currentTarget.dataset.id
     wx.navigateTo({
-      url: '/pages/warning-detail/warning-detail'
+      url: '/pages/warning-detail/warning-detail?id=' + id
     })
   },
   selectTime: function (e) {
     const index = parseInt(e.target.dataset.index)
     this.setData({
       timeActive: index
-    })
-  },
-  togglePicker: function (e) {
-    const type = e.target.dataset.type
-    this.setData({
-      showPicker: !this.data.showPicker,
-      typeActive: type
     })
   },
   bindcancel: function () {
@@ -118,23 +114,19 @@ Page({
     })
   },
   bindDateChange: function (e) {
-    console.log(e)
-    let date = e.detail.value
-    let subStr= new RegExp('-', 'g');//创建正则表达式对象
-    let result = date.replace(subStr,"/");//把'is'替换为空字符串
-    if(this.data.typeActive === 'start') {
+    const type = e.currentTarget.dataset.type
+    const date = e.detail.value
+    // let subStr= new RegExp('-', 'g');//创建正则表达式对象
+    // let result = date.replace(subStr,"/");//把'is'替换为空字符串
+    if(type === 'start') {
       this.setData({
-        startDate: result,
-        date: result
+        activeTimeStart: date
       })
     }else{
       this.setData({
-        endDate: result,
-        date: result
+        activeTimeEnd: date
       })
     }
-    this.setData({
-      showPicker: !this.data.showPicker,
-    })
+    this.getWarningList({closeLoading: true})
   }
 })

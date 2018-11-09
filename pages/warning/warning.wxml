@@ -28,7 +28,22 @@
 		</view>
 		<view class="h-time">
 			<view class="{{timeActive === index ? 'h-t-item active' : 'h-t-item'}}" wx:for="{{timeList}}" wx:key="index" wx:for-index="index" wx:for-item="item" bindtap="selectTime" data-index="{{index}}">{{item}}</view>
-			<view class="h-date"><view bindtap="togglePicker" data-type="start">{{startDate}}</view>-<view bindtap="togglePicker" data-type="end">{{endDate}}</view></view>
+			<view class="h-date">
+				<!-- <view bindtap="togglePicker" data-type="start">{{startDate}}</view>
+				-
+				<view bindtap="togglePicker" data-type="end">{{endDate}}</view> -->
+				<picker mode="date" value="{{activeTimeStart}}" start="2000-01" end="2888-09-01" data-type="start" bindchange="bindDateChange" bindcancel="bindcancel">
+				  <view class="picker" style="display: flex; align-items: center;">
+				    {{activeTimeStart}}
+				   </view>
+				 </picker>
+				 <text decode="{{true}}">&nbsp;-&nbsp;</text>
+				 <picker mode="date" value="{{activeTimeEnd}}" start="2000-01" end="2888-09-01" data-type="end" bindchange="bindDateChange" bindcancel="bindcancel">
+				  <view class="picker" style="display: flex; align-items: center;">
+				    {{activeTimeEnd}}
+				  </view>
+				 </picker>
+			</view>
 			<view class="h-icon">
 				<image src="../../assets/imgs/ChevronUP.png" />
 			</view>
@@ -37,7 +52,7 @@
 	</view>
 	<view class="w-list">
 		<scroll-view scroll-y style="flex: 1;" bindscrolltolower="lower">
-	    <view class="w-l-item" bindtap="goWarningDetail" wx:for="{{warningList}}" wx:key="index">
+	    <view class="w-l-item" bindtap="goWarningDetail" data-id="{{item.Id}}" wx:for="{{warningList}}" wx:key="index">
 				<view class="w-l-item-inner">
 					<image class="inner-type" wx:if="{{item.WarningType === 2}}" src="../../assets/imgs/red-warning.png" />
 					<image class="inner-type" wx:if="{{item.WarningType === 1}}" src="../../assets/imgs/nor-warning.png" />
@@ -59,11 +74,11 @@
 			</view>
 	 	</scroll-view>
 	</view>
-	<view class="time-picker" wx:if="{{showPicker}}">
+	<!-- <view class="time-picker" wx:if="{{showPicker}}">
 	  <picker mode="date" value="{{date}}" start="2000-01" end="2888-09-01" bindchange="bindDateChange" bindcancel="bindcancel">
 	    <view class="picker" style="display: flex; align-items: center;">
-	      <view style="margin-right: 50rpx;">请点击时间:</view> {{date}}
+	      {{date}}
 	    </view>
 	  </picker>
-	</view>
+	</view> -->
 </view>

@@ -1,4 +1,5 @@
 import * as echarts from '../../ec-canvas/echarts'
+const app = getApp()
 
 let chart = null
 
@@ -135,13 +136,50 @@ function initChart(canvas, width, height) {
 
 Page({
   data: {
-     ec_1: {
+    id: null,
+    ec_1: {
       onInit: initChart
+    },
+    warningInfo: null,
+    gnssData: null,
+    anData: null,
+    asycDownNums: 0,
+    asycMaxNums: 2
+  },
+  onLoad: function (e) {
+    this.setData({
+      id: e.id
+    })
+  },
+  closeLoading: function () {
+    if (this.data.asycDownNums === this.data.asycMaxNums) {
+      wx.hideLoading()
     }
   },
-  onLoad: function () {
-    this.setData({
-      
+  onShow: function () {
+    this.getMainInfo()
+  },
+  getMainInfo: function () {
+    const _this = this
+    const monitorId = app.globalData.defaultMonitor.Id
+    const id = _this.data.id
+    app.globalData.fetch({
+      url: `sk/mobile/getwarningdetailinfo/${monitorId}/warninid/${id}`,
+      cb: (res) => {
+        console.log(res)
+        _this.setData({
+          warningInfo: res.data.Result.WarniBaseInfo,
+          gnssData: res.data.Result.GnssData,
+          anData: res.data.Result.AnData,
+        })
+        wx.setNavigationBarTitle({
+          title: res.data.Result.WarniBaseInfo.PointName
+        })
+        _this.setData({
+          asycDownNums: ++_this.data.asycDownNums
+        })
+        _this.closeLoading()
+      }
     })
   },
   takeWarning: function () {

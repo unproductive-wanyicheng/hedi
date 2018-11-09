@@ -14,23 +14,23 @@
 		<view class="u-info">
 			<view class="u-i-item flex">
 				<view class="u-i-i-title">测点:</view>
-				<view class="u-i-i-data">GNS_8011</view>
+				<view class="u-i-i-data">{{warningInfo.PointName}}</view>
 			</view>
 			<view class="u-i-item flex">
 				<view class="u-i-i-title">测点类型:</view>
-				<view class="u-i-i-data">高程位移</view>
+				<view class="u-i-i-data">{{warningInfo.Type}}</view>
 			</view>
 			<view class="u-i-item flex">
 				<view class="u-i-i-title">当前数据:</view>
-				<view class="u-i-i-data">13mm</view>
+				<view class="u-i-i-data">{{warningInfo.WarningValue}}</view>
 			</view>
 			<view class="u-i-item flex">
 				<view class="u-i-i-title">报警时间:</view>
-				<view class="u-i-i-data">2018/05/06 5:00:00</view>
+				<view class="u-i-i-data">{{warningInfo.DateTime}}</view>
 			</view>
 			<view class="u-i-item item-sp">
 				<view class="u-i-i-title">报警说明:</view>
-				<view class="u-i-i-data">高程位移当前值为3mm, 设计值为10mm, 位移大于0.2倍设计值，黄色预警</view>
+				<view class="u-i-i-data">{{warningInfo.WarningMessage}}</view>
 			</view>
 		</view>
 	</view>
