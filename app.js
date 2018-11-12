@@ -7,10 +7,6 @@ App({
   	debug: true,
   	loginInfo: null,
     userInfo: null,
-    monitor: {
-      text: '宝象河-河岸村河堤'
-    },
-    monitorList: [],
     defaultMonitor: null,
   	doLogin: function (params) {
   		const _this = this
@@ -91,7 +87,7 @@ App({
   	getToken: function (params) {
   		const _this = this
 	  	const url = 'http://sso.aeroiot.cn/Token'
-	  	const loginInfo = wx.getStorageSync('hedi_key_user_info')
+	  	const loginInfo = wx.getStorageSync('__HEDI_USER_INFO__')
 	  	let query = null
 	  	if (!loginInfo) {
 		    query = 'grant_type=client_credentials&scope=app&client_id=8&client_secret=0d8e486d45694940a43735acd05b682a'
@@ -103,12 +99,21 @@ App({
 		      },
 		      method : 'POST',
 		      success (res) {
-		      	const expires = {
-		      		expires: new Date().getTime()
+		      	if (res && res.data) {
+		      		console.log(res)
+			      	const expires = {
+			      		expires: new Date().getTime()
+			      	}
+			        _this.loginInfo = Object.assign({}, res.data, expires)
+			        wx.setStorageSync('__HEDI_USER_INFO__', _this.loginInfo)
+			      	_this.getToken(params)
+		      	} else {
+		      		wx.showToast({
+							  title: 'token获取失败',
+							  icon: 'none',
+							  duration: 1500
+							})
 		      	}
-		        _this.loginInfo = Object.assign({}, res.data, expires)
-		        wx.setStorageSync('hedi_key_user_info', _this.loginInfo)
-		      	_this.getToken(params)
 		      }
 		    })
 	  	} else {
@@ -124,12 +129,20 @@ App({
 			      },
 			      method : 'POST',
 			      success (res) {
-			      	const expires = {
-			      		expires: new Date().getTime()
+			      	if (res && res.data) {
+			      		const expires = {
+				      		expires: new Date().getTime()
+				      	}
+				        _this.loginInfo = Object.assign({}, res.data, expires)
+			        	wx.setStorageSync('__HEDI_USER_INFO__', _this.loginInfo)
+				      	_this.getToken(params)
+			      	} else {
+			      		wx.showToast({
+								  title: 'token刷新失败',
+								  icon: 'none',
+								  duration: 1500
+								})
 			      	}
-			        _this.loginInfo = Object.assign({}, res.data, expires)
-		        	wx.setStorageSync('hedi_key_user_info', _this.loginInfo)
-			      	_this.getToken(params)
 			      }
 			    })
 		  	} else {
@@ -140,9 +153,9 @@ App({
 	  },
 	  setTitle: function (title) {
 	  	const _this = this
-	  	if (_this.defaultMonitor) {
+	  	if ( title || _this.defaultMonitor) {
 	  		wx.setNavigationBarTitle({
-		      title: _this.defaultMonitor.Name
+		      title: title ? title : _this.defaultMonitor ? _this.defaultMonitor.Name : '河堤小程序'
 		    })
 	  	}
 	  }

@@ -6,7 +6,7 @@
 				<input value="{{account}}" bindinput="setAccount"/>
 			</view>
 			<view class="item">
-				<view class="title">账号</view>
+				<view class="title">密码</view>
 				<input password value="{{password}}" bindinput="setPassword" />
 			</view>
 		</view>

@@ -1,36 +1,52 @@
 //logs.js
 const util = require('../../utils/util.js')
+const app = getApp()
 
 Page({
   data: {
-    logs: [],
-    active: 0
+    id: null,
+    dotype: 1
   },
-  onLoad: function () {
+  onLoad: function (e) {
     this.setData({
-      logs: (wx.getStorageSync('logs') || []).map(log => {
-        return util.formatTime(new Date(log))
-      })
+      id: e.id
     })
   },
   chooseActive: function (e) {
-    const active = parseInt(e.currentTarget.dataset.active)
-    console.log(e)
+    const dotype = parseInt(e.currentTarget.dataset.dotype)
     this.setData({
-      active: active
+      dotype: dotype
     })
   },
   confirm: function () {
-    wx.showToast({
-      title: '提交成功',
-      icon: 'success',
-      duration: 1000
+    const _this = this
+    const monitorId = app.globalData.defaultMonitor.Id
+    const id = _this.data.id
+    const dotype = _this.data.dotype
+    const data = {
+      Reason: '',
+      HandlerType: '',
+      UserIds: []
+    }
+    app.globalData.fetch({
+      url: `sk/mobile/dowarning/${monitorId}/warningid/${id}/dotype/${dotype}`,
+      method: 'POST',
+      data: data,
+      closeLoading: true,
+      cb: (res) => {
+        console.log(res)
+      }
     })
-    let _this = wx
-    setTimeout(function() {
-      _this.switchTab({
-        url: '/pages/warning/warning'
-      })
-    }, 1000)
+    // wx.showToast({
+    //   title: '提交成功',
+    //   icon: 'success',
+    //   duration: 1000
+    // })
+    // let _this = wx
+    // setTimeout(function() {
+    //   _this.switchTab({
+    //     url: '/pages/warning/warning'
+    //   })
+    // }, 1000)
   }
 })

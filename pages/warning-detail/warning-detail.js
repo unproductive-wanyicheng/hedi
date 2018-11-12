@@ -142,9 +142,7 @@ Page({
     },
     warningInfo: null,
     gnssData: null,
-    anData: null,
-    asycDownNums: 0,
-    asycMaxNums: 2
+    anData: null
   },
   onLoad: function (e) {
     this.setData({
@@ -165,6 +163,7 @@ Page({
     const id = _this.data.id
     app.globalData.fetch({
       url: `sk/mobile/getwarningdetailinfo/${monitorId}/warninid/${id}`,
+      closeLoading: true,
       cb: (res) => {
         console.log(res)
         _this.setData({
@@ -175,16 +174,14 @@ Page({
         wx.setNavigationBarTitle({
           title: res.data.Result.WarniBaseInfo.PointName
         })
-        _this.setData({
-          asycDownNums: ++_this.data.asycDownNums
-        })
-        _this.closeLoading()
+        console.log(JSON.parse(_this.data.gnssData.ResultDataJsons))
       }
     })
   },
   takeWarning: function () {
+    const id = this.data.id
     wx.navigateTo({
-      url: '/pages/take-warning/take-warning'
+      url: '/pages/take-warning/take-warning?id='+id
     })
   },
   back: function () {
