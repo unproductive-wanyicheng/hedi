@@ -159,23 +159,23 @@ Page({
         type: 'line',
         symbol:'none',
         smooth: true,
-        // markLine: {
-        //   symbol: ['none', 'none'],
-        //   label: {
-        //     show: false
-        //   },
-        //   lineStyle: {
-        //       color: '#FF9900',
-        //       type: 'solid'
-        //   },  
-        //   data: [
-        //     {
-        //       type: 'max',
-        //       name: '阈值',
-        //       yAxis: ThresholdValue
-        //     },
-        //   ]
-        // },
+        markLine: {
+          symbol: ['none', 'none'],
+          label: {
+            show: false
+          },
+          lineStyle: {
+              color: '#FF9900',
+              type: 'solid'
+          },  
+          data: [
+            {
+              type: 'max',
+              name: '阈值',
+              yAxis: ThresholdValue
+            },
+          ]
+        },
         areaStyle: {
           color: {
             type: 'linear',
