@@ -17,9 +17,7 @@ Page({
     timeActive: 0,
     timeList: ['实时', '1小时', '今天', '一周'],
     monitorData: null,
-    chartData: null,
-    asycDownNums: 0,
-    asycMaxNums: 2
+    chartData: null
   },
   onLoad: function (e) {
     this.getMonitorData(e)
@@ -46,7 +44,7 @@ Page({
     wx.showLoading()
     app.globalData.fetch({
       url: url,
-      closeLoading: params.type === 'update' ? true : false,
+      closeLoading: true,
       cb: (res) => {
         console.log(res)
         if (res.data && res.data.Result) {
@@ -57,10 +55,6 @@ Page({
             title: res.data.Result[_this.data.activeIndex].name
           })
           _this.updateChart(params)
-          _this.setData({
-            asycDownNums: ++_this.data.asycDownNums
-          })
-          _this.closeLoading()
         }
       }
     })
@@ -165,23 +159,23 @@ Page({
         type: 'line',
         symbol:'none',
         smooth: true,
-        markLine: {
-          symbol: ['none', 'none'],
-          label: {
-            show: false
-          },
-          lineStyle: {
-              color: '#FF9900',
-              type: 'solid'
-          },  
-          data: [
-            {
-              type: 'max',
-              name: '阈值',
-              yAxis: ThresholdValue
-            },
-          ]
-        },
+        // markLine: {
+        //   symbol: ['none', 'none'],
+        //   label: {
+        //     show: false
+        //   },
+        //   lineStyle: {
+        //       color: '#FF9900',
+        //       type: 'solid'
+        //   },  
+        //   data: [
+        //     {
+        //       type: 'max',
+        //       name: '阈值',
+        //       yAxis: ThresholdValue
+        //     },
+        //   ]
+        // },
         areaStyle: {
           color: {
             type: 'linear',
@@ -240,10 +234,6 @@ Page({
           _this.setData({
             monitorData: res.data.Result
           })
-          _this.setData({
-            asycDownNums: ++_this.data.asycDownNums
-          })
-          _this.closeLoading()
 
           _this.getChartsData({e: e, type: 'init'})
         }

@@ -4,7 +4,12 @@ Page({
   data: {
     index: 0,
     showList: [],
-    monitorList:[]
+    monitorList:[{
+      WhiteIcon: 'http://shuiku.aeroiot.cn/content/img/icons/typeicons-w/pointtype-w-14.png',
+      ShowText: '水位',
+      PointCount: 2,
+      OnlinePointCount: 1
+    }]
   },
   onLoad: function (e) {
     this.setData({
