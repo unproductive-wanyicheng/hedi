@@ -1,5 +1,7 @@
 import * as echarts from '../../ec-canvas/echarts'
 const util = require('../../utils/util.js')
+let socketOpen = false
+let socketMsgQueue = []
 
 let chart = null
 
@@ -39,25 +41,50 @@ Page({
     const pointId = parseInt(_this.data.e.id)
     const id = app.globalData.defaultMonitor.Id
     const chartdatatype = _this.data.timeActive
-    // 1 ：1小时  ； 2： 今天  ；  3： 一周
-    const url = `sk/mobile/getmonitorpointdata/${id}/pointtype/${type}/pointid/${pointId}/chartdatatype/${chartdatatype}`
-    wx.showLoading()
-    app.globalData.fetch({
-      url: url,
-      closeLoading: true,
-      cb: (res) => {
-        console.log(res)
-        if (res.data && res.data.Result) {
-          _this.setData({
-            chartData: res.data.Result
-          })
-          wx.setNavigationBarTitle({
-            title: res.data.Result[_this.data.activeIndex].name
-          })
-          _this.updateChart(params)
+    // 1 ：1小时  ； 2： 今天  ；  3： 一周  0: 实时
+    if (chartdatatype !== 0) {
+      const url = `sk/mobile/getmonitorpointdata/${id}/pointtype/${type}/pointid/${pointId}/chartdatatype/${chartdatatype}`
+      wx.showLoading()
+      app.globalData.fetch({
+        url: url,
+        closeLoading: true,
+        cb: (res) => {
+          console.log(res)
+          if (res.data && res.data.Result) {
+            _this.setData({
+              chartData: res.data.Result
+            })
+            wx.setNavigationBarTitle({
+              title: res.data.Result[_this.data.activeIndex].name
+            })
+            _this.updateChart(params)
+          }
         }
-      }
-    })
+      })
+    } else {
+      wx.connectSocket({
+        url: `wss://websocket.aeroiot.cn/Iot?uuid=${id}_${pointId}`,
+        header:{
+          'content-type': 'application/json'
+        },
+        method:"GET",
+        success: function () {
+          wx.onSocketOpen(function(res) {
+            socketOpen = true
+            wx.sendSocketMessage({
+              data: `...`,
+              success: function (res) {
+                console.log(res)
+
+              }
+            })
+            wx.onSocketMessage(function (res) {
+              console.log(res)
+            })
+          })
+        }
+      })
+    }
   },
   updateChart: function (params) {
     const _this = this
@@ -139,21 +166,24 @@ Page({
           }
         }
       ],
-      visualMap: [
-        {
-          show: false,
-          type: 'piecewise',
-          pieces: [
-          {
-              lte: ThresholdValue,
-              color: '#FF5890'
-          },
-          {
-              gt: ThresholdValue,
-              color: '#0071FF'
-          }]
-        }
-      ],
+      // visualMap: {
+      //     show: false,
+      //     type: 'continuous',
+      //     max: 30,
+      //     inRange: {
+      //       color: ['red'],
+      //       symbolSize: [20, 30]
+      //     }
+      //     // pieces: [
+      //     // {
+      //     //     min: 30,
+      //     //     color: '#0071FF'
+      //     // },
+      //     // {
+      //     //     max: 30,
+      //     //     color: '#FF5890'
+      //     // }]
+      // },
       series: [{
         name: '水平位移(mm)',
         type: 'line',

@@ -35,7 +35,7 @@
 		</view>
 	</view>
 	<view class="w-d-down flex">
-		<view class="d-ignore flex" bindtap="back">忽略预警</view>
+		<!-- <view class="d-ignore flex" bindtap="back">忽略预警</view> -->
 		<view class="d-take flex" bindtap="takeWarning">立即处理</view>
 	</view>
 </view>
