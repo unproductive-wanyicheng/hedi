@@ -70,14 +70,15 @@ Page({
         method:"GET",
         success: function () {
           wx.onSocketOpen(function(res) {
+            console.log(res)
             socketOpen = true
-            wx.sendSocketMessage({
-              data: `...`,
-              success: function (res) {
-                console.log(res)
+            // wx.sendSocketMessage({
+            //   data: `...`,
+            //   success: function (res) {
+            //     console.log(res)
 
-              }
-            })
+            //   }
+            // })
             wx.onSocketMessage(function (res) {
               console.log(res)
             })

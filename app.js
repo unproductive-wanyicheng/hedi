@@ -119,6 +119,14 @@ App({
 	  	} else {
 		  	const { access_token, expires_in, refresh_token, token_type, expires } = loginInfo
 		  	const nowTime = new Date().getTime()
+		  	if (!access_token) {
+		  		wx.showToast({
+					  title: 'token获取失败',
+					  icon: 'none',
+					  duration: 1500
+					})
+					return false
+		  	}
 		  	if (nowTime >= expires_in*1000 + expires) {
 		    	query = `grant_type=refresh_token&refresh_token=${refresh_token}&client_id=8&client_secret=0d8e486d45694940a43735acd05b682a`
 		    	wx.request({
@@ -129,7 +137,8 @@ App({
 			      },
 			      method : 'POST',
 			      success (res) {
-			      	if (res && res.data) {
+			      	console.log(res)
+			      	if (res && res.data && res.data.access_token) {
 			      		const expires = {
 				      		expires: new Date().getTime()
 				      	}
