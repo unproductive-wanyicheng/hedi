@@ -1,0 +1,50 @@
+.map-page {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	overflow-y: auto;
+	background: #D8D8D8;
+}
+.map-page .map {
+	width: 100%;
+	height: 502rpx;
+}
+.map-page .info {
+	background: #fff;
+}
+.map-page .info-upper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.map-page .info-upper .upper-item {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.map-page .info .info-down {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.map-page .info .info-down image {
+	width: 42rpx;
+	height: 42rpx;
+}
+
+.map-page .list {
+
+}
+
+.map-page .list .list-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.map-page .list .list-item image {
+	width: 48rpx;
+	height: 48rpx;
+}

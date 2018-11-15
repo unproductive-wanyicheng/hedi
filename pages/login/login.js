@@ -7,7 +7,7 @@ Page({
   onLoad: function () {
     if (app.globalData.debug) {
       wx.switchTab({
-        url: '/pages/index/index'
+        url: '/pages/map/map'
       })
     }
   },

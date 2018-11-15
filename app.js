@@ -128,7 +128,13 @@ App({
 					return false
 		  	}
 		  	if (nowTime >= expires_in*1000 + expires) {
-		    	query = `grant_type=refresh_token&refresh_token=${refresh_token}&client_id=8&client_secret=0d8e486d45694940a43735acd05b682a`
+		    	// query = `grant_type=refresh_token&refresh_token=${refresh_token}&client_id=8&client_secret=0d8e486d45694940a43735acd05b682a`
+		    	query = {
+		    		grant_type: 'refresh_token',
+		    		refresh_token: refresh_token,
+		    		client_id: 8,
+		    		client_secret: '0d8e486d45694940a43735acd05b682a'
+		    	}
 		    	wx.request({
 			      url: url,
 			      data: query,
