@@ -5,11 +5,11 @@
   <view class="info">
   	<view class="info-upper">
   		<view class="upper-item">
-  			<view class="item-num">2</view>
+  			<view class="item-num">{{allCount}}</view>
   			<view class="item-name">水库数量</view>
   		</view>
-  		<view class="upper-item">
-  			<view class="item-num">1</view>
+  		<view class="upper-item border-left">
+  			<view class="item-num orange">{{badCount}}</view>
   			<view class="item-name">预警水库</view>
   		</view>
   	</view>
@@ -19,11 +19,11 @@
   	</view>
   </view>
   <view class="list">
-  	<view class="list-item">
-  		<image src="../../assets/imgs/map-location.png" />
-  		<view class="item-title">XXX</view>
-  		<image src="../../assets/imgs/nor-warning.png" />
-  		<image class="rotate" src="../../assets/imgs/Chevron.png" />
+  	<view class="list-item" wx:for="{{monitorList}}" wx:key="index">
+  		<image class="small-img" src="../../assets/imgs/map-location.png" />
+  		<view class="item-title">{{item.Name}}</view>
+  		<image wx:if="{{!item.WarningStatus}}" src="../../assets/imgs/nor-warning.png" />
+  		<image class="small-img rotate" src="../../assets/imgs/Chevron.png" />
   	</view>
   </view>
 </view>

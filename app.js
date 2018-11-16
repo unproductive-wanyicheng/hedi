@@ -7,6 +7,7 @@ App({
   	debug: true,
   	loginInfo: null,
     userInfo: null,
+    monitorList: null,
     defaultMonitor: null,
   	doLogin: function (params) {
   		const _this = this
@@ -84,10 +85,20 @@ App({
   			tokenCb: fetchCb
   		})
   	},
+  	getUserInfo: function () {
+  		const userInfo = wx.getStorageSync('__HEDI_USER_INFO__')
+  		if (userInfo) {
+  			return userInfo
+  		} else {
+  			wx.navigateTo({
+          url: '/pages/login/login'
+        })
+  		}
+  	},
   	getToken: function (params) {
   		const _this = this
 	  	const url = 'http://sso.aeroiot.cn/Token'
-	  	const loginInfo = wx.getStorageSync('__HEDI_USER_INFO__')
+	  	const loginInfo = wx.getStorageSync('__HEDI_LOGIN_INFO__')
 	  	let query = null
 	  	if (!loginInfo) {
 		    query = 'grant_type=client_credentials&scope=app&client_id=8&client_secret=0d8e486d45694940a43735acd05b682a'
@@ -105,7 +116,7 @@ App({
 			      		expires: new Date().getTime()
 			      	}
 			        _this.loginInfo = Object.assign({}, res.data, expires)
-			        wx.setStorageSync('__HEDI_USER_INFO__', _this.loginInfo)
+			        wx.setStorageSync('__HEDI_LOGIN_INFO__', _this.loginInfo)
 			      	_this.getToken(params)
 		      	} else {
 		      		wx.showToast({
@@ -149,7 +160,7 @@ App({
 				      		expires: new Date().getTime()
 				      	}
 				        _this.loginInfo = Object.assign({}, res.data, expires)
-			        	wx.setStorageSync('__HEDI_USER_INFO__', _this.loginInfo)
+			        	wx.setStorageSync('__HEDI_LOGIN_INFO__', _this.loginInfo)
 				      	_this.getToken(params)
 			      	} else {
 			      		wx.showToast({

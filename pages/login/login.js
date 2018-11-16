@@ -5,8 +5,9 @@ Page({
   	password: ''
   },
   onLoad: function () {
-    if (app.globalData.debug) {
-      wx.switchTab({
+    const userInfo = wx.getStorageSync('__HEDI_USER_INFO__')
+    if (app.globalData.debug && userInfo) {
+      wx.redirectTo({
         url: '/pages/map/map'
       })
     }
@@ -47,8 +48,9 @@ Page({
       password: _this.data.password,
       cb: (res) => {
         app.globalData.userInfo = res.data.Result
-        wx.switchTab({
-          url: '/pages/index/index'
+        wx.setStorageSync('__HEDI_USER_INFO__', res.data.Result)
+        wx.navigateTo({
+          url: '/pages/map/map'
         })
       }
     })

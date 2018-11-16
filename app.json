@@ -1,7 +1,7 @@
 {
   "pages":[
-    "pages/map/map",
     "pages/login/login",
+    "pages/map/map",
     "pages/index/index",
     "pages/warning-detail/warning-detail",
     "pages/monitor-detail/monitor-detail",
