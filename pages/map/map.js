@@ -6,7 +6,13 @@ Page({
   data: {
     monitorList: [],
     allCount: 0,
-    badCount: 0
+    badCount: 0,
+    mapParams: {
+      averageLongitude: 0,
+      averageLatitude: 0,
+      markers: [],
+      scale: 15
+    }
   },
   onLoad: function () {
     
@@ -29,6 +35,7 @@ Page({
           })
           app.globalData.monitorList = res.data.Result
           _this.getCounts()
+          _this.updateMap()
         } else {
           wx.showToast({
             title: '暂无监测列表数据',
@@ -51,6 +58,46 @@ Page({
     this.setData({
       allCount: allCount,
       badCount: badCount
+    })
+  },
+  updateMap: function () {
+    let array = []
+    let aveLon = 0
+    let aveLau = 0
+    const L = this.data.monitorList.length
+    if (!L) {
+      return false
+    }
+    this.data.monitorList.map((item, index) => {
+      const params = {
+        iconPath: '../../assets/imgs/map-location.png',
+        id: index,
+        latitude: parseFloat(item.GpsY),
+        longitude: parseFloat(item.GpsX),
+        width: 15,
+        height: 20,
+        callout: {
+          content: item.Name,
+          bgColor: '#000',
+          color: '#fff',
+          display: 'ALWAYS',
+          textAlign: 'center',
+          padding: 5
+        }
+      }
+      aveLon += parseFloat(item.GpsX) / L
+      aveLau += parseFloat(item.GpsY) / L
+      array.push(params)
+    })
+    this.setData({
+      ['mapParams.markers']: array,
+      ['mapParams.averageLatitude']: aveLau,
+      ['mapParams.averageLongitude']: aveLon
+    })
+  },
+  goSearchPage: function () {
+    wx.navigateTo({
+      url: '/pages/search/search'
     })
   }
 })

@@ -1,0 +1,14 @@
+<view class="searchPage">
+  <view class="input">
+  	<image src="../../assets/imgs/search.png"></image>
+  	<input placeholder="请输入关键字" />
+  </view>
+  <view class="list">
+  	<view class="list-item" wx:for="{{matchList}}" wx:key="index">
+  		<image class="small-img" src="../../assets/imgs/map-location.png" />
+  		<view class="item-title">{{item.Name}}</view>
+  		<image wx:if="{{!item.WarningStatus}}" src="../../assets/imgs/nor-warning.png" />
+  		<image class="small-img rotate" src="../../assets/imgs/Chevron.png" />
+  	</view>
+  </view>
+</view>

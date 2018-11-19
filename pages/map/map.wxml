@@ -1,6 +1,6 @@
 <view class="map-page">
   <view class="map">
-  	<map id="map" subkey="XKLBZ-J753U-PORVZ-2GPCZ-2LUM2-3CF4T" scale="14" style="width: 100%; height: 502rpx;"></map>
+  	<map id="map" longitude="{{mapParams.averageLongitude}}" latitude="{{mapParams.averageLatitude}}" scale="{{mapParams.scale}}" markers="{{mapParams.markers}}" style="width: 100%; height: 502rpx;"></map>
   </view>
   <view class="info">
   	<view class="info-upper">
@@ -13,7 +13,7 @@
   			<view class="item-name">预警水库</view>
   		</view>
   	</view>
-  	<view class="info-down">
+  	<view class="info-down" bindtap="goSearchPage">
   		<image src="../../assets/imgs/search.png" />
   		<view>输入关键字</view>
   	</view>

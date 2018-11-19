@@ -11,7 +11,8 @@
     "pages/video-list/video-list",
     "pages/info-choose/info-choose",
     "pages/monitor/monitor",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/search/search"
   ],
   "window":{
     "backgroundTextStyle":"light",
