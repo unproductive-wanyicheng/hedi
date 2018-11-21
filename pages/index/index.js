@@ -195,7 +195,8 @@ Page({
       BadGoodCount: 1,
       AllPointCount: 100,
       GoodCount: 1,
-      GoodRatio: 80
+      GoodRatio: 80,
+      WindowPointTypeOverviewRealContent: []
     },
     mapParams: [
       { points: [
@@ -231,14 +232,64 @@ Page({
     rainleveldata: [],
     waterleveldata: [],
     asycDownNums: 0,
-    asycMaxNums: 5
+    asycMaxNums: 2,
+    allPage: 1,
+    nowPage: 1
   },
   onLoad: function (e) {
     
   },
   onShow: function () {
     console.log('app started:')
-    this.getAllMonitors()
+    app.globalData.setTitle()
+    // this.getAllMonitors()
+    this.getMainInfo()
+    this.getWarningInfo()
+  },
+  getMainInfo: function () {
+    const id = app.globalData.defaultMonitor.Id
+    const _this = this
+    wx.showLoading()
+    app.globalData.fetch({
+      url: 'sk/mobile/getmonitorobjectinfo/' + id,
+      cb: (res) => {
+        console.log(res)
+        const ratio = parseFloat(res.data.Result.SensorStatus.GoodCount/res.data.Result.SensorStatus.AllPointCount).toFixed(2)*100
+        _this.setData({
+          monitorInfo: res.data.Result,
+          'mainMonitorInfo.Status': res.data.Result.Warning.Status,
+          'mainMonitorInfo.BadGoodCount': res.data.Result.SensorStatus.BadGoodCount,
+          'mainMonitorInfo.AllPointCount': res.data.Result.SensorStatus.AllPointCount,
+          'mainMonitorInfo.GoodCount': res.data.Result.SensorStatus.GoodCount,
+          'mainMonitorInfo.GoodRatio': ratio,
+          'mainMonitorInfo.WindowPointTypeOverviewRealContent': res.data.Result.WindowPointTypeOverviewRealContent
+        })
+        _this.initChart_4(ratio)
+        _this.setData({
+          asycDownNums: ++_this.data.asycDownNums
+        })
+        _this.closeLoading()
+      }
+    })
+  },
+  getWarningInfo: function () {
+    const id = app.globalData.defaultMonitor.Id
+    const _this = this
+    const warningtype = 0
+    const nowPage = _this.data.nowPage
+    const pageCount = 1
+    const url = `reach/mobile/getwarninginfobypagecount/${id}/warningtype/${warningtype}/nowPage/${nowPage}/pageCount/${pageCount}`
+    wx.showLoading()
+    app.globalData.fetch({
+      url: url,
+      cb: (res) => {
+        console.log(res)
+        _this.setData({
+          asycDownNums: ++_this.data.asycDownNums
+        })
+        _this.closeLoading()
+      }
+    })
   },
   setMap: function () {
     const data = app.globalData.defaultMonitor

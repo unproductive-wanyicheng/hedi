@@ -99,5 +99,12 @@ Page({
     wx.navigateTo({
       url: '/pages/search/search'
     })
+  },
+  goIndexPage: function (e) {
+    const index = e.currentTarget.dataset.index
+    app.globalData.defaultMonitor = app.globalData.monitorList[index]
+    wx.switchTab({
+      url: '/pages/index/index'
+    })
   }
 })

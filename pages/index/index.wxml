@@ -15,22 +15,43 @@
     </view>
   </view>
   <view class="wrapper">
-    <view class="scroll-area">
+    <!-- <view class="scroll-area">
       <map wx:if="{{!showModal}}"  id="map" subkey="XKLBZ-J753U-PORVZ-2GPCZ-2LUM2-3CF4T" polygons="{{mapParams}}" scale="14" style="width: 100%; height: 560rpx;"></map>
       <view wx:if="{{showModal}}" style="width: 100%; height: 560rpx; background: #4E6070;"></view>
-    </view>
-    <view class="main-monitor-info">
+    </view> -->
+    <view class="{{mainMonitorInfo.Status === 0 ? 'main-monitor-info danger' : 'main-monitor-info'}}">
       <view class="left">总体监测情况</view>
       <view class="mid">
         <view class="text">{{mainMonitorInfo.Status === 0 ? '异常' : '正常'}}</view>
-        <view class="english">Noramal</view>
+        <view wx:if="{{mainMonitorInfo.Status}}" class="english">Noramal</view>
       </view>
       <view class="right">
         <view class="num">{{mainMonitorInfo.BadGoodCount}}</view>
         <view class="sign">异常</view>
       </view>
     </view>
-    <view wx:if="{{!showModal}}" class="h-chart">
+    <view class="warning-box">
+      <view class="box-inner">
+        <view class="box-header">
+          <image src="" class="header-icon left" />
+          <view class="header-title">
+            <text>预警信息</text>
+            <text>1/6500</text>
+          </view>
+          <image src="" class="header-icon left" />
+        </view>
+        <view class="box-down">
+          <view class="box-type">
+            <view class="type-color"></view>
+            <view class="type-name">渗流</view>
+          </view>
+          <view class="box-message">硬件异常: </view>
+          <view class="box-point">应变点: </view>
+          <view class="box-time">2018-18-18</view>
+        </view>
+      </view>
+    </view>
+    <!-- <view wx:if="{{!showModal}}" class="h-chart">
         <ec-canvas class="h-chart-item" id="mychart-dom-bar-1" canvas-id="mychart-bar" ec="{{ ec_1 }}"></ec-canvas>
     </view>
     <view wx:if="{{showModal}}" class="h-chart">
@@ -41,7 +62,7 @@
     </view>
     <view class="h-chart no-border">
         <ec-canvas class="h-chart-item" id="mychart-dom-bar-3" canvas-id="mychart-bar" ec="{{ ec_3 }}"></ec-canvas>
-    </view>
+    </view> -->
     <view class="sp-lists">
       <view class="s-item no-border" bindtap="goSpDetail" data-index="1">
         <view class="item-title char-margin-top">
@@ -62,7 +83,7 @@
        <view class="data-chart-title">传感器成功采样率</view>
       </view>
     </view>
-    <view class="sp-lists">
+   <!--  <view class="sp-lists">
       <view class="s-item" bindtap="goSpDetail" data-index="1">
         <image src="../../assets/imgs/high-shift.png" />
         <view class="item-title">高程位移</view>
@@ -78,18 +99,18 @@
         <view class="item-title">深部位移</view>
         <view class="item-data">3mm</view>
       </view>
-    </view>
-    <view class="sp-lists">
-      <view class="s-item" bindtap="goSpDetail">
-        <image src="../../assets/imgs/rain-fall.png" />
-        <view class="item-title">降雨量</view>
-        <view class="item-data">200mm</view>
+    </view> -->
+    <view class="sp-lists border-bottom">
+      <view class="s-item" bindtap="goSpDetail" wx:for="{{mainMonitorInfo.WindowPointTypeOverviewRealContent}}" wx:key="index" wx:for-item="content">
+        <image src="{{content.Icon}}" />
+        <view class="item-title">{{content.Name}}</view>
+        <view class="item-data">{{content.DataValue + content.Unit}}</view>
       </view>
-      <view class="s-item" bindtap="goSpDetail">
+      <!-- <view class="s-item" bindtap="goSpDetail">
         <image src="../../assets/imgs/water-line.png" />
         <view class="item-title">水位</view>
         <view class="item-data">24mm</view>
-      </view>
+      </view> -->
     </view>
   </view>
   <view class="modal" wx:if="{{showModal}}" catchtouchmove='true'>

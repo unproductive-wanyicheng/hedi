@@ -19,7 +19,7 @@
   	</view>
   </view>
   <view class="list">
-  	<view class="list-item" wx:for="{{monitorList}}" wx:key="index">
+  	<view class="list-item" wx:for="{{monitorList}}" wx:key="index" bindtap="goIndexPage" data-index="{{index}}">
   		<image class="small-img" src="../../assets/imgs/map-location.png" />
   		<view class="item-title">{{item.Name}}</view>
   		<image wx:if="{{!item.WarningStatus}}" src="../../assets/imgs/nor-warning.png" />
