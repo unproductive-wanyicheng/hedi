@@ -297,4 +297,68 @@
 }
 .home .warning-box .box-inner {
 	background: rgb(105, 122, 138);
+	overflow: hidden;
+}
+.home .warning-box .box-inner .box-header {
+	background: #4E6070;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: #fff;
+	padding: 20rpx;
+	font-size: 32rpx;
+}
+.home .warning-box .box-inner .box-header image {
+	width: 16rpx;
+	height: 26rpx;
+}
+.home .warning-box .box-inner .box-header .left {
+	transform: rotate(180deg);
+}
+.home .warning-box .box-inner .box-header .header-title {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0 20rpx;
+}
+.home .warning-box .box-inner .box-header .header-title  .title {
+	flex: 1;
+}
+.home .warning-box .box-inner .box-header .header-title  .num {
+	font-size: 24rpx;
+}
+.home .warning-box .box-inner .box-down {
+	padding: 20rpx 30rpx;
+	font-size: 24rpx;
+	color: #CCCCCC;
+	overflow-y: auto;
+	height: 320rpx;
+}
+.home .warning-box .box-inner .box-down .box-type {
+	font-size: 32rpx;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	margin-bottom: 30rpx;
+}
+.home .warning-box .box-inner .box-down .box-type .type-color {
+	background: #CCCCCC;
+	width: 32rpx;
+	height: 32rpx;
+	margin-right: 20rpx
+}
+.home .warning-box .box-inner .box-down .box-message {
+	margin-bottom: 20rpx;
+	line-height: 40rpx;
+}
+.home .warning-box .box-inner .box-down .box-point {
+	margin-bottom: 60rpx;
+	line-height: 40rpx;
+}
+.home .warning-box .box-inner .box-down .box-message text {
+	color: #fff;
+}
+.home .warning-box .box-inner .box-down .box-point text {
+	color: #fff;
 }

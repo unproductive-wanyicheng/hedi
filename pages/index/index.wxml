@@ -33,21 +33,21 @@
     <view class="warning-box">
       <view class="box-inner">
         <view class="box-header">
-          <image src="" class="header-icon left" />
+          <image src="../../assets/imgs/right-w-arrow.png" class="header-icon left" bindtap="updateWarningInfo" data-type="pre" />
           <view class="header-title">
-            <text>预警信息</text>
-            <text>1/6500</text>
+            <text class="title">预警信息</text>
+            <text decode="{{true}}" class="num">{{nowPage}}&nbsp;/&nbsp;{{allPage}}</text>
           </view>
-          <image src="" class="header-icon left" />
+          <image src="../../assets/imgs/right-w-arrow.png" class="header-icon right" bindtap="updateWarningInfo" data-type="next" />
         </view>
         <view class="box-down">
           <view class="box-type">
             <view class="type-color"></view>
             <view class="type-name">渗流</view>
           </view>
-          <view class="box-message">硬件异常: </view>
-          <view class="box-point">应变点: </view>
-          <view class="box-time">2018-18-18</view>
+          <view class="box-message"><text>{{warningInfo.SupportSugistion + ' : '}}</text>{{warningInfo.WarningMessage}}</view>
+          <view class="box-point"><text decode="true">应变点&nbsp;:&nbsp;</text>{{warningInfo.PointName}}</view>
+          <view class="box-time">{{warningInfo.DateTime}}</view>
         </view>
       </view>
     </view>
@@ -75,11 +75,11 @@
       </view>
       <view class="s-i-border"></view>
       <view class="s-item" bindtap="goSpDetail">
-       <view class="data-chart">
+       <view wx:if="{{!showModal}}" class="data-chart">
         <ec-canvas class="h-chart-item-4" id="mychart-dom-bar-4" canvas-id="mychart-bar" ec="{{ ec_4 }}"></ec-canvas>
        </view>
-      <!--  <view wx:if="{{showModal}}" class="data-chart">
-       </view> -->
+       <view wx:if="{{showModal}}" class="data-chart">
+       </view>
        <view class="data-chart-title">传感器成功采样率</view>
       </view>
     </view>
@@ -116,7 +116,7 @@
   <view class="modal" wx:if="{{showModal}}" catchtouchmove='true'>
     <view class="inner">
       <view class="header">
-        <view class="title">宝象河-河岸村河堤</view>
+        <view class="title">{{baseCard.BaseInfo.Summary}}</view>
         <view class="share" >
           <button class="button" open-type="share" plain="true">
              <image src="../../assets/imgs/share.png"></image>
@@ -124,21 +124,22 @@
         </view>
       </view>
       <view class="map">
-        <map id="map" longitude="113" latitude="28.21" scale="14" style="width: 100%; height: 350rpx;"></map>
+        <!-- <map id="map" longitude="113" latitude="28.21" scale="14" style="width: 100%; height: 350rpx;"></map> -->
+        <map id="map1" longitude="{{mapParams.averageLongitude}}" latitude="{{mapParams.averageLatitude}}" scale="{{mapParams.scale}}" markers="{{mapParams.markers}}" polyline="{{mapParams.polyline}}"  style="width: 100%; height: 350rpx;"></map>
       </view>
       <view class="info">
-        <view class="message">象河-河岸村河堤位于汕昆高速（经开区段）与S101省道交界处，宝象河经过河岸村。经现场调研，2016年夏季暴雨涨水时，河水经常漫过河堤，对河岸村的村民造成影响。</view>
+        <view class="message">{{baseCard.BaseInfo.PositionRemark}}</view>
         <view class="location">
           <view class="l-title">地理位置 :</view>
-          <view class="l-desc">象河-河岸村河堤位于汕昆高速（经开区段）与S101省道交界处</view>
+          <view class="l-desc">{{baseCard.BaseInfo.PositionRemark}}</view>
         </view>
         <view class="data">
           <view class="item">
-            <view class="i-top">200m</view>
+            <view class="i-top">{{baseCard.BaseInfo.MaxWaterLevel}}m</view>
             <view class="i-down">最大水位</view>
           </view>
           <view class="item">
-            <view class="i-top">300m/h</view>
+            <view class="i-top">{{baseCard.BaseInfo.MaxRain}}m/h</view>
             <view class="i-down">历史最大降雨量</view>
           </view>
         </view>

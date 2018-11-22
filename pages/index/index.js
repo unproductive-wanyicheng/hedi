@@ -234,7 +234,17 @@ Page({
     asycDownNums: 0,
     asycMaxNums: 2,
     allPage: 1,
-    nowPage: 1
+    nowPage: 1,
+    warningInfo: null,
+    baseCard: null,
+    mapParams: {
+      averageLongitude: 0,
+      averageLatitude: 0,
+      markers: [],
+      polyline: [],
+      scale: 15
+    },
+    ratio: 0
   },
   onLoad: function (e) {
     
@@ -246,12 +256,13 @@ Page({
     this.getMainInfo()
     this.getWarningInfo()
   },
-  getMainInfo: function () {
+  getMainInfo: function (params) {
     const id = app.globalData.defaultMonitor.Id
     const _this = this
     wx.showLoading()
     app.globalData.fetch({
       url: 'sk/mobile/getmonitorobjectinfo/' + id,
+      closeLoading: params ? true : false,
       cb: (res) => {
         console.log(res)
         const ratio = parseFloat(res.data.Result.SensorStatus.GoodCount/res.data.Result.SensorStatus.AllPointCount).toFixed(2)*100
@@ -262,6 +273,7 @@ Page({
           'mainMonitorInfo.AllPointCount': res.data.Result.SensorStatus.AllPointCount,
           'mainMonitorInfo.GoodCount': res.data.Result.SensorStatus.GoodCount,
           'mainMonitorInfo.GoodRatio': ratio,
+          ratio: ratio,
           'mainMonitorInfo.WindowPointTypeOverviewRealContent': res.data.Result.WindowPointTypeOverviewRealContent
         })
         _this.initChart_4(ratio)
@@ -269,21 +281,31 @@ Page({
           asycDownNums: ++_this.data.asycDownNums
         })
         _this.closeLoading()
+        setTimeout(()=>{
+          _this.getMainInfo({closeLoading: true})
+        }, 60000)
       }
     })
   },
-  getWarningInfo: function () {
+  getWarningInfo: function (params) {
     const id = app.globalData.defaultMonitor.Id
     const _this = this
     const warningtype = 0
-    const nowPage = _this.data.nowPage
+    const nowPage = params ? params.nowPage : _this.data.nowPage
     const pageCount = 1
     const url = `reach/mobile/getwarninginfobypagecount/${id}/warningtype/${warningtype}/nowPage/${nowPage}/pageCount/${pageCount}`
     wx.showLoading()
     app.globalData.fetch({
       url: url,
+      closeLoading: params ? true : false,
       cb: (res) => {
         console.log(res)
+        const data = res.data.Result
+        _this.setData({
+          allPage: data.AllCount,
+          nowPage: data.NowPage,
+          warningInfo: data.DataList[0]
+        })
         _this.setData({
           asycDownNums: ++_this.data.asycDownNums
         })
@@ -308,9 +330,25 @@ Page({
     })
     console.log(this.data.mapParams)
   },
+  updateWarningInfo: function (e) {
+    console.log(e)
+    const type = e.currentTarget.dataset.type
+    let nowPage = this.data.nowPage
+    if (type === 'next') {
+      nowPage += 1
+    } else {
+      nowPage -= 1
+    }
+    this.getWarningInfo({
+      nowPage: nowPage
+    })
+  },
   closeLoading: function () {
     if (this.data.asycDownNums === this.data.asycMaxNums) {
       wx.hideLoading()
+      this.setData({
+        asycDownNums: 0
+      })
     }
   },
   getAllMonitors: function () {
@@ -644,13 +682,83 @@ Page({
     })
   },
   showModal: function () {
-  	console.log('...')
+  	// console.log('...')
   	this.setData({
   		showModal: !this.data.showModal
   	})
     if (!this.data.showModal) {
-      this.updateRainAndWaterData()
+      this.initChart_4(this.data.ratio)
     }
+    if (!this.data.showModal) {
+      return false
+    }
+    const id = app.globalData.defaultMonitor.Id
+    const _this = this
+    const url = `reach/mobile/getmonitorobjectbaseinfo/${id}`
+    wx.showLoading()
+    app.globalData.fetch({
+      url: url,
+      closeLoading: true,
+      cb: (res) => {
+        console.log(res)
+        const data = res.data.Result
+        _this.setData({
+          baseCard: data
+        })
+        _this.updateMap()
+      }
+    })
+  },
+  updateMap: function () {
+    let array = []
+    let aveLon = 0
+    let aveLau = 0
+    const rangeL = this.data.baseCard.MapRangeData.length
+    const pointL = this.data.baseCard.Points.length
+    if (!rangeL || !pointL) {
+      return false
+    }
+    this.data.baseCard.Points.map((item, index) => {
+      const params = {
+        iconPath: '../../assets/imgs/map-location.png',
+        id: index,
+        latitude: parseFloat(item.MapY),
+        longitude: parseFloat(item.MapX),
+        width: 15,
+        height: 20,
+        callout: {
+          content: item.Name,
+          bgColor: '#000',
+          color: '#fff',
+          display: 'ALWAYS',
+          textAlign: 'center',
+          padding: 5
+        }
+      }
+      array.push(params)
+    })
+
+    const pointLineArray = []
+    this.data.baseCard.MapRangeData.map((item, index) => {
+      aveLon += parseFloat(item[0]) / rangeL
+      aveLau += parseFloat(item[1]) / rangeL
+      pointLineArray.push({
+        longitude: item[0],
+        latitude: item[1]
+      })
+    })
+
+    this.setData({
+      ['mapParams.markers']: array,
+      ['mapParams.averageLatitude']: aveLau,
+      ['mapParams.averageLongitude']: aveLon,
+      ['mapParams.polyline']: [{
+        points: pointLineArray,
+        color:"#FF0000DD",
+        width: 2,
+        dottedLine: true
+      }]
+    })
   },
   goSpDetail: function (e) {
     wx.switchTab({
