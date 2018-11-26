@@ -19,6 +19,11 @@
 	border-bottom: 1rpx solid #EEEEEE;
 	font-size: 30rpx;
 }
+.take-warning .t-w-up .up-chooses .u-c-item text {
+	font-size: 24rpx;
+	color: #999999;
+	margin-left: 20rpx;
+}
 .take-warning .t-w-up .up-chooses .u-c-item image {
 	width: 46rpx;
 	height: 46rpx;

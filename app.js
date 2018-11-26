@@ -9,6 +9,7 @@ App({
     userInfo: null,
     monitorList: null,
     defaultMonitor: null,
+    choosenUser: null,
   	doLogin: function (params) {
   		const _this = this
   		const tokenCb = function (res, params) {
