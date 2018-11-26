@@ -10,6 +10,7 @@
 .warning-peo-list-page .t-w-up .up-chooses {
 	padding: 0 20rpx;
 	background: #fff;
+	overflow-y: auto;
 }
 .warning-peo-list-page .t-w-up .up-chooses .u-c-item {
 	display: flex;
