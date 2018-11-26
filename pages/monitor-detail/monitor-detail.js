@@ -23,6 +23,9 @@ Page({
   },
   onLoad: function (e) {
     this.getMonitorData(e)
+    wx.onSocketMessage(function (res) {
+      console.log(res)
+    })
   },
   onShow: function (e) {
     
@@ -41,6 +44,7 @@ Page({
     const pointId = parseInt(_this.data.e.id)
     const id = app.globalData.defaultMonitor.Id
     const chartdatatype = _this.data.timeActive
+    const uuid = _this.data.monitorData.Uuid
     // 1 ：1小时  ； 2： 今天  ；  3： 一周  0: 实时
     if (chartdatatype !== 0) {
       const url = `sk/mobile/getmonitorpointdata/${id}/pointtype/${type}/pointid/${pointId}/chartdatatype/${chartdatatype}`
@@ -63,7 +67,7 @@ Page({
       })
     } else {
       wx.connectSocket({
-        url: `wss://websocket.aeroiot.cn/Iot?uuid=${id}_${pointId}`,
+        url: `wss://websocket.aeroiot.cn/Iot?uuid=${uuid}_${pointId}`,
         header:{
           'content-type': 'application/json'
         },
@@ -79,12 +83,11 @@ Page({
 
             //   }
             // })
-            wx.onSocketMessage(function (res) {
-              console.log(res)
-            })
+            
           })
         }
       })
+      
     }
   },
   updateChart: function (params) {
@@ -265,7 +268,7 @@ Page({
           _this.setData({
             monitorData: res.data.Result
           })
-
+          app.globalData.setTitle(res.data.Result.Name)
           _this.getChartsData({e: e, type: 'init'})
         }
       }
@@ -304,6 +307,9 @@ Page({
     this.getChartsData({type: 'update'})
   },
   refreshPage: function () {
-   this.getChartsData({type: 'update'})
+    if (!this.data.timeActive) {
+      return false
+    }
+    this.getChartsData({type: 'update'})
   }
 })

@@ -12,7 +12,8 @@
     "pages/info-choose/info-choose",
     "pages/monitor/monitor",
     "pages/logs/logs",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/warning-peo-list/warning-peo-list"
   ],
   "window":{
     "backgroundTextStyle":"light",

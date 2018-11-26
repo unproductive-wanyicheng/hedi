@@ -18,6 +18,7 @@ Page({
   },
   onShow: function () {
     this.getData()
+    app.globalData.setTitle()
   },
   getData: function () {
     const _this = this

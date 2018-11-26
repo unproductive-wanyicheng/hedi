@@ -244,7 +244,8 @@ Page({
       polyline: [],
       scale: 15
     },
-    ratio: 0
+    ratio: 0,
+    timeCaller: null
   },
   onLoad: function (e) {
     
@@ -255,6 +256,14 @@ Page({
     // this.getAllMonitors()
     this.getMainInfo()
     this.getWarningInfo()
+  },
+  onHide: function () {
+    if (this.data.timeCaller) {
+      clearTimeout(this.data.timeCaller)
+      this.setData({
+        timeCaller: null
+      })
+    }
   },
   getMainInfo: function (params) {
     const id = app.globalData.defaultMonitor.Id
@@ -281,9 +290,12 @@ Page({
           asycDownNums: ++_this.data.asycDownNums
         })
         _this.closeLoading()
-        setTimeout(()=>{
+        const timeCaller = setTimeout(()=>{
           _this.getMainInfo({closeLoading: true})
         }, 60000)
+        _this.setData({
+          timeCaller: timeCaller
+        })
       }
     })
   },

@@ -5,24 +5,36 @@ const app = getApp()
 Page({
   data: {
     id: null,
-    dotype: -1,
-    choosenName: ''
+    activeIndex: -1,
+    peoList: []
   },
-  onLoad: function (e) {
-    this.setData({
-      id: e.id
+  onLoad: function () {
+    wx.showLoading()
+    app.globalData.fetch({
+      url: `reach/mobile/getalluser`,
+      method: 'POST',
+      closeLoading: true,
+      cb: (res) => {
+        console.log(res)
+        const data = res.data.Result || []
+        if (!data || !data.length) {
+          wx.showToast({
+            title: '暂无数据',
+            icon: 'none',
+            duration: 1500
+          })
+        }
+        this.setData({
+          peoList: data
+        })
+      }
     })
   },
   chooseActive: function (e) {
     const dotype = parseInt(e.currentTarget.dataset.dotype)
-    if (dotype === 1) {
-      wx.navigateTo({
-        url: '/pages/warning-peo-list/warning-peo-list'
-      })
-    }
-    // this.setData({
-    //   dotype: dotype
-    // })
+    this.setData({
+      dotype: dotype
+    })
   },
   confirm: function () {
     const _this = this

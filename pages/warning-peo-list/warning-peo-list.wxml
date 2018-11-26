@@ -1,0 +1,12 @@
+<view class="warning-peo-list-page full-page flex">
+	<view class="t-w-up">
+		<view class="up-chooses">
+			<view class="u-c-item" bindtap="chooseActive" data-dotype="1" wx:for="{{peoList}}" wx:key="index">
+				<image wx:if="{{activeIndex !== index}}" src="../../assets/imgs/un-choose.png" />
+				<image wx:if="{{dotype === index}}" src="../../assets/imgs/multi-choose.png" />
+				<view>{{item.USER_INFO_NICKNAME}}</view>
+			</view>
+		</view>
+	</view>
+	<view class="t-w-down flex" bindtap="confirm">确认</view>
+</view>

@@ -2,12 +2,12 @@
 	<view class="t-w-up">
 		<view class="up-chooses">
 			<view class="u-c-item" bindtap="chooseActive" data-dotype="1">
-				<image wx:if="{{dotype === 0}}" src="../../assets/imgs/un-choose.png" />
+				<image wx:if="{{dotype !== 1}}" src="../../assets/imgs/un-choose.png" />
 				<image wx:if="{{dotype === 1}}" src="../../assets/imgs/multi-choose.png" />
 				<view>通知管理人员</view>
 			</view>
 			<view class="u-c-item" bindtap="chooseActive" data-dotype="0">
-				<image wx:if="{{dotype === 1}}" src="../../assets/imgs/un-choose.png" />
+				<image wx:if="{{dotype !== 0}}" src="../../assets/imgs/un-choose.png" />
 				<image wx:if="{{dotype === 0}}" src="../../assets/imgs/multi-choose.png" />
 				<view>现场已经处理</view>
 			</view>
