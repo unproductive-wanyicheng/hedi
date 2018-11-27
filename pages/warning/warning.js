@@ -22,15 +22,26 @@ Page({
     this.getWarningInfo()
     this.getWarningList({})
   },
+  onShow: function () {
+    if (app.globalData.refreshPage) {
+      this.getWarningInfo()
+      this.getWarningList({})
+      app.globalData.refreshPage = false
+    }
+  },
   resetTime: function () {
     let date = util.formatTime(new Date(), 'yyyy-MM-dd')
     this.setData({
+      timeActive: 0,
       activeTimeStart: date,
       activeTimeEnd: date
     })
   },
   closeLoading: function () {
     if (this.data.asycDownNums === this.data.asycMaxNums) {
+      this.setData({
+        asycDownNums: 0
+      })
       wx.hideLoading()
     }
   },

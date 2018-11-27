@@ -45,7 +45,7 @@
             <view class="type-color"></view>
             <view class="type-name">渗流</view>
           </view>
-          <view class="box-message"><text>{{warningInfo.SupportSugistion + ' : '}}</text>{{warningInfo.WarningMessage}}</view>
+          <view class="box-message"><text>{{warningInfo ? warningInfo.SupportSugistion + ' : ' : '异常原因'}}</text>{{warningInfo.WarningMessage}}</view>
           <view class="box-point"><text decode="true">应变点&nbsp;:&nbsp;</text>{{warningInfo.PointName}}</view>
           <view class="box-time">{{warningInfo.DateTime}}</view>
         </view>

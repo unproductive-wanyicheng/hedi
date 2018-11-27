@@ -21,7 +21,7 @@
 			</view>
 		</view>
 		<view class="chart">
-          <ec-canvas class="m-chart-item" id="mychart-dom-bar-1" canvas-id="mychart-bar" ec="{{ ec_1 }}"></ec-canvas>
+        <ec-canvas class="m-chart-item" id="mychart-dom-bar-1" canvas-id="mychart-bar" ec="{{ ec_1 }}"></ec-canvas>
 		</view>
 		<view class="info">
 			<view class="i-item">

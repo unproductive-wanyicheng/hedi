@@ -23,9 +23,6 @@ Page({
   },
   onLoad: function (e) {
     this.getMonitorData(e)
-    wx.onSocketMessage(function (res) {
-      console.log(res)
-    })
   },
   onShow: function (e) {
     
@@ -84,6 +81,9 @@ Page({
             //   }
             // })
             
+          })
+          wx.onSocketMessage(function (res) {
+            console.log(res)
           })
         }
       })

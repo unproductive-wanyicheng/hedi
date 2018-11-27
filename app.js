@@ -10,6 +10,7 @@ App({
     monitorList: null,
     defaultMonitor: null,
     choosenUser: null,
+    refreshPage: false,
   	doLogin: function (params) {
   		const _this = this
   		const tokenCb = function (res, params) {

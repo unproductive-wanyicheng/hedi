@@ -57,13 +57,34 @@ Page({
       UserIds: []
     }
     data.UserIds.push(_this.data.userInfo.DEPT_INFO_ID)
+    wx.showLoading()
     app.globalData.fetch({
-      url: `reach/mobile/dowarning/${monitorId}/warningid/${id}/dotype/${dotype}`, 
+      url: `reach/mobile/dowarning/${monitorId}/warninid/${id}/dotype/${dotype}`, 
       method: 'POST',
       data: data,
       closeLoading: true,
       cb: (res) => {
         console.log(res)
+        if (res.data.Result === true) {
+          wx.showToast({
+            title: '提交成功',
+            icon: 'none',
+            duration: 1000
+          })
+          app.globalData.choosenUser = null
+          app.globalData.refreshPage = true
+          setTimeout(()=>{
+            wx.switchTab({
+              url: '/pages/warning/warning'
+            })
+          }, 1000)
+        } else {
+          wx.showToast({
+            title: '提交失败',
+            icon: 'none',
+            duration: 1500
+          })
+        }
       }
     })
     // wx.showToast({

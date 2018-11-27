@@ -258,6 +258,7 @@ Page({
     this.getWarningInfo()
   },
   onHide: function () {
+    console.log('hide')
     if (this.data.timeCaller) {
       clearTimeout(this.data.timeCaller)
       this.setData({
