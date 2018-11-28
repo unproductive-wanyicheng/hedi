@@ -22,10 +22,16 @@ Page({
     chartData: null
   },
   onLoad: function (e) {
-    this.getMonitorData(e)
+    this.setData({
+      e: e
+    })
   },
-  onShow: function (e) {
-    
+  onShow: function () {
+    this.getMonitorData(this.data.e)
+  },
+  onHide: function () {
+    wx.closeSocket()
+    app.globalData.socketOpen = false
   },
   closeLoading: function () {
     if (this.data.asycDownNums === this.data.asycMaxNums) {
@@ -44,7 +50,7 @@ Page({
     const uuid = _this.data.monitorData.Uuid
     // 1 ：1小时  ； 2： 今天  ；  3： 一周  0: 实时
     if (chartdatatype !== 0) {
-      const url = `sk/mobile/getmonitorpointdata/${id}/pointtype/${type}/pointid/${pointId}/chartdatatype/${chartdatatype}`
+      const url = `reach/mobile/getmonitorpointdata/${id}/pointtype/${type}/pointid/${pointId}/chartdatatype/${chartdatatype}`
       wx.showLoading()
       app.globalData.fetch({
         url: url,
@@ -63,31 +69,40 @@ Page({
         }
       })
     } else {
+      if (app.globalData.socketOpen) {
+        wx.closeSocket()
+        app.globalData.socketOpen = false
+      }
+      wx.onSocketClose(function(res) {
+        console.log('WebSocket 已关闭！')
+      })
+      const uuid_type = `${uuid}_${pointId}`
       wx.connectSocket({
-        url: `wss://websocket.aeroiot.cn/Iot?uuid=${uuid}_${pointId}`,
+        url: `wss://websocket.aeroiot.cn/Iot`,
         header:{
           'content-type': 'application/json'
         },
         method:"GET",
         success: function () {
           wx.onSocketOpen(function(res) {
-            console.log(res)
-            socketOpen = true
-            // wx.sendSocketMessage({
-            //   data: `...`,
-            //   success: function (res) {
-            //     console.log(res)
+            app.globalData.socketOpen = true
+            const data = JSON.stringify({
+              Action: 'AddGroup',
+              Params: [uuid_type]
+            })
+            wx.sendSocketMessage({
+              data: data,
+              success: function (res) {
+                console.log('sendSuccess:', res)
 
-            //   }
-            // })
-            
+              }
+            })
           })
           wx.onSocketMessage(function (res) {
-            console.log(res)
+            console.log('onBack:', res)
           })
         }
       })
-      
     }
   },
   updateChart: function (params) {
@@ -252,13 +267,10 @@ Page({
   },
   getMonitorData: function (e) {
     const _this = this
-    _this.setData({
-      e: e
-    })
     const type = parseInt(e.type)
     const pointId = parseInt(e.id)
     const id = app.globalData.defaultMonitor.Id
-    const url = `sk/mobile/getmonitorpointinfo/${id}/pointtype/${type}/pointid/${pointId}`
+    const url = `reach/mobile/getmonitorpointinfo/${id}/pointtype/${type}/pointid/${pointId}`
     wx.showLoading()
     app.globalData.fetch({
       url: url,

@@ -11,6 +11,7 @@ App({
     defaultMonitor: null,
     choosenUser: null,
     refreshPage: false,
+    socketOpen: false,
   	doLogin: function (params) {
   		const _this = this
   		const tokenCb = function (res, params) {
@@ -165,11 +166,13 @@ App({
 			        	wx.setStorageSync('__HEDI_LOGIN_INFO__', _this.loginInfo)
 				      	_this.getToken(params)
 			      	} else {
-			      		wx.showToast({
-								  title: 'token刷新失败',
-								  icon: 'none',
-								  duration: 1500
-								})
+			     //  		wx.showToast({
+								//   title: 'token刷新失败',
+								//   icon: 'none',
+								//   duration: 1500
+								// })
+								wx.removeStorageSync('__HEDI_LOGIN_INFO__')
+								_this.getToken(params)
 			      	}
 			      }
 			    })

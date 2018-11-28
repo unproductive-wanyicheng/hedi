@@ -23,7 +23,7 @@ Page({
   getData: function () {
     const _this = this
     const id = app.globalData.defaultMonitor.Id
-    const url = `sk/mobile/getallmonitorpointsinfo/${id}`
+    const url = `reach/mobile/getallmonitorpointsinfo/${id}`
     wx.showLoading()
     app.globalData.fetch({
       url: url,
