@@ -266,6 +266,15 @@ Page({
       })
     }
   },
+  onUnload: function () {
+    console.log('hide')
+    if (this.data.timeCaller) {
+      clearTimeout(this.data.timeCaller)
+      this.setData({
+        timeCaller: null
+      })
+    }
+  },
   getMainInfo: function (params) {
     const id = app.globalData.defaultMonitor.Id
     const _this = this
