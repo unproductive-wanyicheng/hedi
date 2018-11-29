@@ -1,14 +1,21 @@
 <view class="warning-detail-page full-page flex">
 	<view class="w-d-up">
 		<view class="u-chart">
+			<view class="gnss-type">	
+			  <view class="gnss-t-item"  wx:for="{{gnssTypeList}}" wx:key="{{index}}" bindtap="radioChange" data-index="{{index}}">
+			  	<image wx:if="{{gnssTypeIndex === index}}" src='../../assets/imgs/multi-choose.png'/>
+			  	<image wx:if="{{gnssTypeIndex !== index}}" src='../../assets/imgs/un-choose.png'/>
+			    <view>{{item.value}}</view>
+			  </view>
+			</view>
 		  <view class="chart-wrapper">
-          	<ec-canvas class="u-chart-item" id="mychart-dom-bar-1" canvas-id="mychart-bar" ec="{{ ec_1 }}"></ec-canvas>
+          <ec-canvas class="u-chart-item" id="mychart-dom-bar-1" canvas-id="mychart-bar" ec="{{ ec_1 }}"></ec-canvas>
 		  </view>
           <view class="u-chart-info">
-          	<view class="i-info-item">当前时间: 2018/5/6 16:00</view>
-          	<view class="i-info-item">最大值[6144]</view>
-          	<view class="i-info-item">最小值[-488.93]</view>
-          	<view class="i-info-item">平均值[82.26]</view>
+          	<view class="i-info-item">当前时间: {{warningInfo.DateTime}}</view>
+          	<view class="i-info-item">{{'最大值[' + warningInfo.NowAreaMaxValue + ']'}}</view>
+          	<view class="i-info-item">{{'最小值[' + warningInfo.NowAreaMinValue + ']'}}</view>
+          	<view class="i-info-item">{{'平均值[' + warningInfo.NowHistoryAvgValue + ']'}}]</view>
           </view>
 		</view>
 		<view class="u-info">

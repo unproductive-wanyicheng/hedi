@@ -49,7 +49,7 @@ Page({
     const id = app.globalData.defaultMonitor.Id
     const _this = this
     app.globalData.fetch({
-      url: `sk/mobile/getwarningstaticinfo/${id}`,
+      url: `reach/mobile/getwarningstaticinfo/${id}`,
       cb: (res) => {
         console.log(res)
         if (res.data.Result) {
@@ -81,7 +81,7 @@ Page({
     const endtime = _this.data.activeTimeEnd
     const page = _this.data.nowPage
     app.globalData.fetch({
-      url: `sk/mobile/getwarninginfo/${id}/warningtype/${warningtype}/starttime/${starttime}/endtime/${endtime}/nowPage/${page}`,
+      url: `reach/mobile/getwarninginfo/${id}/warningtype/${warningtype}/starttime/${starttime}/endtime/${endtime}/nowPage/${page}`,
       cb: (res) => {
         console.log(res)
         if (res.data.Result) {

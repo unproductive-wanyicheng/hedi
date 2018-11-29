@@ -140,6 +140,12 @@ Page({
     ec_1: {
       onInit: initChart
     },
+    gnssTypeList: [
+      {name: '位移', value: '位移'},
+      {name: '速率', value: '速率'},
+      {name: '加速度', value: '加速度'}
+    ],
+    gnssTypeIndex: 0,
     warningInfo: null,
     gnssData: null,
     anData: null
@@ -162,7 +168,7 @@ Page({
     const monitorId = app.globalData.defaultMonitor.Id
     const id = _this.data.id
     app.globalData.fetch({
-      url: `sk/mobile/getwarningdetailinfo/${monitorId}/warninid/${id}`,
+      url: `reach/mobile/getwarningdetailinfo/${monitorId}/warninid/${id}`,
       closeLoading: true,
       cb: (res) => {
         console.log(res)
@@ -174,7 +180,7 @@ Page({
         wx.setNavigationBarTitle({
           title: res.data.Result.WarniBaseInfo.PointName
         })
-        console.log(JSON.parse(_this.data.gnssData.ResultDataJsons))
+        _this.updateChart()
       }
     })
   },
@@ -187,5 +193,21 @@ Page({
   },
   back: function () {
     wx.navigateBack()
+  },
+  updateChart: function () {
+    if (this.data.gnssData) {
+      let data = JSON.parse(this.data.gnssData.ResultDataJsons)[this.data.gnssTypeIndex]
+      console.log(data)
+    }
+    if (this.data.anData) {
+      
+    }
+  },
+  radioChange: function(e) {
+    const index = parseInt(e.currentTarget.dataset.index)
+    this.setData({
+      gnssTypeIndex: index
+    })
+    this.updateChart()
   }
 })

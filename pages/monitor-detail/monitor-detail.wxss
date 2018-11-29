@@ -117,5 +117,5 @@
 	margin-right: 40rpx;
 	font-size: 24rpx;
 	white-space: nowrap;
-	padding-bottom: 4rpx;
+	padding-bottom: 2rpx;
 }

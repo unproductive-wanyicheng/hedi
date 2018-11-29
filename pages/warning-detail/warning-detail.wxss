@@ -22,8 +22,28 @@
 	padding: 33rpx 0;
 }
 .warning-detail-page .w-d-up .u-chart {
-	height: 482rpx;
+	height: 512rpx;
 	border-bottom: 1rpx solid #34424e;
+}
+.warning-detail-page .w-d-up .u-chart .gnss-type {
+	font-size: 30rpx;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	padding-right: 20rpx;
+}
+.warning-detail-page .w-d-up .u-chart .gnss-type .gnss-t-item {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.warning-detail-page .w-d-up .u-chart .gnss-type .gnss-t-item image {
+	width: 30rpx;
+	height: 30rpx;
+	margin: 0 10rpx;
+}
+.warning-detail-page .w-d-up .u-chart .gnss-type .radio-group label text{
+	padding-top: 2rpx;
 }
 .warning-detail-page .w-d-up .u-chart .chart-wrapper {
 	height: 420rpx;

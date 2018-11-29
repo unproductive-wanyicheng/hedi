@@ -37,8 +37,10 @@ Page({
     this.getMonitorData(this.data.e)
   },
   onUnload: function () {
-    wx.closeSocket()
-    app.globalData.socketOpen = false
+    if (app.globalData.socketOpen) {
+      wx.closeSocket()
+      app.globalData.socketOpen = false
+    }
   },
   closeLoading: function () {
     if (this.data.asycDownNums === this.data.asycMaxNums) {
@@ -95,6 +97,7 @@ Page({
       })
       // const uuid_type = `${uuid}_${pointId}`
       const uuid_type = 'b101457e-d4de-45ab-823a-73ef412213c5_14'
+      wx.showLoading()
       wx.connectSocket({
         url: `wss://websocket.aeroiot.cn/Iot`,
         header:{
@@ -731,7 +734,7 @@ Page({
   selectMonitor: function (e) {
     const direction = e.currentTarget.dataset.direction
     if (direction === 'pre') {
-      if (this.data.activeIndex === 0) {
+      if (this.data.activeIndex === 0 || app.globalData.socketOpen) {
         return false
       }
       this.setData({
@@ -741,7 +744,7 @@ Page({
         title:  this.data.chartData[this.data.activeIndex].name
       })
     } else {
-      if (this.data.activeIndex === this.data.chartData.length -1) {
+      if (this.data.activeIndex === this.data.chartData.length -1 || app.globalData.socketOpen) {
         return false
       }
       this.setData({
@@ -751,7 +754,7 @@ Page({
         title:  this.data.chartData[this.data.activeIndex].name
       })
     }
-    this.updateChart()
+    this.updateChart({type: 'init'})
   },
   selectTime: function (e) {
     const index = parseInt(e.target.dataset.index)
