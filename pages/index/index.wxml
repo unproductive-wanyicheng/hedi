@@ -102,14 +102,14 @@
     </view> -->
     <view class="sp-lists border-bottom">
       <view class="s-item" bindtap="goSpDetail" wx:for="{{mainMonitorInfo.WindowPointTypeOverviewRealContent}}" wx:key="index" wx:for-item="content" wx:if="{{index <= 2}}">
-        <image src="{{content.Icon}}" />
+        <image src="{{content.WhiteIcon}}" />
         <view class="item-title">{{content.Name}}</view>
         <view class="item-data">{{content.DataValue + content.Unit}}</view>
       </view>
     </view>
     <view class="sp-lists border-bottom" wx:if="{{mainMonitorInfo.WindowPointTypeOverviewRealContent.length > 3}}">
       <view class="s-item" bindtap="goSpDetail" wx:for="{{mainMonitorInfo.WindowPointTypeOverviewRealContent}}" wx:key="index" wx:for-item="content" wx:if="{{index > 2}}">
-        <image src="{{content.Icon}}" />
+        <image src="{{content.WhiteIcon}}" />
         <view class="item-title">{{content.Name}}</view>
         <view class="item-data">{{content.DataValue + content.Unit}}</view>
       </view>
