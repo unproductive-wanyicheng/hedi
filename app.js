@@ -4,7 +4,7 @@ App({
     
   },
   globalData: {
-  	debug: true,
+  	debug: false,
   	loginInfo: null,
     userInfo: null,
     monitorList: null,
@@ -41,8 +41,8 @@ App({
   		const fetchCb = function (res, originParams) {
   			const baseUrl = 'https://mapi.aeroiot.cn/'
   			const { access_token, token_type } = res
-  			const { url, query = '', data = null, cb, method = 'GET',successMessage = '', successCode = 200, closeLoading = false } = originParams
-  			wx.showLoading()
+  			const { url, query = '', data = null, cb, method = 'GET',successMessage = '', successCode = 200, closeLoading = false, noLoading = false } = originParams
+  			!noLoading && wx.showLoading()
   			wx.request({
 		      url: baseUrl + url + query,
 		      data: data,
@@ -80,6 +80,9 @@ App({
 		      		}
 		      	}
 		      	closeLoading && wx.hideLoading()
+		      },
+		      complete: function (res) {
+		      	
 		      }
 		    })
   		}
@@ -100,7 +103,7 @@ App({
   	},
   	getToken: function (params) {
   		const _this = this
-	  	const url = 'http://sso.aeroiot.cn/Token'
+	  	const url = 'https://sso.aeroiot.cn/Token'
 	  	const loginInfo = wx.getStorageSync('__HEDI_LOGIN_INFO__')
 	  	let query = null
 	  	if (!loginInfo) {

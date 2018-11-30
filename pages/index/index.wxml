@@ -101,16 +101,18 @@
       </view>
     </view> -->
     <view class="sp-lists border-bottom">
-      <view class="s-item" bindtap="goSpDetail" wx:for="{{mainMonitorInfo.WindowPointTypeOverviewRealContent}}" wx:key="index" wx:for-item="content">
+      <view class="s-item" bindtap="goSpDetail" wx:for="{{mainMonitorInfo.WindowPointTypeOverviewRealContent}}" wx:key="index" wx:for-item="content" wx:if="{{index <= 2}}">
         <image src="{{content.Icon}}" />
         <view class="item-title">{{content.Name}}</view>
         <view class="item-data">{{content.DataValue + content.Unit}}</view>
       </view>
-      <!-- <view class="s-item" bindtap="goSpDetail">
-        <image src="../../assets/imgs/water-line.png" />
-        <view class="item-title">水位</view>
-        <view class="item-data">24mm</view>
-      </view> -->
+    </view>
+    <view class="sp-lists border-bottom" wx:if="{{mainMonitorInfo.WindowPointTypeOverviewRealContent.length > 3}}">
+      <view class="s-item" bindtap="goSpDetail" wx:for="{{mainMonitorInfo.WindowPointTypeOverviewRealContent}}" wx:key="index" wx:for-item="content" wx:if="{{index > 2}}">
+        <image src="{{content.Icon}}" />
+        <view class="item-title">{{content.Name}}</view>
+        <view class="item-data">{{content.DataValue + content.Unit}}</view>
+      </view>
     </view>
   </view>
   <view class="modal" wx:if="{{showModal}}" catchtouchmove='true'>

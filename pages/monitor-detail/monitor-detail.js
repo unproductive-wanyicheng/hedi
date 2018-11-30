@@ -18,6 +18,7 @@ Page({
     activeIndex: 0,
     timeActive: 0,
     timeList: ['实时', '1小时', '今天', '一周'],
+    dataType: 'other',
     monitorData: null,
     chartData: null,
     socketData: null,
@@ -133,21 +134,13 @@ Page({
               // gnss
               _this.updateChart({type: 'init', dataType: 'socket', chartType: 'gnss'})
             }
-            if (resData.Type === 23 && _this.data.gnssData.time.length) {
-              // 水位
-              _this.updateChart({type: 'update', dataType: 'socket', chartType: 'water'})
+            if (resData.Type !== 14 && _this.data.gnssData.time.length) {
+              // other
+              _this.updateChart({type: 'update', dataType: 'socket', chartType: 'other'})
             }
-            if (resData.Type === 23 && !_this.data.gnssData.time.length) {
-              // 水位
-              _this.updateChart({type: 'init', dataType: 'socket', chartType: 'water'})
-            }
-            if (resData.Type === 24 && _this.data.gnssData.time.length) {
-              // rain
-              _this.updateChart({type: 'update', dataType: 'socket', chartType: 'rain'})
-            }
-            if (resData.Type === 24 && !_this.data.gnssData.time.length) {
-              // rain
-              _this.updateChart({type: 'init', dataType: 'socket', chartType: 'rain'})
+            if (resData.Type !== 14 && !_this.data.gnssData.time.length) {
+              // other
+              _this.updateChart({type: 'init', dataType: 'socket', chartType: 'other'})
             }
           })
         }
@@ -263,6 +256,8 @@ Page({
           smooth: true,
           lineStyle: {
             width: 1,
+          },
+          itemStyle: {
             color: 'red'
           },
           data: x
@@ -274,6 +269,8 @@ Page({
           smooth: true,
           lineStyle: {
             width: 1,
+          },
+          itemStyle: {
             color: 'yellow'
           },
           data: y
@@ -285,6 +282,8 @@ Page({
           smooth: true,
           lineStyle: {
             width: 1,
+          },
+          itemStyle: {
             color: 'blue'
           },
           data: h
@@ -292,7 +291,7 @@ Page({
       }
     }
 
-    if (dataType === 'socket' && chartType === 'water') {
+    if (dataType === 'socket' && chartType === 'other') {
       let time_data = _this.data.gnssData.time
       let x = _this.data.gnssData.x
       let y = _this.data.gnssData.y
@@ -422,37 +421,35 @@ Page({
       }
     }
 
-    if (dataType === 'socket' && chartType === 'rain') {
-      let time_data = _this.data.gnssData.time
-      let x = _this.data.gnssData.x
-      let y = _this.data.gnssData.y
-      let h = _this.data.gnssData.h
-      let time = _this.data.socketData.DateTime.split('T')[1].split('.')[0]
-      if (x.length >= 7) {
-        time_data.shift()
-        x.shift()
-        y.shift()
-        h.shift()
-        time_data.push(time)
-        x.push(_this.data.socketData.X)
-        y.push(_this.data.socketData.Y)
-        h.push(_this.data.socketData.H)
-      } else {
-        time_data.push(time)
-        x.push(_this.data.socketData.X)
-        y.push(_this.data.socketData.Y)
-        h.push(_this.data.socketData.H)
+    if (dataType === 'http' && _this.data.dataType === 'gnss') {
+
+      if (!_this.data.chartData.length) {
+        return false
       }
-      _this.setData({
-        [`gnssData.time`]: time_data,
-        [`gnssData.x`]: x,
-        [`gnssData.y`]: y,
-        [`gnssData.h`]: h,
+
+      const chart_x_data = _this.data.chartData[0].data
+      const chart_y_data = _this.data.chartData[1].data
+      const chart_h_data = _this.data.chartData[2].data
+
+      let time_data = []
+      let x_data = []
+      let y_data = []
+      let h_data = []
+      
+      // let ThresholdValue = parseInt(_this.data.monitorData.ThresholdValue.split('mm')[0])
+      chart_x_data.map((item, index) => {
+        const time = new Date(item[0])
+        // console.log(util.formatTime(time, 'yyyy-MM-dd hh:mm:ss'))
+        time_data.push(util.formatTime(time, 'hh:mm'))
+        x_data.push(item[1])
+        x_interval = Math.floor(chart_x_data.length / 7)
+        y_data.push(chart_y_data[index][1])
+        h_data.push(chart_h_data[index][1])
       })
 
       option = {
         title: {
-          text: '实时数据(mm)',
+          text: 'gnss数据(mm)',
           left: 'center',
           top: 10,
           textStyle: {
@@ -462,7 +459,7 @@ Page({
         },
         legend: {
           top: 30,
-          data:['x','y','h']
+          data:[{name: 'x'}, {name: 'y'}, {name: 'h'}] 
         },
         grid: {
           left: 40,
@@ -523,9 +520,11 @@ Page({
           smooth: true,
           lineStyle: {
             width: 1,
+          },
+          itemStyle: {
             color: 'red'
           },
-          data: x
+          data: x_data
         },
         {
           name: 'y',
@@ -534,9 +533,11 @@ Page({
           smooth: true,
           lineStyle: {
             width: 1,
+          },
+          itemStyle: {
             color: 'yellow'
           },
-          data: y
+          data: y_data
         },
         {
           name: 'h',
@@ -545,14 +546,16 @@ Page({
           smooth: true,
           lineStyle: {
             width: 1,
+          },
+          itemStyle: {
             color: 'blue'
           },
-          data: h
+          data: h_data
         }]
       }
     }
 
-    if (dataType === 'http') {
+    if (dataType === 'http' && _this.data.dataType === 'other') {
 
       if (!_this.data.chartData.length) {
         return false
@@ -725,6 +728,11 @@ Page({
           _this.setData({
             monitorData: res.data.Result
           })
+          if (res.data.Result.PointType === 14) {
+            _this.setData({
+              dataType: 'gnss'
+            })
+          }
           app.globalData.setTitle(res.data.Result.Name)
           _this.getChartsData({e: e, type: 'init'})
         }
@@ -732,6 +740,7 @@ Page({
     })
   },
   selectMonitor: function (e) {
+    return false
     const direction = e.currentTarget.dataset.direction
     if (direction === 'pre') {
       if (this.data.activeIndex === 0 || app.globalData.socketOpen) {

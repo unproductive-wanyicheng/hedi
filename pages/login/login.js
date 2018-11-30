@@ -42,7 +42,6 @@ Page({
 		})
 		return false
   	}
-    wx.showLoading()
     app.globalData.doLogin({
       account: _this.data.account,
       password: _this.data.password,

@@ -23,8 +23,9 @@ Page({
   },
   goFullScreen: function (e) {
     const index = parseInt(e.currentTarget.dataset.index)
+    const title = this.data.videoList[index].Note ? this.data.videoList[index].Note : '视频'
     wx.navigateTo({
-      url: '/pages/video-detail/video-detail?title=' + this.data.videoList[index].title
+      url: '/pages/video-detail/video-detail?title=' + title
     })
   }
 })

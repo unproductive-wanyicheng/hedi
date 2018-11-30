@@ -247,9 +247,6 @@ Page({
     ratio: 0,
     timeCaller: null
   },
-  onLoad: function (e) {
-    
-  },
   onShow: function () {
     console.log('app started:')
     app.globalData.setTitle()
@@ -278,9 +275,9 @@ Page({
   getMainInfo: function (params) {
     const id = app.globalData.defaultMonitor.Id
     const _this = this
-    wx.showLoading()
     app.globalData.fetch({
       url: 'sk/mobile/getmonitorobjectinfo/' + id,
+      noLoading: params ? params.noLoading ? params.noLoading : false : false,
       closeLoading: params ? true : false,
       cb: (res) => {
         console.log(res)
@@ -295,13 +292,13 @@ Page({
           ratio: ratio,
           'mainMonitorInfo.WindowPointTypeOverviewRealContent': res.data.Result.WindowPointTypeOverviewRealContent
         })
-        _this.initChart_4(ratio)
+        !_this.data.showModal && _this.initChart_4(ratio)
         _this.setData({
           asycDownNums: ++_this.data.asycDownNums
         })
         _this.closeLoading()
         const timeCaller = setTimeout(()=>{
-          _this.getMainInfo({closeLoading: true})
+          _this.getMainInfo({noLoading: true, closeLoading: true})
         }, 60000)
         _this.setData({
           timeCaller: timeCaller
