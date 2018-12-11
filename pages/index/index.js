@@ -10,181 +10,173 @@ let chart_2 = null
 let chart_3 = null
 let chart_4 = null
 
-function initChart(canvas, width, height) {
-  
-}
+// function initChart_2(canvas, width, height) {
+//   const chart = echarts.init(canvas, null, {
+//     width: width,
+//     height: height
+//   });
+//   canvas.setChart(chart);
 
-function initChart_2(canvas, width, height) {
-  const chart = echarts.init(canvas, null, {
-    width: width,
-    height: height
-  });
-  canvas.setChart(chart);
+//   var option = {
+//     title: {
+//       text: '高程位移(mm)',
+//       left: 'center',
+//       textStyle: {
+//         color: "#fff",
+//         fontSize: 12
+//       }
+//     },
+//     grid: {
+//       left: 40,
+//       right: 40,
+//       bottom: 40,
+//       top: 40,
+//       containLabel: false
+//     },
+//     xAxis: {
+//       type: 'category',
+//       boundaryGap: false,
+//       data: ['22:00', '23:00', '5月6日', '01:00', '02:00', '03:00', '04:00'],
+//       axisLine: {
+//         lineStyle: {
+//           color: "#fff"
+//         },
+//       },
+//       axisLabel: {
+//         align: 'center',
+//         interval: 0
+//       }
+//       // show: false
+//     },
+//     yAxis: [
+//       {
+//         x: 'center',
+//         type: 'value',
+//         min: function(value) {
+//           return value.min - 10
+//         },
+//         max: function(value) {
+//           return value.max + 30
+//         },
+//         axisLine: {
+//           lineStyle: {
+//             color: "#fff"
+//           }
+//         },
+//         splitLine: {
+//           lineStyle: {
+//             type: 'dashed'
+//           },
+//           show: false
+//         },
+//         minInterval: 1
+//       }
+//     ],
+//     series: [{
+//       name: '高程位移(mm)',
+//       type: 'line',
+//       symbol:'none',
+//       smooth: true,
+//       areaStyle: {
+//         color: "#417ab8",
+//         opacity: 1
+//       },
+//       lineStyle: {
+//         normal: {
+//           width: 0
+//         }
+//       },
+//       data: [20, 50, 60, 70, 60, 50, 40]
+//     }]
+//   };
 
-  var option = {
-    title: {
-      text: '高程位移(mm)',
-      left: 'center',
-      textStyle: {
-        color: "#fff",
-        fontSize: 12
-      }
-    },
-    grid: {
-      left: 40,
-      right: 40,
-      bottom: 40,
-      top: 40,
-      containLabel: false
-    },
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      data: ['22:00', '23:00', '5月6日', '01:00', '02:00', '03:00', '04:00'],
-      axisLine: {
-        lineStyle: {
-          color: "#fff"
-        },
-      },
-      axisLabel: {
-        align: 'center',
-        interval: 0
-      }
-      // show: false
-    },
-    yAxis: [
-      {
-        x: 'center',
-        type: 'value',
-        min: function(value) {
-          return value.min - 10
-        },
-        max: function(value) {
-          return value.max + 30
-        },
-        axisLine: {
-          lineStyle: {
-            color: "#fff"
-          }
-        },
-        splitLine: {
-          lineStyle: {
-            type: 'dashed'
-          },
-          show: false
-        },
-        minInterval: 1
-      }
-    ],
-    series: [{
-      name: '高程位移(mm)',
-      type: 'line',
-      symbol:'none',
-      smooth: true,
-      areaStyle: {
-        color: "#417ab8",
-        opacity: 1
-      },
-      lineStyle: {
-        normal: {
-          width: 0
-        }
-      },
-      data: [20, 50, 60, 70, 60, 50, 40]
-    }]
-  };
+//   chart.setOption(option);
+//   return chart;
+// }
 
-  chart.setOption(option);
-  return chart;
-}
+// function initChart_3(canvas, width, height) {
+//   const chart = echarts.init(canvas, null, {
+//     width: width,
+//     height: height
+//   });
+//   canvas.setChart(chart);
 
-function initChart_3(canvas, width, height) {
-  const chart = echarts.init(canvas, null, {
-    width: width,
-    height: height
-  });
-  canvas.setChart(chart);
+//   var option = {
+//     title: {
+//       text: '水平位移(mm)',
+//       left: 'center',
+//       textStyle: {
+//         color: "#fff",
+//         fontSize: 12
+//       }
+//     },
+//     grid: {
+//       left: 40,
+//       right: 40,
+//       bottom: 40,
+//       top: 40,
+//       containLabel: false
+//     },
+//     xAxis: {
+//       type: 'category',
+//       boundaryGap: false,
+//       data: ['22:00', '23:00', '5月6日', '01:00', '02:00', '03:00', '04:00'],
+//       axisLine: {
+//         lineStyle: {
+//           color: "#fff"
+//         },
+//       },
+//       axisLabel: {
+//         align: 'center',
+//         interval: 0
+//       }
+//       // show: false
+//     },
+//     yAxis: [
+//       {
+//         x: 'center',
+//         type: 'value',
+//         min: function(value) {
+//           return value.min - 10
+//         },
+//         max: function(value) {
+//           return value.max + 30
+//         },
+//         axisLine: {
+//           lineStyle: {
+//             color: "#fff"
+//           }
+//         },
+//         splitLine: {
+//           lineStyle: {
+//             type: 'dashed'
+//           },
+//           show: false
+//         },
+//         minInterval: 1
+//       }
+//     ],
+//     series: [{
+//       name: '水平位移(mm)',
+//       type: 'line',
+//       symbol:'none',
+//       smooth: true,
+//       areaStyle: {
+//         color: "#417ab8",
+//         opacity: 1
+//       },
+//       lineStyle: {
+//         normal: {
+//           width: 0
+//         }
+//       },
+//       data: [20, 50, 60, 70, 60, 50, 40]
+//     }]
+//   };
 
-  var option = {
-    title: {
-      text: '水平位移(mm)',
-      left: 'center',
-      textStyle: {
-        color: "#fff",
-        fontSize: 12
-      }
-    },
-    grid: {
-      left: 40,
-      right: 40,
-      bottom: 40,
-      top: 40,
-      containLabel: false
-    },
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      data: ['22:00', '23:00', '5月6日', '01:00', '02:00', '03:00', '04:00'],
-      axisLine: {
-        lineStyle: {
-          color: "#fff"
-        },
-      },
-      axisLabel: {
-        align: 'center',
-        interval: 0
-      }
-      // show: false
-    },
-    yAxis: [
-      {
-        x: 'center',
-        type: 'value',
-        min: function(value) {
-          return value.min - 10
-        },
-        max: function(value) {
-          return value.max + 30
-        },
-        axisLine: {
-          lineStyle: {
-            color: "#fff"
-          }
-        },
-        splitLine: {
-          lineStyle: {
-            type: 'dashed'
-          },
-          show: false
-        },
-        minInterval: 1
-      }
-    ],
-    series: [{
-      name: '水平位移(mm)',
-      type: 'line',
-      symbol:'none',
-      smooth: true,
-      areaStyle: {
-        color: "#417ab8",
-        opacity: 1
-      },
-      lineStyle: {
-        normal: {
-          width: 0
-        }
-      },
-      data: [20, 50, 60, 70, 60, 50, 40]
-    }]
-  };
-
-  chart.setOption(option);
-  return chart;
-}
-
-function initChart_4(canvas, width, height) {
-  
-}
+//   chart.setOption(option);
+//   return chart;
+// }
 
 Page({
   data: {
@@ -215,16 +207,16 @@ Page({
       }
     ],
     showModal: false,
-    ec_1: {
-      lazyLoad: true
-      // onInit: initChart
-    },
-    ec_2: {
-      onInit: initChart_2
-    },
-    ec_3: {
-      onInit: initChart_3
-    },
+    // ec_1: {
+    //   lazyLoad: true
+    //   // onInit: initChart
+    // },
+    // ec_2: {
+    //   onInit: initChart_2
+    // },
+    // ec_3: {
+    //   onInit: initChart_3
+    // },
     ec_4: {
       lazyLoad: true
       // onInit: initChart_4
