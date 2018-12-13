@@ -91,7 +91,8 @@
 }
 .home .main-monitor-info .right .num {
 	font-size: 36rpx;
-	color: #FF9900;
+	/*color: #FF9900;*/
+	color: #fff;
 	margin-right: 20rpx;
 }
 .home .main-monitor-info .right .sign {

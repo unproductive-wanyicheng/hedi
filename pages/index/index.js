@@ -268,7 +268,7 @@ Page({
     const id = app.globalData.defaultMonitor.Id
     const _this = this
     app.globalData.fetch({
-      url: 'sk/mobile/getmonitorobjectinfo/' + id,
+      url: 'reach/mobile/getmonitorobjectinfo/' + id,
       noLoading: params ? params.noLoading ? params.noLoading : false : false,
       closeLoading: params ? true : false,
       cb: (res) => {
@@ -315,7 +315,7 @@ Page({
         _this.setData({
           allPage: data.AllCount,
           nowPage: data.NowPage,
-          warningInfo: data.DataList[0]
+          warningInfo: data.DataList.length ? data.DataList[0] : null
         })
         _this.setData({
           asycDownNums: ++_this.data.asycDownNums

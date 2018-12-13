@@ -30,7 +30,7 @@
         <view class="sign">异常</view>
       </view>
     </view>
-    <view class="warning-box">
+    <view class="warning-box" wx:if="{{warningInfo}}">
       <view class="box-inner">
         <view class="box-header">
           <image src="../../assets/imgs/right-w-arrow.png" class="header-icon left" bindtap="updateWarningInfo" data-type="pre" />
