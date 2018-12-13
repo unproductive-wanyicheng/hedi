@@ -4,7 +4,7 @@ App({
     
   },
   globalData: {
-  	debug: false,
+  	debug: true,
   	loginInfo: null,
     userInfo: null,
     monitorList: null,
@@ -56,7 +56,7 @@ App({
 		      		wx.showToast({
 							  title: '后台数据报错',
 							  icon: 'none',
-							  duration: 1500
+							  duration: 3000
 							})
 							return false
 		      	}
@@ -66,17 +66,17 @@ App({
 		      			wx.showToast({
 								  title: Message,
 								  icon: 'none',
-								  duration: 1500
+								  duration: 3000
 								})
 		      		} else {
 		      			successMessage.length && wx.showToast({
 								  title: successMessage,
 								  icon: 'none',
-								  duration: 1500
+								  duration: 2000
 								})
 								setTimeout(()=>{
 									cb & cb(res)
-								}, 1500)
+								}, 2000)
 		      		}
 		      	}
 		      	closeLoading && wx.hideLoading()

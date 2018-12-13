@@ -96,6 +96,9 @@ Page({
     })
   },
   goSearchPage: function () {
+    if (!this.data.monitorList.length) {
+      return false
+    }
     wx.navigateTo({
       url: '/pages/search/search'
     })

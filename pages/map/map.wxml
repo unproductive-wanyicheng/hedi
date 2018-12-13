@@ -6,11 +6,11 @@
   	<view class="info-upper">
   		<view class="upper-item">
   			<view class="item-num">{{allCount}}</view>
-  			<view class="item-name">水库数量</view>
+  			<view class="item-name">河堤数量</view>
   		</view>
   		<view class="upper-item border-left">
   			<view class="item-num orange">{{badCount}}</view>
-  			<view class="item-name">预警水库</view>
+  			<view class="item-name">预警河堤</view>
   		</view>
   	</view>
   	<view class="info-down" bindtap="goSearchPage">

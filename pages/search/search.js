@@ -13,13 +13,21 @@ Page({
     })
   },
   inputEnd: function (e) {
-    console.log(e)
-    const key = e.detail.value || ' '
+    this.setData({
+      matchList: []
+    })
+    const key = e.detail.value || ''
+    if (!key.length) {
+      return false
+    }
     const matchList = []
-    this.data.allList.map((item, index) => {
+    const listData = JSON.parse(JSON.stringify(this.data.allList))
+    listData.map((item, index) => {
       let text = item.Name
       const re = new RegExp(key ,"g")
       if (re.test(text)) {
+        const highLightText = `<span style="color: blue;">${key}</span>`
+        item.Name = text.replace(re, highLightText)
         matchList.push(item)
       }
     })
