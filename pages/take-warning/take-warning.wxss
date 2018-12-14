@@ -24,6 +24,7 @@
 	white-space: nowrap;
 }
 .take-warning .t-w-up .up-chooses .u-c-item text {
+	padding-top: 3rpx;
 	font-size: 24rpx;
 	color: #999999;
 	margin-left: 20rpx;

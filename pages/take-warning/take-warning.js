@@ -17,11 +17,10 @@ Page({
   },
   onShow: function () {
     const list = app.globalData.choosenUserList
-    console.log(list)
     if (list && list.length) {
       let name = ''
       list.forEach((item, index) => {
-        name += item.USER_INFO_NICKNAME + ' '
+        name += item.info.USER_INFO_NICKNAME + ' '
       })
       this.setData({
         dotype: 1,
@@ -53,7 +52,7 @@ Page({
       wx.showToast({
         title: '请选择提交方式',
         icon: 'none',
-        duration: 2000
+        duration: 3000
       })
       return false
     }
@@ -66,7 +65,7 @@ Page({
       UserIds: []
     }
     _this.data.userInfoList.forEach((item, index) => {
-      data.UserIds.push(item.DEPT_INFO_ID)
+      data.UserIds.push(item.info.DEPT_INFO_ID)
     })
     wx.showLoading()
     app.globalData.fetch({
@@ -80,7 +79,7 @@ Page({
           wx.showToast({
             title: '提交成功',
             icon: 'none',
-            duration: 1000
+            duration: 2000
           })
           app.globalData.choosenUserList = []
           app.globalData.refreshPage = true
@@ -88,26 +87,15 @@ Page({
             wx.switchTab({
               url: '/pages/warning/warning'
             })
-          }, 1000)
+          }, 2000)
         } else {
           wx.showToast({
             title: '提交失败',
             icon: 'none',
-            duration: 1500
+            duration: 3000
           })
         }
       }
     })
-    // wx.showToast({
-    //   title: '提交成功',
-    //   icon: 'success',
-    //   duration: 1000
-    // })
-    // let _this = wx
-    // setTimeout(function() {
-    //   _this.switchTab({
-    //     url: '/pages/warning/warning'
-    //   })
-    // }, 1000)
   }
 })

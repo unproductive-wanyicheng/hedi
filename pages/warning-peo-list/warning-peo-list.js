@@ -6,8 +6,7 @@ Page({
   data: {
     choosenUser: null,
     activeIndex: -1,
-    peoList: [],
-    chooseList: []
+    peoList: []
   },
   onLoad: function () {
     const _this = this
@@ -28,13 +27,19 @@ Page({
         }
         const mapList = []
         data.map((item, index) => {
+          let is_choose = false 
+          app.globalData.choosenUserList.forEach((data) => {
+            if (data.info.DEPT_INFO_ID === item.DEPT_INFO_ID && data.info.USER_INFO_NICKNAME === item.USER_INFO_NICKNAME) {
+              is_choose = true
+            }
+          })
           mapList.push({
-            choose: false
+            info: item,
+            choose: is_choose ? true : false
           })
         })
         _this.setData({
-          peoList: data,
-          chooseList: mapList
+          peoList: mapList
         })
       }
     })
@@ -42,11 +47,12 @@ Page({
   chooseActive: function (e) {
     const index = parseInt(e.currentTarget.dataset.index)
     this.setData({
-      [`chooseList[${index}].choose`]: !this.data.chooseList[index].choose
+      [`peoList[${index}].choose`]: !this.data.peoList[index].choose
     })
   },
   confirm: function () {
-    this.data.chooseList.forEach((item, index) => {
+    app.globalData.choosenUserList = []
+    this.data.peoList.forEach((item, index) => {
       item.choose && app.globalData.choosenUserList.push(this.data.peoList[index])
     })
     wx.navigateBack()
