@@ -55,6 +55,13 @@ Page({
           gnssData: res.data.Result.GnssData,
           anData: res.data.Result.AnData,
         })
+        if (_this.data.warningInfo) {
+          _this.data.warningInfo.DateTime = _this.data.warningInfo.DateTime.replace('T', ' ')
+          _this.setData({
+            warningInfo: res.data.Result.WarniBaseInfo
+          })
+        }
+
         wx.setNavigationBarTitle({
           title: res.data.Result.WarniBaseInfo.PointName
         })

@@ -6,9 +6,11 @@ Page({
   data: {
     choosenUser: null,
     activeIndex: -1,
-    peoList: []
+    peoList: [],
+    chooseList: []
   },
   onLoad: function () {
+    const _this = this
     wx.showLoading()
     app.globalData.fetch({
       url: `reach/mobile/getalluser`,
@@ -24,8 +26,15 @@ Page({
             duration: 1500
           })
         }
-        this.setData({
-          peoList: data
+        const mapList = []
+        data.map((item, index) => {
+          mapList.push({
+            choose: false
+          })
+        })
+        _this.setData({
+          peoList: data,
+          chooseList: mapList
         })
       }
     })
@@ -33,11 +42,13 @@ Page({
   chooseActive: function (e) {
     const index = parseInt(e.currentTarget.dataset.index)
     this.setData({
-      activeIndex: index
+      [`chooseList[${index}].choose`]: !this.data.chooseList[index].choose
     })
   },
   confirm: function () {
-    app.globalData.choosenUser = this.data.peoList[this.data.activeIndex]
+    this.data.chooseList.forEach((item, index) => {
+      item.choose && app.globalData.choosenUserList.push(this.data.peoList[index])
+    })
     wx.navigateBack()
   }
 })

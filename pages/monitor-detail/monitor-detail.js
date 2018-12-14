@@ -22,11 +22,16 @@ Page({
     monitorData: null,
     chartData: null,
     socketData: null,
+    socketValue: 0,
     gnssData: {
       time: [],
       x: [],
       y: [],
       h: []
+    },
+    otherData: {
+      time: [],
+      y: []
     }
   },
   onLoad: function (e) {
@@ -73,7 +78,8 @@ Page({
           console.log(res)
           if (res.data && res.data.Result && res.data.Result.length) {
             _this.setData({
-              chartData: res.data.Result
+              chartData: res.data.Result,
+              socketData: null
             })
             wx.setNavigationBarTitle({
               title: res.data.Result[_this.data.activeIndex].name
@@ -96,8 +102,8 @@ Page({
       wx.onSocketClose(function(res) {
         console.log('WebSocket 已关闭！')
       })
-      // const uuid_type = `${uuid}_${pointId}`
-      const uuid_type = 'b101457e-d4de-45ab-823a-73ef412213c5_14'
+      const uuid_type = `${uuid}_${type}`
+      // const uuid_type = 'b101457e-d4de-45ab-823a-73ef412213c5_14'
       wx.showLoading()
       wx.connectSocket({
         url: `wss://websocket.aeroiot.cn/Iot`,
@@ -121,8 +127,8 @@ Page({
           })
           wx.onSocketMessage(function (res) {
             wx.hideLoading()
-            console.log('onBack:', res)
             const resData = JSON.parse(res.data)
+            console.log('onBack:', resData)
             _this.setData({
               socketData: resData
             })
@@ -134,11 +140,11 @@ Page({
               // gnss
               _this.updateChart({type: 'init', dataType: 'socket', chartType: 'gnss'})
             }
-            if (resData.Type !== 14 && _this.data.gnssData.time.length) {
+            if (resData.Type !== 14 && _this.data.otherData.time.length) {
               // other
               _this.updateChart({type: 'update', dataType: 'socket', chartType: 'other'})
             }
-            if (resData.Type !== 14 && !_this.data.gnssData.time.length) {
+            if (resData.Type !== 14 && !_this.data.otherData.time.length) {
               // other
               _this.updateChart({type: 'init', dataType: 'socket', chartType: 'other'})
             }
@@ -289,34 +295,28 @@ Page({
           data: h
         }]
       }
+
+      _this.setData({
+        socketValue: 'X: ' + _this.data.socketData.X + 'mm ' +'Y: ' +  _this.data.socketData.Y + 'mm ' +'H: ' +  _this.data.socketData.H + 'mm'
+      })
     }
 
     if (dataType === 'socket' && chartType === 'other') {
-      let time_data = _this.data.gnssData.time
-      let x = _this.data.gnssData.x
-      let y = _this.data.gnssData.y
-      let h = _this.data.gnssData.h
+      let time_data = _this.data.otherData.time
+      let y = _this.data.otherData.y
       let time = _this.data.socketData.DateTime.split('T')[1].split('.')[0]
-      if (x.length >= 7) {
+      if (y.length >= 7) {
         time_data.shift()
-        x.shift()
         y.shift()
-        h.shift()
         time_data.push(time)
-        x.push(_this.data.socketData.X)
-        y.push(_this.data.socketData.Y)
-        h.push(_this.data.socketData.H)
+        y.push(_this.data.socketData.DataValue)
       } else {
         time_data.push(time)
-        x.push(_this.data.socketData.X)
-        y.push(_this.data.socketData.Y)
-        h.push(_this.data.socketData.H)
+        y.push(_this.data.socketData.DataValue)
       }
       _this.setData({
-        [`gnssData.time`]: time_data,
-        [`gnssData.x`]: x,
-        [`gnssData.y`]: y,
-        [`gnssData.h`]: h,
+        [`otherData.time`]: time_data,
+        [`gnssData.y`]: y
       })
 
       option = {
@@ -329,10 +329,10 @@ Page({
             fontSize: 12
           }
         },
-        legend: {
-          top: 30,
-          data:['x','y','h']
-        },
+        // legend: {
+        //   top: 30,
+        //   data:['x','y','h']
+        // },
         grid: {
           left: 40,
           right: 40,
@@ -385,17 +385,7 @@ Page({
             }
           }
         ],
-        series: [{
-          name: 'x',
-          type: 'line',
-          symbol:'none',
-          smooth: true,
-          lineStyle: {
-            width: 1,
-            color: 'red'
-          },
-          data: x
-        },
+        series: [
         {
           name: 'y',
           type: 'line',
@@ -406,19 +396,11 @@ Page({
             color: 'yellow'
           },
           data: y
-        },
-        {
-          name: 'h',
-          type: 'line',
-          symbol:'none',
-          smooth: true,
-          lineStyle: {
-            width: 1,
-            color: 'blue'
-          },
-          data: h
         }]
       }
+      _this.setData({
+        socketValue: _this.data.socketData.ShowValue
+      })
     }
 
     if (dataType === 'http' && _this.data.dataType === 'gnss') {
@@ -698,7 +680,7 @@ Page({
     }
     
     if (type === 'update') {
-      chart.setOption(option)
+      chart && chart.setOption(option)
       return false
     }
 

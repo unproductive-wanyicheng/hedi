@@ -237,7 +237,12 @@ Page({
       scale: 15
     },
     ratio: 0,
-    timeCaller: null
+    timeCaller: null,
+    touch: {
+      x: 0,
+      y: 0
+    },
+    allowTouch: true
   },
   onShow: function () {
     console.log('app started:')
@@ -317,7 +322,14 @@ Page({
           nowPage: data.NowPage,
           warningInfo: data.DataList.length ? data.DataList[0] : null
         })
+        if (_this.data.warningInfo) {
+          _this.data.warningInfo.DateTime = _this.data.warningInfo.DateTime.replace('T', ' ')
+          _this.setData({
+            warningInfo: _this.data.warningInfo
+          })
+        }
         _this.setData({
+          allowTouch: true,
           asycDownNums: ++_this.data.asycDownNums
         })
         _this.closeLoading()
@@ -341,15 +353,25 @@ Page({
     })
     console.log(this.data.mapParams)
   },
-  updateWarningInfo: function (e) {
-    console.log(e)
-    const type = e.currentTarget.dataset.type
+  updateWarningInfo: function (turn) {
+    if (!turn) {
+      return false
+    }
     let nowPage = this.data.nowPage
-    if (type === 'next') {
+    if (turn === 'left') {
       nowPage += 1
+      if (nowPage > this.data.allPage) {
+        return false
+      }
     } else {
       nowPage -= 1
+      if (nowPage <= 0) {
+        return false
+      }
     }
+    this.setData({
+      allowTouch: false
+    })
     this.getWarningInfo({
       nowPage: nowPage
     })
@@ -788,5 +810,26 @@ Page({
       title: '这真的是一个很不错的小程序，快来看看吧',
       path: currentPage.route ,
     }
+  },
+  touchStart: function (e) {
+    this.setData({
+      "touch.x": e.changedTouches[0].clientX,
+      "touch.y": e.changedTouches[0].clientY
+    })
+  },
+  touchEnd: function (e) {
+    let x = e.changedTouches[0].clientX
+    let y = e.changedTouches[0].clientY
+    const turn = this.getTouchData(x, y, this.data.touch.x, this.data.touch.y)
+    this.updateWarningInfo(turn)
+  },
+  getTouchData: function (endX, endY, startX, startY) {
+    let turn = ""
+    if (endX - startX > 50 && Math.abs(endY - startY) < 50) {      //右滑
+      turn = "right"
+    } else if (endX - startX < -50 && Math.abs(endY - startY) < 50) {   //左滑
+      turn = "left"
+    }
+    return turn
   }
 })

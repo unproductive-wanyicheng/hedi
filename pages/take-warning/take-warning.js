@@ -7,7 +7,7 @@ Page({
     id: null,
     dotype: -1,
     choosenName: '',
-    userInfo: null,
+    userInfoList: null,
     reason: ''
   },
   onLoad: function (e) {
@@ -16,13 +16,17 @@ Page({
     })
   },
   onShow: function () {
-    const userInfo = app.globalData.choosenUser
-    console.log(userInfo)
-    if (userInfo) {
+    const list = app.globalData.choosenUserList
+    console.log(list)
+    if (list && list.length) {
+      let name = ''
+      list.forEach((item, index) => {
+        name += item.USER_INFO_NICKNAME + ' '
+      })
       this.setData({
         dotype: 1,
-        userInfo: userInfo,
-        choosenName: userInfo.USER_INFO_NICKNAME
+        userInfoList: list,
+        choosenName: name
       })
     }
   },
@@ -46,6 +50,11 @@ Page({
   confirm: function () {
     const _this = this
     if (_this.data.dotype === -1) {
+      wx.showToast({
+        title: '请选择提交方式',
+        icon: 'none',
+        duration: 2000
+      })
       return false
     }
     const monitorId = app.globalData.defaultMonitor.Id
@@ -56,7 +65,9 @@ Page({
       HandlerType: _this.data.dotype,
       UserIds: []
     }
-    data.UserIds.push(_this.data.userInfo.DEPT_INFO_ID)
+    _this.data.userInfoList.forEach((item, index) => {
+      data.UserIds.push(item.DEPT_INFO_ID)
+    })
     wx.showLoading()
     app.globalData.fetch({
       url: `reach/mobile/dowarning/${monitorId}/warninid/${id}/dotype/${dotype}`, 
@@ -71,7 +82,7 @@ Page({
             icon: 'none',
             duration: 1000
           })
-          app.globalData.choosenUser = null
+          app.globalData.choosenUserList = []
           app.globalData.refreshPage = true
           setTimeout(()=>{
             wx.switchTab({

@@ -19,13 +19,17 @@
 	border-bottom: 1rpx solid #EEEEEE;
 	font-size: 30rpx;
 }
+.take-warning .t-w-up .up-chooses .u-c-item view {
+	flex-wrap: nowrap;
+	white-space: nowrap;
+}
 .take-warning .t-w-up .up-chooses .u-c-item text {
 	font-size: 24rpx;
 	color: #999999;
 	margin-left: 20rpx;
 }
 .take-warning .t-w-up .up-chooses .u-c-item image {
-	width: 46rpx;
+	flex: 0 0 46rpx;
 	height: 46rpx;
 	margin-right: 20rpx;
 }

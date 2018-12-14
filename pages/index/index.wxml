@@ -33,17 +33,17 @@
     <view class="warning-box" wx:if="{{warningInfo}}">
       <view class="box-inner">
         <view class="box-header">
-          <image src="../../assets/imgs/right-w-arrow.png" class="header-icon left" bindtap="updateWarningInfo" data-type="pre" />
+          <image src="../../assets/imgs/right-w-arrow.png" class="header-icon left"/>
           <view class="header-title">
             <text class="title">预警信息</text>
             <text decode="{{true}}" class="num">{{nowPage}}&nbsp;/&nbsp;{{allPage}}</text>
           </view>
-          <image src="../../assets/imgs/right-w-arrow.png" class="header-icon right" bindtap="updateWarningInfo" data-type="next" />
+          <image src="../../assets/imgs/right-w-arrow.png" class="header-icon right"/>
         </view>
-        <view class="box-down">
+        <view class="box-down" bindtouchstart="touchStart" bindtouchend="touchEnd">
           <view class="box-type">
             <view class="type-color"></view>
-            <view class="type-name">渗流</view>
+            <view class="type-name">{{warningInfo.Type}}</view>
           </view>
           <view class="box-message"><text>{{warningInfo ? warningInfo.SupportSugistion + ' : ' : '异常原因'}}</text>{{warningInfo.WarningMessage}}</view>
           <view class="box-point"><text decode="true">应变点&nbsp;:&nbsp;</text>{{warningInfo.PointName}}</view>
@@ -51,18 +51,6 @@
         </view>
       </view>
     </view>
-    <!-- <view wx:if="{{!showModal}}" class="h-chart">
-        <ec-canvas class="h-chart-item" id="mychart-dom-bar-1" canvas-id="mychart-bar" ec="{{ ec_1 }}"></ec-canvas>
-    </view>
-    <view wx:if="{{showModal}}" class="h-chart">
-        
-    </view>
-    <view class="h-chart">
-        <ec-canvas class="h-chart-item" id="mychart-dom-bar-2" canvas-id="mychart-bar" ec="{{ ec_2 }}"></ec-canvas>
-    </view>
-    <view class="h-chart no-border">
-        <ec-canvas class="h-chart-item" id="mychart-dom-bar-3" canvas-id="mychart-bar" ec="{{ ec_3 }}"></ec-canvas>
-    </view> -->
     <view class="sp-lists">
       <view class="s-item no-border" bindtap="goSpDetail" data-index="1">
         <view class="item-title char-margin-top">

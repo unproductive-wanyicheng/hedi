@@ -24,9 +24,13 @@
         <ec-canvas class="m-chart-item" id="mychart-dom-bar-1" canvas-id="mychart-bar" ec="{{ ec_1 }}"></ec-canvas>
 		</view>
 		<view class="info">
+			<view class="i-item" wx:if="{{socketData}}">
+				<view class="i-title" >当前实时数据</view>
+				<view class="i-data">{{socketValue}}</view>
+				<!-- <view class="i-title">阈值</view>
+				<view class="i-data">{{monitorData.ThresholdValue}}</view> -->
+			</view>
 			<view class="i-item">
-				<view class="i-title">当前实时数据</view>
-				<view class="i-data">13mm</view>
 				<view class="i-title">阈值</view>
 				<view class="i-data">{{monitorData.ThresholdValue}}</view>
 			</view>

@@ -2,8 +2,8 @@
 	<view class="t-w-up">
 		<view class="up-chooses">
 			<view class="u-c-item" bindtap="chooseActive" data-index="{{index}}" wx:for="{{peoList}}" wx:key="index">
-				<image wx:if="{{activeIndex !== index}}" src="../../assets/imgs/un-choose.png" />
-				<image wx:if="{{activeIndex === index}}" src="../../assets/imgs/multi-choose.png" />
+				<image wx:if="{{!chooseList[index].choose}}" src="../../assets/imgs/un-choose.png" />
+				<image wx:if="{{chooseList[index].choose}}" src="../../assets/imgs/multi-choose.png" />
 				<view>{{item.USER_INFO_NICKNAME}}</view>
 			</view>
 		</view>

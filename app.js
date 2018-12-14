@@ -9,7 +9,7 @@ App({
     userInfo: null,
     monitorList: null,
     defaultMonitor: null,
-    choosenUser: null,
+    choosenUserList: [],
     refreshPage: false,
     socketOpen: false,
   	doLogin: function (params) {
@@ -74,9 +74,7 @@ App({
 								  icon: 'none',
 								  duration: 2000
 								})
-								setTimeout(()=>{
-									cb & cb(res)
-								}, 2000)
+								cb & cb(res)
 		      		}
 		      	}
 		      	closeLoading && wx.hideLoading()
