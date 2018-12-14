@@ -4,7 +4,7 @@ App({
     
   },
   globalData: {
-  	debug: true,
+  	debug: false,
   	loginInfo: null,
     userInfo: null,
     monitorList: null,
@@ -126,7 +126,7 @@ App({
 		      		wx.showToast({
 							  title: 'token获取失败',
 							  icon: 'none',
-							  duration: 1500
+							  duration: 3000
 							})
 		      	}
 		      }
@@ -138,7 +138,7 @@ App({
 		  		wx.showToast({
 					  title: 'token获取失败',
 					  icon: 'none',
-					  duration: 1500
+					  duration: 3000
 					})
 					return false
 		  	}
