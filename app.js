@@ -4,7 +4,7 @@ App({
     
   },
   globalData: {
-  	debug: false,
+  	debug: true,
   	loginInfo: null,
     userInfo: null,
     monitorList: null,
@@ -12,6 +12,7 @@ App({
     choosenUserList: [],
     refreshPage: false,
     socketOpen: false,
+    canLogin: true,
   	doLogin: function (params) {
   		const _this = this
   		const tokenCb = function (res, params) {
@@ -32,6 +33,7 @@ App({
   				successMessage: '登录成功'
   			})
   		}
+  		wx.showLoading()
   		_this.getToken({
   			cbParams: params,
   			tokenCb: tokenCb

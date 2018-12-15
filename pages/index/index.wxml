@@ -15,10 +15,6 @@
     </view>
   </view>
   <view class="wrapper">
-    <!-- <view class="scroll-area">
-      <map wx:if="{{!showModal}}"  id="map" subkey="XKLBZ-J753U-PORVZ-2GPCZ-2LUM2-3CF4T" polygons="{{mapParams}}" scale="14" style="width: 100%; height: 560rpx;"></map>
-      <view wx:if="{{showModal}}" style="width: 100%; height: 560rpx; background: #4E6070;"></view>
-    </view> -->
     <view class="{{mainMonitorInfo.Status === 0 ? 'main-monitor-info danger' : 'main-monitor-info'}}">
       <view class="left">总体监测情况</view>
       <view class="mid">
@@ -40,15 +36,19 @@
           </view>
           <image src="../../assets/imgs/right-w-arrow.png" class="header-icon right"/>
         </view>
-        <view class="box-down" bindtouchstart="touchStart" bindtouchend="touchEnd">
-          <view class="box-type">
-            <view class="type-color"></view>
-            <view class="type-name">{{warningInfo.Type}}</view>
-          </view>
-          <view class="box-message"><text>{{warningInfo ? warningInfo.SupportSugistion + ' : ' : '异常原因'}}</text>{{warningInfo.WarningMessage}}</view>
-          <view class="box-point"><text decode="true">应变点&nbsp;:&nbsp;</text>{{warningInfo.PointName}}</view>
-          <view class="box-time">{{warningInfo.DateTime}}</view>
-        </view>
+        <swiper class="index-swiper" bindchange="changePage">
+          <block wx:for="{{swiperList}}" wx:key="{{index}}">
+            <swiper-item class="box-down">
+              <view class="box-type">
+                <view class="type-color"></view>
+                <view class="type-name">{{item.Type}}</view>
+              </view>
+              <view class="box-message"><text>{{item ? item.SupportSugistion + ' : ' : '异常原因'}}</text>{{item.WarningMessage}}</view>
+              <view class="box-point"><text decode="true">应变点&nbsp;:&nbsp;</text>{{item.PointName}}</view>
+              <view class="box-time">{{item.DateTime}}</view>
+            </swiper-item>
+          </block>
+        </swiper>
       </view>
     </view>
     <view class="sp-lists">
@@ -71,23 +71,6 @@
        <view class="data-chart-title">传感器成功采样率</view>
       </view>
     </view>
-   <!--  <view class="sp-lists">
-      <view class="s-item" bindtap="goSpDetail" data-index="1">
-        <image src="../../assets/imgs/high-shift.png" />
-        <view class="item-title">高程位移</view>
-        <view class="item-data">32.69mm</view>
-      </view>
-      <view class="s-item" bindtap="goSpDetail">
-        <image src="../../assets/imgs/row-shift.png" />
-        <view class="item-title">水平位移</view>
-        <view class="item-data">-8mm</view>
-      </view>
-      <view class="s-item" bindtap="goSpDetail">
-        <image src="../../assets/imgs/deep-shift.png" />
-        <view class="item-title">深部位移</view>
-        <view class="item-data">3mm</view>
-      </view>
-    </view> -->
     <view class="sp-lists border-bottom">
       <view class="s-item" bindtap="goSpDetail" wx:for="{{mainMonitorInfo.WindowPointTypeOverviewRealContent}}" wx:key="index" wx:for-item="content" wx:if="{{index <= 2}}">
         <image src="{{content.WhiteIcon}}" />

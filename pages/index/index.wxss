@@ -334,7 +334,8 @@
 	font-size: 24rpx;
 	color: #CCCCCC;
 	overflow-y: auto;
-	height: 320rpx;
+	height: 360rpx;
+	box-sizing: border-box;
 }
 .home .warning-box .box-inner .box-down .box-type {
 	font-size: 32rpx;
@@ -362,4 +363,9 @@
 }
 .home .warning-box .box-inner .box-down .box-point text {
 	color: #fff;
+}
+.home .index-swiper {
+	height: 360rpx;
+	box-sizing: border-box;
+	overflow: hidden;
 }

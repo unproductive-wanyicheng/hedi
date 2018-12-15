@@ -48,9 +48,11 @@ Page({
       cb: (res) => {
         app.globalData.userInfo = res.data.Result
         wx.setStorageSync('__HEDI_USER_INFO__', res.data.Result)
-        wx.navigateTo({
-          url: '/pages/map/map'
-        })
+        setTimeout(()=>{
+          wx.navigateTo({
+            url: '/pages/map/map'
+          })
+        }, 1500)
       }
     })
   }

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "[一般报警] GNS_8011",
+  "navigationBarTitleText": "河堤监测系统",
   "usingComponents": {
     "ec-canvas": "../../ec-canvas/ec-canvas"
   }
