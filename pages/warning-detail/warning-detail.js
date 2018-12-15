@@ -71,7 +71,7 @@ Page({
   },
   takeWarning: function () {
     const id = this.data.id
-    app.globalData.choosenUser = null
+    app.globalData.choosenUserList = []
     wx.navigateTo({
       url: '/pages/take-warning/take-warning?id='+id
     })
