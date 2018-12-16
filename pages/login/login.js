@@ -52,7 +52,7 @@ Page({
           wx.navigateTo({
             url: '/pages/map/map'
           })
-        }, 1500)
+        }, 2000)
       }
     })
   }

@@ -30,7 +30,8 @@ App({
   				closeLoading: true,
   				cb: cb,
   				successCode: 200,
-  				successMessage: '登录成功'
+  				successMessage: '登录成功',
+  				waitClose: true
   			})
   		}
   		wx.showLoading()
@@ -43,7 +44,7 @@ App({
   		const fetchCb = function (res, originParams) {
   			const baseUrl = 'https://mapi.aeroiot.cn/'
   			const { access_token, token_type } = res
-  			const { url, query = '', data = null, cb, method = 'GET',successMessage = '', successCode = 200, closeLoading = false, noLoading = false } = originParams
+  			const { url, query = '', data = null, cb, method = 'GET',successMessage = '', successCode = 200, closeLoading = false, noLoading = false, waitClose = false } = originParams
   			!noLoading && wx.showLoading()
   			wx.request({
 		      url: baseUrl + url + query,
@@ -62,6 +63,20 @@ App({
 							})
 							return false
 		      	}
+		      	if (res.data.Code === 401) {
+							wx.removeStorageSync('__HEDI_LOGIN_INFO__')
+							wx.removeStorageSync('__HEDI_USER_INFO__')
+							wx.showToast({
+							  title: res.data.Message,
+							  icon: 'none',
+							  duration: 2000
+							})
+							setTimeout(()=>{
+								wx.redirectTo({
+									url: '/pages/login/login'
+								})
+							}, 2000)
+		      	}
 		      	if (res && res.data) {
 		      		const { Code, Message = '后台数据报错' } = res.data
 		      		if (Code !== successCode) {
@@ -70,6 +85,9 @@ App({
 								  icon: 'none',
 								  duration: 3000
 								})
+								setTimeout(()=>{
+				      		closeLoading && wx.hideLoading()
+				      	}, 3000)
 		      		} else {
 		      			successMessage.length && wx.showToast({
 								  title: successMessage,
@@ -77,9 +95,11 @@ App({
 								  duration: 2000
 								})
 								cb & cb(res)
+								setTimeout(()=>{
+				      		closeLoading && wx.hideLoading()
+				      	}, waitClose ? 2000 : 0)
 		      		}
 		      	}
-		      	closeLoading && wx.hideLoading()
 		      },
 		      complete: function (res) {
 		      	
