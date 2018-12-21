@@ -23,12 +23,10 @@
 		<view class="chart">
         <ec-canvas class="m-chart-item" id="mychart-dom-bar-1" canvas-id="mychart-bar" ec="{{ ec_1 }}"></ec-canvas>
 		</view>
-		<view class="info">
+		<!-- <view class="info">
 			<view class="i-item" wx:if="{{socketData}}">
 				<view class="i-title" >当前实时数据</view>
 				<view class="i-data">{{socketValue}}</view>
-				<!-- <view class="i-title">阈值</view>
-				<view class="i-data">{{monitorData.ThresholdValue}}</view> -->
 			</view>
 			<view class="i-item">
 				<view class="i-title">阈值</view>
@@ -45,6 +43,20 @@
 			<view class="i-item">
 				<view class="i-title">15分钟最小值</view>
 				<view class="i-data">{{monitorData.MinValue}}</view>
+			</view>
+		</view> -->
+		<view class="info">
+			<view class="i-item" wx:if="{{socketData}}">
+				<view class="i-title">日期</view>
+				<view class="i-title">监测值</view>
+			</view>
+			<view class="i-item" wx:if="{{!socketData}}">
+				<view class="i-title">时间点</view>
+				<view class="i-title">实时数据</view>
+			</view>
+			<view class="i-item" wx:for="{{bottomDataList}}" wx:key="index">
+				<view class="i-data">{{item.time}}</view>
+				<view class="i-data">{{item.value}}</view>
 			</view>
 		</view>
 	</view>

@@ -1,3 +1,6 @@
 {
+ 	"usingComponents": {
+    "ec-canvas": "../../ec-canvas/ec-canvas"
+  },
   "navigationBarTitleText": "河堤监测"
 }

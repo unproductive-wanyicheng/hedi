@@ -32,7 +32,8 @@ Page({
     otherData: {
       time: [],
       y: []
-    }
+    },
+    bottomDataList:[]
   },
   onLoad: function (e) {
     this.setData({
@@ -167,20 +168,31 @@ Page({
       let y = _this.data.gnssData.y
       let h = _this.data.gnssData.h
       let time = _this.data.socketData.DateTime.split('T')[1].split('.')[0]
+      let bottomTime = _this.data.socketData.DateTime.split('.')[0].replace('T', ' ')
+      let bottomValue = 'X: ' + _this.data.socketData.X + 'mm ' +'Y: ' +  _this.data.socketData.Y + 'mm ' +'H: ' +  _this.data.socketData.H + 'mm'
       if (x.length >= 7) {
         time_data.shift()
         x.shift()
         y.shift()
         h.shift()
+        this.data.bottomDataList.pop()
         time_data.push(time)
         x.push(_this.data.socketData.X)
         y.push(_this.data.socketData.Y)
         h.push(_this.data.socketData.H)
+        this.data.bottomDataList.unshift({
+          time: bottomTime,
+          value: bottomValue
+        })
       } else {
         time_data.push(time)
         x.push(_this.data.socketData.X)
         y.push(_this.data.socketData.Y)
         h.push(_this.data.socketData.H)
+        this.data.bottomDataList.unshift({
+          time: bottomTime,
+          value: bottomValue
+        })
       }
       _this.setData({
         [`gnssData.time`]: time_data,
@@ -296,23 +308,33 @@ Page({
         }]
       }
 
-      _this.setData({
-        socketValue: 'X: ' + _this.data.socketData.X + 'mm ' +'Y: ' +  _this.data.socketData.Y + 'mm ' +'H: ' +  _this.data.socketData.H + 'mm'
-      })
+      // _this.setData({
+      //   socketValue: 'X: ' + _this.data.socketData.X + 'mm ' +'Y: ' +  _this.data.socketData.Y + 'mm ' +'H: ' +  _this.data.socketData.H + 'mm'
+      // })
     }
 
     if (dataType === 'socket' && chartType === 'other') {
       let time_data = _this.data.otherData.time
       let y = _this.data.otherData.y
       let time = _this.data.socketData.DateTime.split('T')[1].split('.')[0]
+      let bottomTime = _this.data.socketData.DateTime.split('.')[0].replace('T', ' ')
       if (y.length >= 7) {
         time_data.shift()
         y.shift()
+        this.data.bottomDataList.shift()
         time_data.push(time)
         y.push(_this.data.socketData.DataValue)
+        this.data.bottomDataList.unshift({
+          time: bottomTime,
+          value: _this.data.socketData.ShowValue
+        })
       } else {
         time_data.push(time)
         y.push(_this.data.socketData.DataValue)
+        this.data.bottomDataList.unshift({
+          time: bottomTime,
+          value: _this.data.socketData.ShowValue
+        })
       }
       _this.setData({
         [`otherData.time`]: time_data,
@@ -423,10 +445,18 @@ Page({
         const time = new Date(item[0])
         // console.log(util.formatTime(time, 'yyyy-MM-dd hh:mm:ss'))
         time_data.push(util.formatTime(time, 'hh:mm'))
+        let bottomValue = 'X: ' + item[1] + 'mm ' +'Y: ' +  chart_y_data[index][1] + 'mm ' +'H: ' +  chart_h_data[index][1] + 'mm'
         x_data.push(item[1])
         x_interval = Math.floor(chart_x_data.length / 7)
         y_data.push(chart_y_data[index][1])
         h_data.push(chart_h_data[index][1])
+        if (index > 6) {
+          this.data.bottomDataList.pop()
+        }
+        this.data.bottomDataList.unshift({
+          time: util.formatTime(time, 'hh:mm'),
+          value: bottomValue
+        })
       })
 
       option = {
@@ -550,6 +580,13 @@ Page({
         x_data.push(util.formatTime(time, 'hh:mm'))
         y_data.push(item[1])
         x_interval = Math.floor(_this.data.chartData[_this.data.activeIndex].data.length / 7)
+        if (index > 6) {
+          this.data.bottomDataList.pop()
+        }
+        this.data.bottomDataList.push({
+          time: util.formatTime(time, 'hh:mm'),
+          value: item[1] + 'mm'
+        })
       })
 
       option = {
@@ -679,6 +716,10 @@ Page({
       }
     }
     
+    _this.setData({
+      bottomDataList: _this.data.bottomDataList
+    })
+
     if (type === 'update') {
       chart && chart.setOption(option)
       return false
@@ -756,8 +797,10 @@ Page({
         x: [],
         y: [],
         h: []
-      }
+      },
+      bottomDataList: []
     })
+    console.log(this.data.socketData)
     this.getChartsData({type: 'init'})
   },
   refreshPage: function () {

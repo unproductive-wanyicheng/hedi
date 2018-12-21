@@ -1,4 +1,26 @@
 <view class="map-page">
+  <div class="map-page_chart">
+    <view class="sp-lists">
+      <view class="s-item no-border" bindtap="goSpDetail" data-index="1">
+        <view class="item-title char-margin-top">
+          <view class="item-nums">{{mainMonitorInfo.GoodCount}} / {{mainMonitorInfo.AllPointCount}}</view>
+          <view class="item-nums-desc">传感器(正常/总数)</view>
+        </view>
+        <view class="item-data">
+          异常传感器<view class="i-d-num">{{mainMonitorInfo.BadGoodCount}}</view>
+        </view>
+      </view>
+      <view class="s-i-border"></view>
+      <view class="s-item" bindtap="goSpDetail">
+       <view wx:if="{{!showModal}}" class="data-chart">
+        <ec-canvas class="h-chart-item-4" id="mychart-dom-bar-4" canvas-id="mychart-bar" ec="{{ ec_4 }}"></ec-canvas>
+       </view>
+       <view wx:if="{{showModal}}" class="data-chart">
+       </view>
+       <view class="data-chart-title">传感器成功采样率</view>
+      </view>
+    </view>
+  </div>
   <view class="map">
   	<map id="map" longitude="{{mapParams.averageLongitude}}" latitude="{{mapParams.averageLatitude}}" scale="{{mapParams.scale}}" markers="{{mapParams.markers}}" style="width: 100%; height: 502rpx;"></map>
   </view>

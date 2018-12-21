@@ -108,12 +108,14 @@
 	align-items: flex-end;
 }
 .moni-detail .info .i-item .i-title {
+	flex: 1;
 	font-size: 28rpx;
 	color: #999999;
 	margin-right: 15rpx;
 	white-space: nowrap;
 }
 .moni-detail .info .i-item .i-data {
+	flex: 1;
 	margin-right: 40rpx;
 	font-size: 24rpx;
 	white-space: nowrap;

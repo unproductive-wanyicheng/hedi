@@ -39,6 +39,12 @@
       },
       {
         "pagePath": "pages/video-list/video-list",
+        "text": "现场监控",
+        "iconPath": "/assets/imgs/video.png",
+        "selectedIconPath": "/assets/imgs/video-selected.png"
+      },
+      {
+        "pagePath": "pages/video-list/video-list",
         "text": "视频",
         "iconPath": "/assets/imgs/video.png",
         "selectedIconPath": "/assets/imgs/video-selected.png"
