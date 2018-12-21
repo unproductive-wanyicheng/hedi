@@ -106,6 +106,7 @@ Page({
   goIndexPage: function (e) {
     const index = e.currentTarget.dataset.index
     app.globalData.defaultMonitor = app.globalData.monitorList[index]
+    app.globalData.refreshPage = true
     wx.switchTab({
       url: '/pages/index/index'
     })

@@ -83,6 +83,15 @@ Page({
     const _this = this
     if (this.data.gnssData) {
       let data = JSON.parse(this.data.gnssData.ResultDataJsons)[this.data.gnssTypeIndex]
+      if (!data.length) {
+      	wx.hideLoading()
+      	wx.showToast({
+				  title: "暂无图表数据",
+				  icon: 'none',
+				  duration: 2000
+				})
+				return false
+      }
       let gnss_x = data[0].data
       let gnss_y = data[1].data
 
@@ -383,6 +392,17 @@ Page({
       })
     }
     if (this.data.anData) {
+
+      if (!this.data.anData.Data.length) {
+      	wx.hideLoading()
+      	wx.showToast({
+				  title: "暂无图表数据",
+				  icon: 'none',
+				  duration: 2000
+				})
+				return false
+      }
+
       let data = this.data.anData.Data.data
 
       let x_data = []
