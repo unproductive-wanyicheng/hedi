@@ -12,7 +12,8 @@
     "pages/info-choose/info-choose",
     "pages/monitor/monitor",
     "pages/search/search",
-    "pages/warning-peo-list/warning-peo-list"
+    "pages/warning-peo-list/warning-peo-list",
+    "pages/watching-list/watching-list"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -38,7 +39,7 @@
         "selectedIconPath": "/assets/imgs/monitor-selected.png"
       },
       {
-        "pagePath": "pages/video-list/video-list",
+        "pagePath": "pages/watching-list/watching-list",
         "text": "现场监控",
         "iconPath": "/assets/imgs/video.png",
         "selectedIconPath": "/assets/imgs/video-selected.png"
