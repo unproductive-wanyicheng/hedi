@@ -1,0 +1,24 @@
+<view class="watching-detail">
+  <view class="watching-detail_img-box">
+    <image src="{{vrData.PhotoUrl}}" class="watching-detail_img-box-img" />
+    <view class="watching-detail_img-box-modal">
+      <view class="watching-detail_img-box-modal-time">{{vrData.DateTime}}</view>
+      <view class="watching-detail_img-box-modal-title">{{vrData.Note}}</view>
+    </view>
+  </view>
+  <view class="watching-detail_icon-box">
+    <view class="watching-detail_icon-box-item" wx:for="{{vrData.PointMonitorInfos}}" wx:key="index">
+      <image class="watching-detail_icon-box-item-img" src="../../assets/imgs/rain-fall.png" />
+      <view class="watching-detail_icon-box-item-name">{{item.PointName}}</view>
+      <view class="watching-detail_icon-box-item-value">{{item.CurrentValue}}</view>
+    </view>
+  </view>
+  <view class="watching-detail_chart-box">
+    <view class="watching-detail_chart-item" wx:for="{{vrData.PointMonitorInfos}}" wx:key="index">
+      <!-- <view class="watching-detail_chart-item-title">{{item.PointType === 23 ? '水位数据分析' : item.PointType === 24 ? '降雨量数据分析' : '渗流数据分析'}}</view> -->
+      
+         <ec-canvas class="watching-detail_chart-item-chart" id="{{'watchingchar_' + index}}" canvas-id="{{'watchingchar_' + index}}" ec="{{ item.PointType === 23 ? ec_0 : item.PointType === 24 ? ec_1 : ec_2 }}"></ec-canvas>
+      
+    </view>
+  </view>
+</view>

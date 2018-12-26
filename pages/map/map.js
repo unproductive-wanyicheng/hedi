@@ -6,6 +6,7 @@ let chart_4 = null
 
 Page({
   data: {
+    monitorData: null,
     monitorList: [],
     allCount: 0,
     badCount: 0,
@@ -30,25 +31,26 @@ Page({
   onShow: function () {
     this.fetchData()
     // chart
-    const ratio = parseFloat(this.data.mainMonitorInfo.GoodCount/this.data.mainMonitorInfo.AllPointCount).toFixed(2)*100
-    this.initChart_4(ratio)
+    //const ratio = parseFloat(this.data.mainMonitorInfo.GoodCount/this.data.mainMonitorInfo.AllPointCount).toFixed(2)*100
+    //this.initChart_4(ratio)
   },
   fetchData: function () {
     const _this = this
     const { USER_INFO_ID } = app.globalData.getUserInfo()
-    const url = `reach/mobile/monitorobjects/getall/${USER_INFO_ID}`
+    const url = `reach/mobile/monitorobjects/getallstaticinfo/${USER_INFO_ID}`
     app.globalData.fetch({
       url: url,
       closeLoading: true,
       cb: (res) => {
         console.log(res)
-        if (res.data.Result && res.data.Result.length) {
+        if (res.data.Result) {
           _this.setData({
-            monitorList: res.data.Result
+            monitorData: res.data.Result,
           })
-          app.globalData.monitorList = res.data.Result
-          _this.getCounts()
+          app.globalData.monitorList = res.data.Result.MonitorList
+          //_this.getCounts()
           _this.updateMap()
+          _this.initChart_4(res.data.Result.Rate)
         } else {
           wx.showToast({
             title: '暂无监测列表数据',
@@ -77,11 +79,11 @@ Page({
     let array = []
     let aveLon = 0
     let aveLau = 0
-    const L = this.data.monitorList.length
+    const L = this.data.monitorData.MonitorList.length
     if (!L) {
       return false
     }
-    this.data.monitorList.map((item, index) => {
+    this.data.monitorData.MonitorList.map((item, index) => {
       const params = {
         iconPath: '../../assets/imgs/map-location.png',
         id: index,
@@ -109,7 +111,7 @@ Page({
     })
   },
   goSearchPage: function () {
-    if (!this.data.monitorList.length) {
+    if (!this.data.monitorData.MonitorList.length) {
       return false
     }
     wx.navigateTo({

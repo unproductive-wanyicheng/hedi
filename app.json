@@ -13,7 +13,8 @@
     "pages/monitor/monitor",
     "pages/search/search",
     "pages/warning-peo-list/warning-peo-list",
-    "pages/watching-list/watching-list"
+    "pages/watching-list/watching-list",
+    "pages/watching-detail/watching-detail"
   ],
   "window":{
     "backgroundTextStyle":"light",

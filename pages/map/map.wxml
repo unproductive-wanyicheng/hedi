@@ -1,17 +1,17 @@
 <view class="map-page">
   <div class="map-page_chart">
     <view class="sp-lists">
-      <view class="s-item no-border" bindtap="goSpDetail" data-index="1">
+      <view class="s-item no-border" data-index="1">
         <view class="item-title char-margin-top">
-          <view class="item-nums">{{mainMonitorInfo.GoodCount}} / {{mainMonitorInfo.AllPointCount}}</view>
+          <view class="item-nums">{{monitorData.GoodPointCount}} / {{monitorData.PointCount}}</view>
           <view class="item-nums-desc">传感器(正常/总数)</view>
         </view>
         <view class="item-data">
-          异常传感器<view class="i-d-num">{{mainMonitorInfo.BadGoodCount}}</view>
+          异常传感器<view class="i-d-num">{{monitorData.DiseasePointCount}}</view>
         </view>
       </view>
       <view class="s-i-border"></view>
-      <view class="s-item" bindtap="goSpDetail">
+      <view class="s-item">
        <view wx:if="{{!showModal}}" class="data-chart">
         <ec-canvas class="h-chart-item-4" id="mychart-dom-bar-4" canvas-id="mychart-bar" ec="{{ ec_4 }}"></ec-canvas>
        </view>
@@ -27,11 +27,11 @@
   <view class="info">
   	<view class="info-upper">
   		<view class="upper-item">
-  			<view class="item-num">{{allCount}}</view>
+  			<view class="item-num">{{monitorData.MonitorCount}}</view>
   			<view class="item-name">河堤数量</view>
   		</view>
   		<view class="upper-item border-left">
-  			<view class="item-num orange">{{badCount}}</view>
+  			<view class="item-num orange">{{monitorData.DiseaseMonitorCount}}</view>
   			<view class="item-name">预警河堤</view>
   		</view>
   	</view>
@@ -41,7 +41,7 @@
   	</view>
   </view>
   <view class="list">
-  	<view class="list-item" wx:for="{{monitorList}}" wx:key="index" bindtap="goIndexPage" data-index="{{index}}">
+  	<view class="list-item" wx:for="{{monitorData.MonitorList}}" wx:key="index" bindtap="goIndexPage" data-index="{{index}}">
   		<image class="small-img" src="../../assets/imgs/map-location.png" />
   		<view class="item-title">{{item.Name}}</view>
   		<image wx:if="{{!item.WarningStatus}}" src="../../assets/imgs/nor-warning.png" />

@@ -1,6 +1,6 @@
-<view class="warning-page full-page flex">
+<view class="watching-page full-page flex">
 	<view class="w-header">
-		<view class="h-type">
+		<!-- <view class="h-type">
 			<view class="t-item fixed">
 				<view class="t-i-inner " bindtap="chooseActiveType" data-type="0">
 					<view class="t-num">{{warningInfo.PointCount}}</view>
@@ -25,7 +25,7 @@
 					<view class="t-title">硬件故障</view>
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<view class="h-time">
 			<view class="{{timeActive === index ? 'h-t-item active' : 'h-t-item'}}" wx:for="{{timeList}}" wx:key="index" wx:for-index="index" wx:for-item="item" bindtap="selectTime" data-index="{{index}}">{{item}}</view>
 			<view class="h-date">
@@ -48,7 +48,7 @@
 				<image src="../../assets/imgs/ChevronUP.png" />
 			</view>
 		</view>
-		<view class="w-scroll-title">
+		<!-- <view class="w-scroll-title">
 			<view class="title">预警列表</view>
 			<view class="title-icon">
 				<image src="../../assets/imgs/red-warning.png"></image>
@@ -66,11 +66,25 @@
 				<image src="../../assets/imgs/resoved-warning.png"></image>
 				<text>全部</text>
 			</view>
-		</view>
+		</view> -->
 	</view>
 	<view class="w-list">
 		<scroll-view scroll-y style="flex: 1;" bindscrolltolower="lower">
-	    <view class="w-l-item" bindtap="goWarningDetail" data-id="{{item.Id}}" wx:for="{{warningList}}" wx:key="index">
+			<view class="watch-page_box" data-id="{{item.Id}}" wx:for="{{vrData}}" wx:key="index" bindtap="goWatchingDetail">
+				<image class="watch-page_box-img" src="{{item.PhotoUrl}}" />
+				<view class="watch-page_box-center">
+					<view class="watch-page_box-center-title">{{item.Note}}</view>
+					<view class="watch-page_box-center-time">{{item.DateTime}}</view>
+				</view>
+				<view class="watch-page_box-seprate"></view>
+				<view class="watch-page_box-info">
+					<view class="watch-page_box-info-item" wx:for="{{item.PointMonitorInfos}}" wx:for-item="infoItem" wx:key="infoIndex">
+						<view class="watch-page_box-info-item-label">{{infoItem.PointName}}</view>
+						<view class="watch-page_box-info-item-value">{{infoItem.CurrentValue}}</view>
+					</view>
+				</view>
+			</view>
+	    <!-- <view class="w-l-item" bindtap="goWarningDetail" data-id="{{item.Id}}" wx:for="{{warningList}}" wx:key="index">
 				<view class="w-l-item-inner">
 					<image class="inner-type" wx:if="{{item.WarningType === 2}}" src="../../assets/imgs/red-warning.png" />
 					<image class="inner-type" wx:if="{{item.WarningType === 1}}" src="../../assets/imgs/nor-warning.png" />
@@ -89,7 +103,7 @@
 					</view>
 					<image class="inner-arrow" src="../../assets/imgs/ChevronUP.png" />
 				</view>
-			</view>
+			</view> -->
 	 	</scroll-view>
 	</view>
 	<!-- <view class="time-picker" wx:if="{{showPicker}}">
