@@ -1,5 +1,5 @@
 <view class="map-page">
-  <div class="map-page_chart">
+  <view class="map-page_chart">
     <view class="sp-lists">
       <view class="s-item no-border" data-index="1">
         <view class="item-title char-margin-top">
@@ -20,7 +20,7 @@
        <view class="data-chart-title">传感器成功采样率</view>
       </view>
     </view>
-  </div>
+  </view>
   <view class="map">
   	<map id="map" longitude="{{mapParams.averageLongitude}}" latitude="{{mapParams.averageLatitude}}" scale="{{mapParams.scale}}" markers="{{mapParams.markers}}" style="width: 100%; height: 502rpx;"></map>
   </view>
