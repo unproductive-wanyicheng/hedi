@@ -46,12 +46,6 @@
         "selectedIconPath": "/assets/imgs/video-selected.png"
       },
       {
-        "pagePath": "pages/video-list/video-list",
-        "text": "视频",
-        "iconPath": "/assets/imgs/video.png",
-        "selectedIconPath": "/assets/imgs/video-selected.png"
-      }, 
-      {
         "pagePath": "pages/warning/warning",
         "text": "预警",
         "iconPath": "/assets/imgs/warning.png",
