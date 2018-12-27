@@ -20,44 +20,69 @@
 				<image src="../../assets/imgs/refresh.png" bindtap="refreshPage" />
 			</view>
 		</view>
-		<view class="chart">
-        <ec-canvas class="m-chart-item" id="mychart-dom-bar-1" canvas-id="mychart-bar" ec="{{ ec_1 }}"></ec-canvas>
+		<view class="{{!(!socketData && e.type !== '14') ? 'chart' : 'chart no-border'}}">
+        	<ec-canvas class="m-chart-item" id="mychart-dom-bar-1" canvas-id="mychart-bar" ec="{{ ec_1 }}"></ec-canvas>
 		</view>
-		<!-- <view class="info">
-			<view class="i-item" wx:if="{{socketData}}">
-				<view class="i-title" >当前实时数据</view>
-				<view class="i-data">{{socketValue}}</view>
+		<view class="char-info" wx:if="{{!socketData && e.type !== '14'}}">
+			<view class="char-info-item">
+				<text class="char-info-title" decode="{{true}}">阈值:&nbsp;</text>
+				<view class="char-info-data">{{monitorData.ThresholdValue}}</view>
 			</view>
-			<view class="i-item">
-				<view class="i-title">阈值</view>
-				<view class="i-data">{{monitorData.ThresholdValue}}</view>
+			<view class="char-info-item">
+				<text class="char-info-title" decode="{{true}}">最大值:&nbsp;</text>
+				<view class="char-info-data">{{monitorData.MaxValue}}</view>
 			</view>
-			<view class="i-item">
-				<view class="i-title">15分钟平均值</view>
-				<view class="i-data">{{monitorData.AvgValue}}</view>
+			<view class="char-info-item">
+				<text class="char-info-title" decode="{{true}}">最小值:&nbsp;</text>
+				<view class="char-info-data">{{monitorData.MinValue}}</view>
 			</view>
-			<view class="i-item">
-				<view class="i-title">15分钟最大值</view>
-				<view class="i-data">{{monitorData.MaxValue}}</view>
+			<view class="char-info-item">
+				<text class="char-info-title" decode="{{true}}">平均值:&nbsp;</text>
+				<view class="char-info-data">{{monitorData.AvgValue}}</view>
 			</view>
-			<view class="i-item">
-				<view class="i-title">15分钟最小值</view>
-				<view class="i-data">{{monitorData.MinValue}}</view>
-			</view>
-		</view> -->
+		</view>
 		<view class="info">
 			<view class="i-item" wx:if="{{socketData}}">
-				<view class="i-title">日期</view>
-				<view class="i-title">监测值</view>
+				<block wx:if="{{socketData.Type !== 14}}">
+					<view class="i-title">日期</view>
+					<view class="i-title">监测值</view>
+				</block>
+				<block wx:if="{{socketData.Type === 14}}">
+					<view class="i-title">时间</view>
+					<view class="i-title">测点名称</view>
+					<view class="i-title">DX(mm)</view>
+					<view class="i-title">DY(mm)</view>
+					<view class="i-title">DH(mm)</view>
+				</block>
 			</view>
 			<view class="i-item" wx:if="{{!socketData}}">
-				<view class="i-title">时间点</view>
-				<view class="i-title">实时数据</view>
+				<block wx:if="{{e.type !== '14'}}">
+					<view class="i-title">日期</view>
+					<view class="i-title">监测值</view>
+				</block>
+				<block wx:if="{{e.type === '14'}}">
+					<view class="i-title">时间</view>
+					<view class="i-title">测点名称</view>
+					<view class="i-title">DX(mm)</view>
+					<view class="i-title">DY(mm)</view>
+					<view class="i-title">DH(mm)</view>
+				</block>
 			</view>
-			<view class="i-item" wx:for="{{bottomDataList}}" wx:key="index">
-				<view class="i-data">{{item.time}}</view>
-				<view class="i-data">{{item.value}}</view>
-			</view>
+			<block wx:if="{{e.type === '14'}}">
+				<view class="i-item" wx:for="{{bottomDataList}}" wx:key="index">
+					<view class="i-data">{{item.time}}</view>
+					<view class="i-data">{{item.name}}</view>
+					<block wx:for="{{item.value}}" wx:for-item="valueItem" wx:key="valueKey" wx:for-index="valueIndex">
+						<view class="{{item.value > ThresholdValue[valueIndex] ? 'i-data--danger' : 'i-data'}}">{{valueItem}}</view>
+					</block>
+				</view>
+			</block>
+			<block wx:if="{{e.type !== '14'}}">
+				<view class="i-item" wx:for="{{bottomDataList}}" wx:key="index">
+					<view class="i-data">{{item.time}}</view>
+					<view class="{{item.value > ThresholdValue ? 'i-data--danger' : 'i-data'}}">{{item.value}}</view>
+				</view>
+			</block>
 		</view>
 	</view>
 </view>

@@ -33,7 +33,8 @@ Page({
       time: [],
       y: []
     },
-    bottomDataList:[]
+    bottomDataList:[],
+    ThresholdValue: null
   },
   onLoad: function (e) {
     this.setData({
@@ -169,7 +170,9 @@ Page({
       let h = _this.data.gnssData.h
       let time = _this.data.socketData.DateTime.split('T')[1].split('.')[0]
       let bottomTime = _this.data.socketData.DateTime.split('.')[0].replace('T', ' ')
-      let bottomValue = 'X: ' + _this.data.socketData.X + 'mm ' +'Y: ' +  _this.data.socketData.Y + 'mm ' +'H: ' +  _this.data.socketData.H + 'mm'
+      let bottomName = _this.data.monitorData.Name
+      //let bottomValue = 'X: ' + _this.data.socketData.X + 'mm ' +'Y: ' +  _this.data.socketData.Y + 'mm ' +'H: ' +  _this.data.socketData.H + 'mm' 
+      let bottomValue = [_this.data.socketData.X, _this.data.socketData.Y, _this.data.socketData.H]
       if (x.length >= 7) {
         time_data.shift()
         x.shift()
@@ -182,6 +185,7 @@ Page({
         h.push(_this.data.socketData.H)
         this.data.bottomDataList.unshift({
           time: bottomTime,
+          name: bottomName,
           value: bottomValue
         })
       } else {
@@ -191,6 +195,7 @@ Page({
         h.push(_this.data.socketData.H)
         this.data.bottomDataList.unshift({
           time: bottomTime,
+          name: bottomName,
           value: bottomValue
         })
       }
@@ -244,10 +249,10 @@ Page({
             x: 'center',
             type: 'value',
             min: function(value) {
-              return value.min
+              return (value.min - value.min/10)
             },
             max: function(value) {
-              return value.max
+              return (value.max + value.max/10)
             },
             // axisLine: {
             //   lineStyle: {
@@ -314,6 +319,7 @@ Page({
     }
 
     if (dataType === 'socket' && chartType === 'other') {
+      let ThresholdValue = parseInt(_this.data.monitorData.ThresholdValue.split('mm')[0])
       let time_data = _this.data.otherData.time
       let y = _this.data.otherData.y
       let time = _this.data.socketData.DateTime.split('T')[1].split('.')[0]
@@ -351,6 +357,9 @@ Page({
             fontSize: 12
           }
         },
+        itemStyle: {
+          color: ''
+        },
         // legend: {
         //   top: 30,
         //   data:['x','y','h']
@@ -384,10 +393,10 @@ Page({
             x: 'center',
             type: 'value',
             min: function(value) {
-              return value.min
+              return (value.min - value.min/10)
             },
             max: function(value) {
-              return value.max
+              return (value.max + value.max/10)
             },
             // axisLine: {
             //   lineStyle: {
@@ -417,12 +426,34 @@ Page({
             width: 1,
             color: 'yellow'
           },
+          markLine: {
+            symbol: ['none', 'none'],
+            label: {
+              show: false
+            },
+            lineStyle: {
+                color: '#FF9900',
+                type: 'solid'
+            },  
+            data: [
+              {
+                type: 'max',
+                name: '阈值',
+                yAxis: ThresholdValue
+              },
+            ]
+          },
           data: y
         }]
       }
       _this.setData({
         socketValue: _this.data.socketData.ShowValue
       })
+      if (_this.data.socketData.Type === 24 ||_this.data.socketData.Type === 9) {
+        option.series[0].type = 'bar'
+        option.xAxis.boundaryGap = true
+        option.itemStyle.color = "#0076FF"
+      }
     }
 
     if (dataType === 'http' && _this.data.dataType === 'gnss') {
@@ -445,7 +476,9 @@ Page({
         const time = new Date(item[0])
         // console.log(util.formatTime(time, 'yyyy-MM-dd hh:mm:ss'))
         time_data.push(util.formatTime(time, 'hh:mm'))
-        let bottomValue = 'X: ' + item[1] + 'mm ' +'Y: ' +  chart_y_data[index][1] + 'mm ' +'H: ' +  chart_h_data[index][1] + 'mm'
+        //let bottomValue = 'X: ' + item[1] + 'mm ' +'Y: ' +  chart_y_data[index][1] + 'mm ' +'H: ' +  chart_h_data[index][1] + 'mm'
+        let bottomValue = [item[1], chart_y_data[index][1], chart_h_data[index][1]]
+        let bottomName = _this.data.monitorData.Name
         x_data.push(item[1])
         x_interval = Math.floor(chart_x_data.length / 7)
         y_data.push(chart_y_data[index][1])
@@ -455,6 +488,7 @@ Page({
         }
         this.data.bottomDataList.unshift({
           time: util.formatTime(time, 'hh:mm'),
+          name: bottomName,
           value: bottomValue
         })
       })
@@ -502,10 +536,10 @@ Page({
             x: 'center',
             type: 'value',
             min: function(value) {
-              return value.min
+              return (value.min - value.min/10)
             },
             max: function(value) {
-              return value.max
+              return (value.max + value.max/10)
             },
             // axisLine: {
             //   lineStyle: {
@@ -606,6 +640,9 @@ Page({
           top: 60,
           containLabel: false
         },
+        itemStyle: {
+          color: ''
+        },
         xAxis: {
           type: 'category',
           boundaryGap: false,
@@ -628,10 +665,10 @@ Page({
             x: 'center',
             type: 'value',
             min: function(value) {
-              return value.min
+              return (value.min - value.min/10)
             },
             max: function(value) {
-              return value.max
+              return (value.max + value.max/10)
             },
             axisLine: {
               lineStyle: {
@@ -714,6 +751,11 @@ Page({
           data: y_data
         }]
       }
+      if (_this.data.chartData.Type === 24 || _this.data.chartData.Type === 9 || parseInt(_this.data.e.type) === 24 || parseInt(_this.data.e.type) === 9) {
+        option.series[0].type = 'bar'
+        option.xAxis.boundaryGap = true
+        option.itemStyle.color = "#0076FF"
+      }
     }
     
     _this.setData({
@@ -749,11 +791,14 @@ Page({
         console.log(res)
         if (res.data && res.data.Result) {
           _this.setData({
-            monitorData: res.data.Result
+            monitorData: res.data.Result,
+            ThresholdValue: parseInt(res.data.Result.ThresholdValue.split('mm')[0])
           })
           if (res.data.Result.PointType === 14) {
+            let array = [parseInt(res.data.Result.ThresholdValue.split(',')[0].split('mm')[0]), parseInt(res.data.Result.ThresholdValue.split(',')[1].split('mm')[0]), parseInt(res.data.Result.ThresholdValue.split(',')[2].split('mm')[0])]
             _this.setData({
-              dataType: 'gnss'
+              dataType: 'gnss',
+              ThresholdValue: array
             })
           }
           app.globalData.setTitle(res.data.Result.Name)

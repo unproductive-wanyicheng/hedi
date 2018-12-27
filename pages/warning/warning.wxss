@@ -135,7 +135,7 @@
 	justify-content: space-between;
 }
 .warning-page  .w-list .w-l-item .w-l-item-inner .w-l-item-message .w-l-m-type {
-	margin-bottom: 10rpx;
+	/*margin-bottom: 10rpx;*/
 	white-space: nowrap;
     overflow: hidden;
 	text-overflow: ellipsis;

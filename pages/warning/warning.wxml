@@ -85,7 +85,7 @@
 				<view class="w-l-item-inner">
 					<view class="w-l-item-message warning">
 						<view class="w-l-m-type"><text decode="{{true}}">监测值&ensp;{{item.WarningValue}}</text></view>
-						<view class="w-l-m-data"><text decode="{{true}}">设计值&ensp;{{item.NowRoughMultipleValue}}</text></view>
+						<!-- <view class="w-l-m-data"><text decode="{{true}}">设计值&ensp;{{item.NowRoughMultipleValue}}</text></view> -->
 					</view>
 					<image class="inner-arrow" src="../../assets/imgs/ChevronUP.png" />
 				</view>
