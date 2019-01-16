@@ -5,8 +5,11 @@
 			<view class="p-title" >上一个</view>
 		</view>
 		<view class="status">
-			<view class=" {{monitorData.PointStatus === 1 ? 'active s-icon' : 's-icon'}}"></view>
-			<view class="s-title">{{monitorData.PointStatus === 1 ? '状态正常' : '状态异常'}}</view>
+			<view wx:if="{{monitorData.PointStatus === 0 }}" class="green s-icon"></view>
+			<view wx:if="{{monitorData.PointStatus === 1 }}" class="yellow s-icon"></view>
+			<view wx:if="{{monitorData.PointStatus === 2 }}" class="red s-icon"></view>
+			<view wx:if="{{monitorData.PointStatus === 3 }}" class="gray s-icon"></view>
+			<view class="s-title">{{monitorData.PointStatus === 0 ? '状态正常' : '状态异常'}}</view>
 		</view>
 		<view class="next" bindtap="selectMonitor" data-direction="next">
 			<view class="n-title" >下一个</view>

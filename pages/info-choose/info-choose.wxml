@@ -9,8 +9,11 @@
 		<blockquote wx:if="{{showList[moIndex]}}">
 			<view class="c-list-item" wx:for="{{monitor.Points}}" wx:key="pindex" wx:for-index="pIndex" wx:for-item="pItem">
 				<!-- <image src="../../assets/imgs/un-choose.png" /> -->
-				<view class="{{ pItem.PointStatus === 1 ? 'active choose' : 'choose' }} choose"></view>
-				<view class="c-list-data" bindtap="goMonitorDetail" data-id="{{pItem.PointId}}" data-type="{{pItem.PointType}}" data-index="{{pIndex}}" data-listIndex="{{pindex}}">{{pItem.ShowText}}</view>
+				<view wx:if="{{pItem.PointStatus === 0}}" class="green choose"></view>
+				<view wx:if="{{pItem.PointStatus === 1}}" class="yellow choose"></view>
+				<view wx:if="{{pItem.PointStatus === 2}}" class="red choose"></view>
+				<view wx:if="{{pItem.PointStatus === 3}}" class="gray choose"></view>
+				<view class="c-list-data" bindtap="goMonitorDetail" data-id="{{pItem.PointId}}" data-type="{{pItem.PointType}}" data-index="{{pIndex}}" data-listIndex="{{pindex}}" data-golbalIndex="{{pItem.golbalIndex}}">{{pItem.ShowText}}</view>
 			</view>
 		</blockquote>
 	</view>

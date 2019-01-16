@@ -1,4 +1,4 @@
-<view class="map-page">
+<view class="map-page full-page ">
   <view class="map-page_chart">
     <view class="sp-lists">
       <view class="s-item no-border" data-index="1">

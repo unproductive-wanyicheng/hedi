@@ -10,7 +10,7 @@ Page({
   },
   onLoad: function () {
     const _this = this
-    wx.showLoading()
+    wx.showLoading({title: '加载中...',mask: true})
     app.globalData.fetch({
       url: `reach/mobile/getalluser`,
       method: 'POST',

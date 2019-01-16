@@ -82,8 +82,7 @@ Page({
   updateChart: function () {
     const _this = this
     if (this.data.gnssData) {
-      let data = JSON.parse(this.data.gnssData.ResultDataJsons)[this.data.gnssTypeIndex]
-      if (!data.length) {
+      if (!this.data.gnssData.ResultDataJsons.length || !JSON.parse(this.data.gnssData.ResultDataJsons)[this.data.gnssTypeIndex].length) {
       	wx.hideLoading()
       	wx.showToast({
 				  title: "暂无图表数据",
@@ -92,6 +91,7 @@ Page({
 				})
 				return false
       }
+      let data = JSON.parse(this.data.gnssData.ResultDataJsons)[this.data.gnssTypeIndex]
       let gnss_x = data[0].data
       let gnss_y = data[1].data
 
@@ -156,10 +156,10 @@ Page({
             x: 'center',
             type: 'value',
             min: function(value) {
-              return value.min
+              return (value.min - value.min/10).toFixed(0)
             },
             max: function(value) {
-              return value.max
+              return (value.max + value.max/10).toFixed(0)
             },
             axisLine: {
               lineStyle: {
@@ -282,10 +282,10 @@ Page({
             x: 'center',
             type: 'value',
             min: function(value) {
-              return value.min
+              return (value.min - value.min/10).toFixed(0)
             },
             max: function(value) {
-              return value.max
+              return (value.max + value.max/10).toFixed(0)
             },
             axisLine: {
               lineStyle: {
@@ -403,7 +403,7 @@ Page({
 				return false
       }
 
-      let data = this.data.anData.Data.data
+      let data = this.data.anData.Data[0].data
 
       let x_data = []
       let y_data = []
@@ -456,10 +456,10 @@ Page({
             x: 'center',
             type: 'value',
             min: function(value) {
-              return value.min
+              return (value.min - value.min/10).toFixed(0)
             },
             max: function(value) {
-              return value.max
+              return (value.max - value.max/10).toFixed(0)
             },
             axisLine: {
               lineStyle: {

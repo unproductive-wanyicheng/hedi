@@ -40,10 +40,13 @@
           <block wx:for="{{swiperList}}" wx:key="{{index}}">
             <swiper-item class="box-down">
               <view class="box-type">
-                <view class="type-color"></view>
+                <view wx:if="{{item.WarningType === 0}}" class="green type-color"></view>
+                <view wx:if="{{item.WarningType === 1}}" class="yellow type-color"></view>
+                <view wx:if="{{item.WarningType === 2}}" class="red type-color"></view>
+                <view wx:if="{{item.WarningType === 3}}" class="gray type-color"></view>
                 <view class="type-name">{{item.Type}}</view>
               </view>
-              <view class="box-message"><text>{{item ? item.SupportSugistion + ' : ' : '异常原因'}}</text>{{item.WarningMessage}}</view>
+              <view class="box-message"><text wx:if="{{item.WarningType === 0}}">{{"安全" + ' : '}}</text><text wx:if="{{item.WarningType === 1}}">{{"一般报警" + ' : '}}</text><text wx:if="{{item.WarningType === 2}}">{{"严重报警" + ' : '}}</text><text wx:if="{{item.WarningType === 3}}">{{"硬件异常" + ' : '}}</text>{{item.WarningMessage}}</view>
               <view class="box-point"><text decode="true">应变点&nbsp;:&nbsp;</text>{{item.PointName}}</view>
               <view class="box-time">{{item.DateTime}}</view>
             </swiper-item>

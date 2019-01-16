@@ -12,9 +12,7 @@ Page({
     }]
   },
   onLoad: function (e) {
-    this.setData({
-      
-    })
+    
   },
   onShow: function () {
     this.getData()
@@ -24,7 +22,7 @@ Page({
     const _this = this
     const id = app.globalData.defaultMonitor.Id
     const url = `reach/mobile/getallmonitorpointsinfo/${id}`
-    wx.showLoading()
+    wx.showLoading({title: '加载中...',mask: true})
     app.globalData.fetch({
       url: url,
       closeLoading: true,
@@ -41,6 +39,15 @@ Page({
         const array = []
         for (let i = 0; i < res.data.Result.length; i++) {
           array.push[false]
+        }
+        
+        let golbalIndex = 0;
+        for(var i=0;i<res.data.Result.length;i++){
+          for(var j=0;j<res.data.Result[i].Points.length;j++){
+            res.data.Result[i].Points[j].golbalIndex = golbalIndex;
+            app.globalData.monitorsChooseList.push(res.data.Result[i].Points[j])
+            golbalIndex++;
+          }
         }
         _this.setData({
           monitorList: res.data.Result,
@@ -62,9 +69,11 @@ Page({
     const index = parseInt(e.target.dataset.index)
     const type = parseInt(e.target.dataset.type)
     const id = parseInt(e.target.dataset.id)
-    app.globalData.monitorList = this.data.monitorList[listIndex]
+    const golbalIndex = parseInt(e.target.dataset.golbalindex)
+    //app.globalData.monitorList = this.data.monitorList[listIndex]
     wx.navigateTo({
-      url: `/pages/monitor-detail/monitor-detail?index=${index}&type=${type}&id=${id}`
+      //url: `/pages/monitor-detail/monitor-detail?index=${index}&type=${type}&id=${id}`
+      url: `/pages/monitor-detail/monitor-detail?golbalIndex=${golbalIndex}`
     })
   }
 })

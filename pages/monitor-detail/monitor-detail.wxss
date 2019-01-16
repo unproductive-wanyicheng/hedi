@@ -1,8 +1,6 @@
 .moni-detail {
-	position: absolute;
-	top: 0;
-	bottom: 0;
 	width: 100%;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 }
@@ -52,6 +50,18 @@
 	background: red;
 	border-radius: 50%;
 }
+.moni-detail .choose .status .green {
+	background: #99cc33;
+}
+.moni-detail .choose .status .yellow {
+	background: #FF9900;
+}
+.moni-detail .choose .status .red {
+	background: #DC0101;
+}
+.moni-detail .choose .status .gray {
+	background: #CCCCCC;
+}
 .moni-detail .choose .status .active{
 	background: #99CC33;
 }
@@ -60,7 +70,7 @@
 }
 .moni-detail .info-wrapper {
 	flex: 1;
-	overflow-y: auto;
+	/*overflow-y: auto;*/
 	box-sizing: border-box;
 }
 .moni-detail .info-wrapper .time{

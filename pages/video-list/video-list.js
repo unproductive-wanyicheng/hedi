@@ -7,7 +7,7 @@ Page({
     const _this = this
     const id = app.globalData.defaultMonitor.Id
     const url = `sk/mobile/videoinfolist/${id}`
-    wx.showLoading()
+    wx.showLoading({title: '加载中...',mask: true})
     app.globalData.fetch({
       url: url,
       closeLoading: true,

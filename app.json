@@ -29,7 +29,7 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "概括",
+        "text": "概况",
         "iconPath": "/assets/imgs/main-message.png",
         "selectedIconPath": "/assets/imgs/main-message-selected.png"
       }, 

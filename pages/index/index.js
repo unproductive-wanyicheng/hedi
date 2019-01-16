@@ -114,7 +114,7 @@ Page({
     const swiperType = params ? params.swiperType : 'init'
     const pageCount = 1
     const url = `reach/mobile/getwarninginfobypagecount/${id}/warningtype/${warningtype}/nowPage/${nowPage}/pageCount/${pageCount}`
-    wx.showLoading()
+    wx.showLoading({title: '加载中...',mask: true})
     app.globalData.fetch({
       url: url,
       closeLoading: params ? true : false,
@@ -238,7 +238,7 @@ Page({
     const id = app.globalData.defaultMonitor.Id
     const _this = this
     const url = `reach/mobile/getmonitorobjectbaseinfo/${id}`
-    wx.showLoading()
+    wx.showLoading({title: '加载中...',mask: true})
     app.globalData.fetch({
       url: url,
       closeLoading: true,

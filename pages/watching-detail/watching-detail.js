@@ -120,10 +120,10 @@ Page({
           x: 'center',
           type: 'value',
           min: function(value) {
-            return (value.min - value.min/10)
+            return (value.min - value.min/10).toFixed(0)
           },
           max: function(value) {
-            return (value.max + value.max/10)
+            return (value.max + value.max/10).toFixed(0)
           },
           axisLine: {
             lineStyle: {

@@ -13,6 +13,7 @@ Page({
       lazyLoad: true
       // onInit: initChart
     },
+    golbalIndex: 0,
     e: null,
     monitorList: [],
     activeIndex: 0,
@@ -38,11 +39,12 @@ Page({
   },
   onLoad: function (e) {
     this.setData({
-      e: e
+      e: e,
+      golbalIndex: parseInt(e.golbalIndex)
     })
   },
   onShow: function () {
-    this.getMonitorData(this.data.e)
+    this.getMonitorData(this.data.golbalIndex)
   },
   onUnload: function () {
     if (app.globalData.socketOpen) {
@@ -59,12 +61,26 @@ Page({
     }
   },
   getChartsData: function (params) {
+    this.setData({
+      gnssData: {
+        time: [],
+        x: [],
+        y: [],
+        h: []
+      },
+      otherData: {
+        time: [],
+        y: []
+      },
+      bottomDataList: []
+    })
+
     const _this = this
-    const type = parseInt(_this.data.e.type)
-    const pointId = parseInt(_this.data.e.id)
+    const type = parseInt(app.globalData.monitorsChooseList[_this.data.golbalIndex].PointType)
+    const pointId = parseInt(app.globalData.monitorsChooseList[_this.data.golbalIndex].PointId)
     const id = app.globalData.defaultMonitor.Id
     const chartdatatype = _this.data.timeActive
-    const uuid = _this.data.monitorData.Uuid
+    const uuid = app.globalData.monitorsChooseList[_this.data.golbalIndex].UuId
     // 1 ：1小时  ； 2： 今天  ；  3： 一周  0: 实时
     if (chartdatatype !== 0) {
       if (app.globalData.socketOpen) {
@@ -72,7 +88,7 @@ Page({
         app.globalData.socketOpen = false
       }
       const url = `reach/mobile/getmonitorpointdata/${id}/pointtype/${type}/pointid/${pointId}/chartdatatype/${chartdatatype}`
-      wx.showLoading()
+      wx.showLoading({title: '加载中...',mask: true})
       app.globalData.fetch({
         url: url,
         closeLoading: true,
@@ -86,7 +102,12 @@ Page({
             wx.setNavigationBarTitle({
               title: res.data.Result[_this.data.activeIndex].name
             })
-            _this.updateChart(params)
+            if (app.globalData.monitorsChooseList[_this.data.golbalIndex].PointType === 14) {
+              _this.updateChart({type: params.type, dataType: 'http', chartType: 'gnss'})
+            }else{
+              _this.updateChart({type: params.type, dataType: 'http', chartType: 'other'})
+            }
+            //_this.updateChart(params)
           } else {
             wx.showToast({
               title: '图表数据获取失败',
@@ -106,7 +127,7 @@ Page({
       })
       const uuid_type = `${uuid}_${type}`
       // const uuid_type = 'b101457e-d4de-45ab-823a-73ef412213c5_14'
-      wx.showLoading()
+      wx.showLoading({title: '加载中...',mask: true})
       wx.connectSocket({
         url: `wss://websocket.aeroiot.cn/Iot`,
         header:{
@@ -123,10 +144,22 @@ Page({
             wx.sendSocketMessage({
               data: data,
               success: function (res) {
-
+                setTimeout(()=>{
+                  if(app.globalData.socketOpen&&(!_this.data.socketValue)){
+                    wx.showToast({
+                      title: '暂无实时数据',
+                      icon: 'none',
+                      duration: 2000
+                    })
+                    wx.hideLoading()
+                    app.globalData.socketOpen = false
+                    wx.closeSocket()
+                  }
+                },30*1000)
               }
             })
           })
+
           wx.onSocketMessage(function (res) {
             wx.hideLoading()
             const resData = JSON.parse(res.data)
@@ -249,10 +282,10 @@ Page({
             x: 'center',
             type: 'value',
             min: function(value) {
-              return (value.min - value.min/10)
+              return (value.min - value.min/10).toFixed(0)
             },
             max: function(value) {
-              return (value.max + value.max/10)
+              return (value.max + value.max/10).toFixed(0)
             },
             // axisLine: {
             //   lineStyle: {
@@ -324,6 +357,7 @@ Page({
       let y = _this.data.otherData.y
       let time = _this.data.socketData.DateTime.split('T')[1].split('.')[0]
       let bottomTime = _this.data.socketData.DateTime.split('.')[0].replace('T', ' ')
+
       if (y.length >= 7) {
         time_data.shift()
         y.shift()
@@ -393,10 +427,10 @@ Page({
             x: 'center',
             type: 'value',
             min: function(value) {
-              return (value.min - value.min/10)
+              return (value.min - value.min/10).toFixed(0)
             },
             max: function(value) {
-              return (value.max + value.max/10)
+              return (value.max + value.max/10).toFixed(0)
             },
             // axisLine: {
             //   lineStyle: {
@@ -425,6 +459,21 @@ Page({
           lineStyle: {
             width: 1,
             color: 'yellow'
+          },
+          areaStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                {
+                    offset: 0, color: '#C68874' // 0% 处的颜色
+                }, {
+                    offset: 1, color: '#C76D89' // 100% 处的颜色
+              }],
+            }
           },
           markLine: {
             symbol: ['none', 'none'],
@@ -456,7 +505,7 @@ Page({
       }
     }
 
-    if (dataType === 'http' && _this.data.dataType === 'gnss') {
+    if (dataType === 'http' && chartType === 'gnss') {
 
       if (!_this.data.chartData.length) {
         return false
@@ -487,7 +536,7 @@ Page({
           this.data.bottomDataList.pop()
         }
         this.data.bottomDataList.unshift({
-          time: util.formatTime(time, 'hh:mm'),
+          time: util.formatTime(time, 'yyyy-MM-dd hh:mm:ss'),
           name: bottomName,
           value: bottomValue
         })
@@ -536,10 +585,10 @@ Page({
             x: 'center',
             type: 'value',
             min: function(value) {
-              return (value.min - value.min/10)
+              return (value.min - value.min/10).toFixed(0)
             },
             max: function(value) {
-              return (value.max + value.max/10)
+              return (value.max + value.max/10).toFixed(0)
             },
             // axisLine: {
             //   lineStyle: {
@@ -601,7 +650,7 @@ Page({
       }
     }
 
-    if (dataType === 'http' && _this.data.dataType === 'other') {
+    if (dataType === 'http' && chartType === 'other') {
 
       if (!_this.data.chartData.length) {
         return false
@@ -618,7 +667,7 @@ Page({
           this.data.bottomDataList.pop()
         }
         this.data.bottomDataList.push({
-          time: util.formatTime(time, 'hh:mm'),
+          time: util.formatTime(time, 'yyyy-MM-dd hh:mm:ss'),
           value: item[1] + 'mm'
         })
       })
@@ -662,13 +711,12 @@ Page({
         },
         yAxis: [
           {
-            x: 'center',
             type: 'value',
             min: function(value) {
-              return (value.min - value.min/10)
+              return (value.min - (value.min/10)).toFixed(0)
             },
             max: function(value) {
-              return (value.max + value.max/10)
+              return (value.max + (value.max/10)).toFixed(0)
             },
             axisLine: {
               lineStyle: {
@@ -751,7 +799,7 @@ Page({
           data: y_data
         }]
       }
-      if (_this.data.chartData.Type === 24 || _this.data.chartData.Type === 9 || parseInt(_this.data.e.type) === 24 || parseInt(_this.data.e.type) === 9) {
+      if (_this.data.chartData.Type === 24 || _this.data.chartData.Type === 9 || app.globalData.monitorsChooseList[_this.data.golbalIndex].PointType === 24 || app.globalData.monitorsChooseList[_this.data.golbalIndex].PointType === 9) {
         option.series[0].type = 'bar'
         option.xAxis.boundaryGap = true
         option.itemStyle.color = "#0076FF"
@@ -778,13 +826,13 @@ Page({
       return chart
     })
   },
-  getMonitorData: function (e) {
+  getMonitorData: function (golbalIndex) {
     const _this = this
-    const type = parseInt(e.type)
-    const pointId = parseInt(e.id)
+    const type = app.globalData.monitorsChooseList[golbalIndex].PointType
+    const pointId = app.globalData.monitorsChooseList[golbalIndex].PointId
     const id = app.globalData.defaultMonitor.Id
     const url = `reach/mobile/getmonitorpointinfo/${id}/pointtype/${type}/pointid/${pointId}`
-    wx.showLoading()
+    wx.showLoading({title: '加载中...',mask: true})
     app.globalData.fetch({
       url: url,
       cb: (res) => {
@@ -802,36 +850,35 @@ Page({
             })
           }
           app.globalData.setTitle(res.data.Result.Name)
-          _this.getChartsData({e: e, type: 'init'})
+          _this.getChartsData({type: 'init'})
         }
       }
     })
   },
   selectMonitor: function (e) {
-    return false
     const direction = e.currentTarget.dataset.direction
     if (direction === 'pre') {
-      if (this.data.activeIndex === 0 || app.globalData.socketOpen) {
+      if (this.data.golbalIndex === 0) {
         return false
       }
       this.setData({
-        activeIndex: this.data.activeIndex - 1
+        golbalIndex: this.data.golbalIndex - 1
       })
-      wx.setNavigationBarTitle({
-        title:  this.data.chartData[this.data.activeIndex].name
-      })
+      // wx.setNavigationBarTitle({
+      //   title:  this.data.chartData[this.data.activeIndex].name
+      // })
     } else {
-      if (this.data.activeIndex === this.data.chartData.length -1 || app.globalData.socketOpen) {
+      if (this.data.golbalIndex === app.globalData.monitorsChooseList.length -1) {
         return false
       }
       this.setData({
-        activeIndex: this.data.activeIndex + 1
+        golbalIndex: this.data.golbalIndex + 1
       })
-      wx.setNavigationBarTitle({
-        title:  this.data.chartData[this.data.activeIndex].name
-      })
+      // wx.setNavigationBarTitle({
+      //   title:  this.data.chartData[this.data.activeIndex].name
+      // })
     }
-    this.updateChart({type: 'init'})
+    this.getMonitorData(this.data.golbalIndex)
   },
   selectTime: function (e) {
     const index = parseInt(e.target.dataset.index)
@@ -843,15 +890,16 @@ Page({
         y: [],
         h: []
       },
+      otherData: {
+        time: [],
+        y: []
+      },
       bottomDataList: []
     })
-    console.log(this.data.socketData)
+    //console.log(this.data.socketData)
     this.getChartsData({type: 'init'})
   },
   refreshPage: function () {
-    if (!this.data.timeActive) {
-      return false
-    }
     this.getChartsData({type: 'init'})
   }
 })

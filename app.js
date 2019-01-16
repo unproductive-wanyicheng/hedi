@@ -7,6 +7,7 @@ App({
   	debug: false,
   	loginInfo: null,
     userInfo: null,
+    monitorsChooseList: [],
     monitorList: null,
     defaultMonitor: null,
     choosenUserList: [],
@@ -34,7 +35,7 @@ App({
   				waitClose: true
   			})
   		}
-  		wx.showLoading()
+  		wx.showLoading({title: '加载中...',mask: true})
   		_this.getToken({
   			cbParams: params,
   			tokenCb: tokenCb
@@ -45,7 +46,7 @@ App({
   			const baseUrl = 'https://mapi.aeroiot.cn/'
   			const { access_token, token_type } = res
   			const { url, query = '', data = null, cb, method = 'GET',successMessage = '', successCode = 200, closeLoading = false, noLoading = false, waitClose = false } = originParams
-  			!noLoading && wx.showLoading()
+  			!noLoading && wx.showLoading({title: '加载中...',mask: true})
   			wx.request({
 		      url: baseUrl + url + query,
 		      data: data,

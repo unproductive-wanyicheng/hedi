@@ -345,10 +345,21 @@
 	margin-bottom: 30rpx;
 }
 .home .warning-box .box-inner .box-down .box-type .type-color {
-	background: #CCCCCC;
 	width: 32rpx;
 	height: 32rpx;
 	margin-right: 20rpx
+}
+.home .warning-box .box-inner .box-down .box-type .green {
+	background: #99cc33;
+}
+.home .warning-box .box-inner .box-down .box-type  .yellow {
+	background: #FF9900;
+}
+.home .warning-box .box-inner .box-down .box-type  .red {
+	background: #DC0101;
+}
+.home .warning-box .box-inner .box-down .box-type .gray {
+	background: #CCCCCC;
 }
 .home .warning-box .box-inner .box-down .box-message {
 	margin-bottom: 20rpx;

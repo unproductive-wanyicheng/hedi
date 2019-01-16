@@ -64,10 +64,12 @@ Page({
       HandlerType: _this.data.dotype,
       UserIds: []
     }
-    _this.data.userInfoList.forEach((item, index) => {
-      data.UserIds.push(item.info.DEPT_INFO_ID)
-    })
-    wx.showLoading()
+    if(_this.data.userInfoList) {
+       _this.data.userInfoList.forEach((item, index) => {
+        data.UserIds.push(item.info.DEPT_INFO_ID)
+      })
+    }
+    wx.showLoading({title: '加载中...',mask: true})
     app.globalData.fetch({
       url: `reach/mobile/dowarning/${monitorId}/warninid/${id}/dotype/${dotype}`, 
       method: 'POST',

@@ -52,6 +52,15 @@
 	border-radius: 50%;
 	margin-right: 20rpx;
 }
-.choose-page .c-item .c-list-item .active {
+.choose-page .c-item .c-list-item .green {
 	background: #99cc33;
+}
+.choose-page .c-item .c-list-item .yellow {
+	background: #FF9900;
+}
+.choose-page .c-item .c-list-item .red {
+	background: #DC0101;
+}
+.choose-page .c-item .c-list-item .gray {
+	background: #CCCCCC;
 }

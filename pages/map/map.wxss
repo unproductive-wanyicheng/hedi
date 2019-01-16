@@ -1,7 +1,7 @@
 .map-page {
 	height: 100%;
 	width: 100%;
-	overflow-y: auto;
+	/*overflow-y: auto;*/
 	background: #D8D8D8;
 }
 .map-page .map {

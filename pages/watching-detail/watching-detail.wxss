@@ -1,8 +1,8 @@
 .watching-detail {
 	width: 100%;
 	height: 100%;
-	overflow-y: auto;
-	overflow-x: hidden;
+	/*overflow-y: auto;*/
+	/*overflow-x: hidden;*/
 }
 .watching-detail_img-box {
 	position: relative;
