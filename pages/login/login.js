@@ -1,8 +1,8 @@
 const app = getApp()
 Page({
   data: {
-  	account: '',
-  	password: ''
+  	account: 'admin',
+  	password: 'htjc8888'
   },
   onLoad: function () {
     const userInfo = wx.getStorageSync('__HEDI_USER_INFO__')
