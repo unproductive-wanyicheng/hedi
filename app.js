@@ -4,7 +4,7 @@ App({
     
   },
   globalData: {
-  	debug: false,
+  	debug: true,
   	loginInfo: null,
     userInfo: null,
     monitorsChooseList: [],

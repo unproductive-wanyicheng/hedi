@@ -6,7 +6,7 @@ Page({
   data: {
     allPage: 1,
     timeActive: 0,
-    timeList: ['1小时', '一天', '一周'],
+    timeList: ['24小时', '三天', '一周'],
     activeType: 0, // 0, 1, 2, 3
     activeDate: 0,
     activeTimeStart: '2018-11-8',
@@ -36,9 +36,10 @@ Page({
     const endtime = _this.data.activeTimeEnd
     const page = _this.data.nowPage
     const showType = _this.data.timeActive
+    const pointId = 0
       
     app.globalData.fetch({
-      url: `reach/mobile/videophotolist/${id}/showtype/${showType}/starttime/${starttime}/endtime/${endtime}/nowPage/${page}`,
+      url: `reach/mobile/videoimagelist/${id}/showtype/${showType}/starttime/${starttime}/endtime/${endtime}/nowPage/${page}/pointid/${pointId}`,
       closeLoading: closeLoading,
       cb: (res) => {
         console.log(res)
