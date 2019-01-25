@@ -4,7 +4,7 @@ App({
     
   },
   globalData: {
-  	debug: true,
+  	debug: false,
   	loginInfo: null,
     userInfo: null,
     monitorsChooseList: [],
@@ -14,6 +14,7 @@ App({
     refreshPage: false,
     socketOpen: false,
     canLogin: true,
+    videoPointId: null,
   	doLogin: function (params) {
   		const _this = this
   		const tokenCb = function (res, params) {

@@ -70,7 +70,7 @@
 	</view>
 	<view class="w-list">
 		<scroll-view scroll-y style="flex: 1;" bindscrolltolower="lower">
-			<view class="watch-page_box" data-id="{{item.Id}}" wx:for="{{vrData}}" wx:key="index" bindtap="goWatchingDetail">
+			<view class="watch-page_box" data-id="{{item.Id}}" data-pointId="{{item.PointId}}" data-time="{{item.DateTime}}" data-name="{{item.PointName}}" data-photo="{{item.PhotoUrl}}" wx:for="{{vrData}}" wx:key="index" bindtap="goWatchingDetail">
 				<image class="watch-page_box-img" src="{{item.PhotoUrl}}" />
 				<view class="watch-page_box-center">
 					<view class="watch-page_box-center-title">{{item.Note}}</view>

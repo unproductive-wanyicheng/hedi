@@ -9,6 +9,7 @@ let chart_2 = null
 
 Page({
   data: {
+    e: null,
     ec_0: {
       lazyLoad: true
     },
@@ -21,12 +22,17 @@ Page({
     vrData: {}
   },
   onLoad: function (e) {
-    this.getData(e.id)
+    this.setData({
+      e: e
+    })
+    this.getData()
   },
-  getData: function (photoid) {
+  getData: function () {
     const _this = this
     const id = app.globalData.defaultMonitor.Id
-    const url = `reach/mobile/videophotodetail/${id}/photoid/${photoid}`
+    const pointid = parseInt(_this.data.e.pointid)
+    const timestamp = new Date(_this.data.e.time).getTime()
+    const url = `reach/mobile/videoimagedetail/${id}/timestamp/${timestamp}?Photoid=${pointid}`
     app.globalData.fetch({
       url: url,
       closeLoading: true,
@@ -35,9 +41,9 @@ Page({
         _this.setData({
           vrData: res.data.Result
         })
-        _this.timeFormat()
+        
         app.globalData.setTitle(_this.data.vrData.Note)
-        _this.data.vrData.PointMonitorInfos.map((item, index)=>{
+        _this.data.vrData.map((item, index)=>{
           _this.updateChart({
             item: item,
             index: index
@@ -45,11 +51,12 @@ Page({
         })
       }
     })
+    _this.timeFormat()
   },
   timeFormat: function() {
-    this.data.vrData.DateTime = this.data.vrData.DateTime.split('.')[0].replace("T", " ")
+    this.data.e.time = this.data.e.time.split('.')[0].replace("T", " ")
     this.setData({
-      vrData: this.data.vrData
+      e: this.data.e
     })
   },
   updateChart: function(params) {

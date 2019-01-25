@@ -14,8 +14,8 @@ Page({
     nowPage: 1,
     vrData:[]
   },
-  onLoad: function () {
-    
+  onLoad: function (e) {
+
   },
   onShow: function () {
     this.getWarningList({})
@@ -36,10 +36,10 @@ Page({
     const endtime = _this.data.activeTimeEnd
     const page = _this.data.nowPage
     const showType = _this.data.timeActive
-    const pointId = 0
+    const pointId = app.globalData.videoPointId ? app.globalData.videoPointId : 0
       
     app.globalData.fetch({
-      url: `reach/mobile/videoimagelist/${id}/showtype/${showType}/starttime/${starttime}/endtime/${endtime}/nowPage/${page}/pointid/${pointId}`,
+      url: `reach/mobile/videoimagelist/${id}?starttime/${starttime}/endtime/${endtime}/showtype/${showType}/nowPage/${page}/pointid/${pointId}`,
       closeLoading: closeLoading,
       cb: (res) => {
         console.log(res)
@@ -64,8 +64,12 @@ Page({
   },
   goWatchingDetail: function (e) {
     const id = e.currentTarget.dataset.id
+    const pointid = e.currentTarget.dataset.pointid
+    const time = e.currentTarget.dataset.time
+    const name = e.currentTarget.dataset.name
+    const photo = e.currentTarget.dataset.photo
     wx.navigateTo({
-      url: '/pages/watching-detail/watching-detail?id=' + id
+      url: `/pages/watching-detail/watching-detail?id=${id}&&id=${id}&&pointid=${pointid}&&time=${time}&&name=${name}&&photo=${photo}`
     })
   },
   selectTime: function (e) {

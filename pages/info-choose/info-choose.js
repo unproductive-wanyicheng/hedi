@@ -71,9 +71,17 @@ Page({
     const id = parseInt(e.target.dataset.id)
     const golbalIndex = parseInt(e.target.dataset.golbalindex)
     //app.globalData.monitorList = this.data.monitorList[listIndex]
-    wx.navigateTo({
-      //url: `/pages/monitor-detail/monitor-detail?index=${index}&type=${type}&id=${id}`
-      url: `/pages/monitor-detail/monitor-detail?golbalIndex=${golbalIndex}`
-    })
+    if (type !== 32) {
+      app.globalData.videoPointId = null
+      wx.navigateTo({
+        //url: `/pages/monitor-detail/monitor-detail?index=${index}&type=${type}&id=${id}`
+        url: `/pages/monitor-detail/monitor-detail?golbalIndex=${golbalIndex}`
+      })
+    }else{
+      app.globalData.videoPointId = type
+      wx.switchTab({
+        url: `/pages/watching-list/watching-list`
+      })
+    }
   }
 })
