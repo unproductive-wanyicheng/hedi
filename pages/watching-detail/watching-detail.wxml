@@ -2,7 +2,7 @@
   <view class="watching-detail_img-box">
     <image src="{{e.photo}}" class="watching-detail_img-box-img" />
     <view class="watching-detail_img-box-modal">
-      <view class="watching-detail_img-box-modal-time">{{e.time}}</view>
+      <view class="watching-detail_img-box-modal-time">{{e.showTime}}</view>
       <view class="watching-detail_img-box-modal-title">{{e.name}}</view>
     </view>
   </view>

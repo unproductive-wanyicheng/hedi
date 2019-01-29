@@ -15,6 +15,7 @@ App({
     socketOpen: false,
     canLogin: true,
     videoPointId: null,
+    watchingDetailEvent: null,
   	doLogin: function (params) {
   		const _this = this
   		const tokenCb = function (res, params) {

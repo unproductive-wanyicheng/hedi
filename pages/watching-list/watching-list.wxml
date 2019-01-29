@@ -74,7 +74,7 @@
 				<image class="watch-page_box-img" src="{{item.PhotoUrl}}" />
 				<view class="watch-page_box-center">
 					<view class="watch-page_box-center-title">{{item.Note}}</view>
-					<view class="watch-page_box-center-time">{{item.DateTime}}</view>
+					<view class="watch-page_box-center-time">{{item.showDateTime}}</view>
 				</view>
 				<view class="watch-page_box-seprate"></view>
 				<view class="watch-page_box-info">

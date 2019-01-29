@@ -23,38 +23,48 @@ Page({
   },
   onLoad: function (e) {
     this.setData({
-      e: e
+      e: app.globalData.watchingDetailEvent
     })
     this.getData()
   },
   getData: function () {
     const _this = this
-    const id = app.globalData.defaultMonitor.Id
-    const pointid = parseInt(_this.data.e.pointid)
-    const timestamp = new Date(_this.data.e.time).getTime()
-    const url = `reach/mobile/videoimagedetail/${id}/timestamp/${timestamp}?Photoid=${pointid}`
-    app.globalData.fetch({
-      url: url,
-      closeLoading: true,
-      cb: (res) => {
-        console.log(res)
-        _this.setData({
-          vrData: res.data.Result
+    wx.getSystemInfo({
+      success(res) {
+        const id = app.globalData.defaultMonitor.Id
+        const pointid = parseInt(_this.data.e.pointid)
+        let timestamp
+        if (res.platform == "ios") {
+          timestamp = new Date(_this.data.e.time).getTime() - 28800*1000
+        }else{
+          timestamp = new Date(_this.data.e.time).getTime()
+        }
+        const url = `reach/mobile/videoimagedetail/${id}/timestamp/${timestamp}?Photoid=${pointid}`
+        app.globalData.fetch({
+          url: url,
+          closeLoading: true,
+          cb: (res) => {
+            console.log(res)
+            _this.setData({
+              vrData: res.data.Result
+            })
+            
+            app.globalData.setTitle(_this.data.vrData.Note)
+            _this.data.vrData.map((item, index)=>{
+              _this.updateChart({
+                item: item,
+                index: index
+              })
+            })
+          }
         })
-        
-        app.globalData.setTitle(_this.data.vrData.Note)
-        _this.data.vrData.map((item, index)=>{
-          _this.updateChart({
-            item: item,
-            index: index
-          })
+        _this.timeFormat()
+          }
         })
-      }
-    })
-    _this.timeFormat()
   },
   timeFormat: function() {
-    this.data.e.time = this.data.e.time.split('.')[0].replace("T", " ")
+    let localEvent = JSON.parse(JSON.stringify(this.data.e))
+    this.data.e.showTime = localEvent.time.split('.')[0].replace("T", " ")
     this.setData({
       e: this.data.e
     })

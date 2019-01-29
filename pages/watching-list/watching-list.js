@@ -68,8 +68,16 @@ Page({
     const time = e.currentTarget.dataset.time
     const name = e.currentTarget.dataset.name
     const photo = e.currentTarget.dataset.photo
+    app.globalData.watchingDetailEvent = {
+      id:id,
+      pointid:pointid,
+      time:time,
+      name:name,
+      photo:photo
+    }
     wx.navigateTo({
-      url: `/pages/watching-detail/watching-detail?id=${id}&&id=${id}&&pointid=${pointid}&&time=${time}&&name=${name}&&photo=${photo}`
+      //url: `/pages/watching-detail/watching-detail?id=${id}&&id=${id}&&pointid=${pointid}&&time=${time}&&name=${name}&&photo=${photo}`
+      url: `/pages/watching-detail/watching-detail`
     })
   },
   selectTime: function (e) {
@@ -139,8 +147,9 @@ Page({
     })
   },
   timeFormat: function(list) {
-    list.map((item, index)=>{
-      item.DateTime = item.DateTime.split('.')[0].replace("T", " ")
+    let newList = JSON.parse(JSON.stringify(list))
+    newList.map((item, index)=>{
+      list[index].showDateTime = item.DateTime.split('.')[0].replace("T", " ")
     })
     this.setData({
       vrData: list
