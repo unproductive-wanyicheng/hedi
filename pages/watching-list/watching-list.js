@@ -88,10 +88,10 @@ Page({
     }
     let preTime = 0
     if (index === 1) {
-      preTime = 7 * 24 * 60 * 60 * 1000
+      preTime = 3 * 24 * 60 * 60 * 1000
     }
     if (index === 2) {
-      preTime = 30 * 24 * 60 * 60 * 1000
+      preTime = 7 * 24 * 60 * 60 * 1000
     }
     let startDate = util.formatTime(new Date(new Date() - preTime) , 'yyyy-MM-dd')
     let endDate = util.formatTime(new Date(), 'yyyy-MM-dd')

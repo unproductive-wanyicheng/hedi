@@ -125,7 +125,13 @@ Page({
       })
       const uuid_type = `${uuid}_${type}`
       // const uuid_type = 'b101457e-d4de-45ab-823a-73ef412213c5_14'
-      wx.showLoading({title: '加载中...',mask: true})
+      const {showLoading = false} = params
+      //showLoading && wx.showLoading({title: '加载中...',mask: true})
+      wx.showToast({
+        title: '正在等待实时数据返回请稍后……',
+        icon: 'none',
+        duration: 60000
+      })
       wx.connectSocket({
         url: `wss://websocket.aeroiot.cn/Iot`,
         header:{
@@ -142,23 +148,28 @@ Page({
             wx.sendSocketMessage({
               data: data,
               success: function (res) {
-                // setTimeout(()=>{
-                //   if(app.globalData.socketOpen&&(!_this.data.socketValue)){
-                //     wx.showToast({
-                //       title: '暂无实时数据',
-                //       icon: 'none',
-                //       duration: 2000
-                //     })
-                //     wx.hideLoading()
-                //     app.globalData.socketOpen = false
-                //     wx.closeSocket()
-                //   }
-                // },30*1000)
+                setTimeout(()=>{
+                  if(app.globalData.socketOpen&&(!_this.data.socketValue)){
+                    wx.showToast({
+                      title: '暂无实时数据',
+                      icon: 'none',
+                      duration: 2000
+                    })
+                    wx.hideLoading()
+                    app.globalData.socketOpen = false
+                    wx.closeSocket()
+                  }
+                },60*1000)
               }
             })
           })
 
           wx.onSocketMessage(function (res) {
+            wx.showToast({
+              title: '数据返回成功',
+              icon: 'none',
+              duration: 0
+            })
             wx.hideLoading()
             const resData = JSON.parse(res.data)
             console.log('onBack:', resData)
@@ -848,6 +859,7 @@ Page({
             })
           }
           app.globalData.setDetailTitle("监测点", res.data.Result.ShowText)
+          wx.hideLoading()
           _this.getChartsData({type: 'init'})
         }
       }
@@ -895,9 +907,9 @@ Page({
       bottomDataList: []
     })
     //console.log(this.data.socketData)
-    this.getChartsData({type: 'init'})
+    this.getChartsData({type: 'init',showLoading: true})
   },
   refreshPage: function () {
-    this.getChartsData({type: 'init'})
+    this.getChartsData({type: 'init',showLoading: true})
   }
 })
