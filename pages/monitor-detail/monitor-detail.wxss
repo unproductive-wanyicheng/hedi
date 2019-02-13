@@ -160,6 +160,14 @@
 	border-bottom: 1rpx solid #34424e;
 	padding: 0 30rpx 20rpx 30rpx;
 }
+.moni-detail .char-info-gnss {
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 0 30rpx 0rpx 30rpx;
+}
+.moni-detail .char-info-gnss .char-info-item{
+	margin-bottom: 10rpx;
+}
 .moni-detail .char-info  .char-info-item {
 	display: flex;
 	align-content: center;

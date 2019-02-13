@@ -22,7 +22,7 @@
         <view wx:if="{{mainMonitorInfo.Status}}" class="english">Noramal</view>
       </view>
       <view class="right">
-        <view class="num">{{mainMonitorInfo.BadGoodCount}}</view>
+        <view class="num">{{allPage}}</view>
         <view class="sign">异常</view>
       </view>
     </view>

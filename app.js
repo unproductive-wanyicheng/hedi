@@ -4,7 +4,7 @@ App({
     
   },
   globalData: {
-  	debug: false,
+  	debug: true,
   	loginInfo: null,
     userInfo: null,
     monitorsChooseList: [],
@@ -207,6 +207,11 @@ App({
 		  		tokenCb(loginInfo, cbParams)
 		  	}
 	  	}
+	  },
+	  setDetailTitle: function (block, title) {
+	  	wx.setNavigationBarTitle({
+	      title: block + '-' + title
+	    })
 	  },
 	  setTitle: function (title) {
 	  	const _this = this

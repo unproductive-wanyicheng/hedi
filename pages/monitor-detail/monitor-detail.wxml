@@ -26,7 +26,7 @@
 		<view class="{{!(!socketData && e.type !== '14') ? 'chart' : 'chart no-border'}}">
         	<ec-canvas class="m-chart-item" id="mychart-dom-bar-1" canvas-id="mychart-bar" ec="{{ ec_1 }}"></ec-canvas>
 		</view>
-		<view class="char-info" wx:if="{{!socketData && e.type !== '14'}}">
+		<view class="{{!socketData && e.type !== '14' && dataType !== 'gnss' ? 'char-info' : 'char-info char-info-gnss'}}">
 			<view class="char-info-item">
 				<text class="char-info-title" decode="{{true}}">阈值:&nbsp;</text>
 				<view class="char-info-data">{{monitorData.ThresholdValue}}</view>
@@ -59,11 +59,11 @@
 				</block>
 			</view>
 			<view class="i-item" wx:if="{{!socketData}}">
-				<block wx:if="{{e.type !== '14'}}">
+				<block wx:if="{{dataType !== 'gnss'}}">
 					<view class="i-title">日期</view>
 					<view class="i-title">监测值</view>
 				</block>
-				<block wx:if="{{e.type === '14'}}">
+				<block wx:if="{{dataType === 'gnss'}}">
 					<view class="i-title">时间</view>
 					<view class="i-title">测点名称</view>
 					<view class="i-title">DX(mm)</view>
@@ -71,7 +71,7 @@
 					<view class="i-title">DH(mm)</view>
 				</block>
 			</view>
-			<block wx:if="{{e.type === '14'}}">
+			<block wx:if="{{dataType === 'gnss'}}">
 				<view class="i-item" wx:for="{{bottomDataList}}" wx:key="index">
 					<view class="i-data">{{item.time}}</view>
 					<view class="i-data">{{item.name}}</view>
@@ -80,7 +80,7 @@
 					</block>
 				</view>
 			</block>
-			<block wx:if="{{e.type !== '14'}}">
+			<block wx:if="{{dataType !== 'gnss'}}">
 				<view class="i-item" wx:for="{{bottomDataList}}" wx:key="index">
 					<view class="i-data">{{item.time}}</view>
 					<view class="{{item.value > ThresholdValue ? 'i-data--danger' : 'i-data'}}">{{item.value}}</view>

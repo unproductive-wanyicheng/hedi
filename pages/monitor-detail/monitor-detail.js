@@ -99,9 +99,7 @@ Page({
               chartData: res.data.Result,
               socketData: null
             })
-            wx.setNavigationBarTitle({
-              title: res.data.Result[_this.data.activeIndex].name
-            })
+            //app.globalData.setDetailTitle("监测点", res.data.Result[_this.data.activeIndex].name)
             if (app.globalData.monitorsChooseList[_this.data.golbalIndex].PointType === 14) {
               _this.updateChart({type: params.type, dataType: 'http', chartType: 'gnss'})
             }else{
@@ -144,18 +142,18 @@ Page({
             wx.sendSocketMessage({
               data: data,
               success: function (res) {
-                setTimeout(()=>{
-                  if(app.globalData.socketOpen&&(!_this.data.socketValue)){
-                    wx.showToast({
-                      title: '暂无实时数据',
-                      icon: 'none',
-                      duration: 2000
-                    })
-                    wx.hideLoading()
-                    app.globalData.socketOpen = false
-                    wx.closeSocket()
-                  }
-                },30*1000)
+                // setTimeout(()=>{
+                //   if(app.globalData.socketOpen&&(!_this.data.socketValue)){
+                //     wx.showToast({
+                //       title: '暂无实时数据',
+                //       icon: 'none',
+                //       duration: 2000
+                //     })
+                //     wx.hideLoading()
+                //     app.globalData.socketOpen = false
+                //     wx.closeSocket()
+                //   }
+                // },30*1000)
               }
             })
           })
@@ -203,7 +201,7 @@ Page({
       let h = _this.data.gnssData.h
       let time = _this.data.socketData.DateTime.split('T')[1].split('.')[0]
       let bottomTime = _this.data.socketData.DateTime.split('.')[0].replace('T', ' ')
-      let bottomName = _this.data.monitorData.Name
+      let bottomName = _this.data.monitorData.ShowText
       //let bottomValue = 'X: ' + _this.data.socketData.X + 'mm ' +'Y: ' +  _this.data.socketData.Y + 'mm ' +'H: ' +  _this.data.socketData.H + 'mm' 
       let bottomValue = [_this.data.socketData.X, _this.data.socketData.Y, _this.data.socketData.H]
       if (x.length >= 7) {
@@ -527,7 +525,7 @@ Page({
         time_data.push(util.formatTime(time, 'hh:mm'))
         //let bottomValue = 'X: ' + item[1] + 'mm ' +'Y: ' +  chart_y_data[index][1] + 'mm ' +'H: ' +  chart_h_data[index][1] + 'mm'
         let bottomValue = [item[1], chart_y_data[index][1], chart_h_data[index][1]]
-        let bottomName = _this.data.monitorData.Name
+        let bottomName = _this.data.monitorData.ShowText
         x_data.push(item[1])
         x_interval = Math.floor(chart_x_data.length / 7)
         y_data.push(chart_y_data[index][1])
@@ -849,7 +847,7 @@ Page({
               ThresholdValue: array
             })
           }
-          app.globalData.setTitle(res.data.Result.Name)
+          app.globalData.setDetailTitle("监测点", res.data.Result.ShowText)
           _this.getChartsData({type: 'init'})
         }
       }

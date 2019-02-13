@@ -62,9 +62,10 @@ Page({
           })
         }
 
-        wx.setNavigationBarTitle({
-          title: res.data.Result.WarniBaseInfo.PointName
-        })
+        // wx.setNavigationBarTitle({
+        //   title: res.data.Result.WarniBaseInfo.PointName
+        // })
+        app.globalData.setDetailTitle("预警", res.data.Result.WarniBaseInfo.PointName)
         _this.updateChart()
       }
     })

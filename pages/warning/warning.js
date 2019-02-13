@@ -18,12 +18,14 @@ Page({
     nowPage: 1
   },
   onLoad: function () {
+    app.globalData.setTitle()
     this.resetTime()
     this.getWarningInfo()
     this.getWarningList({})
   },
   onShow: function () {
     if (app.globalData.refreshPage) {
+      app.globalData.setTitle()
       this.getWarningInfo()
       this.getWarningList({})
       app.globalData.refreshPage = false

@@ -12,6 +12,10 @@
 		</view>
 		<view class="btn" bindtap="doLogin">登录</view>
 	</view>
+	<view class="header">
+		<image src="../../assets/imgs/hedi-icon.png"></image>
+		<view class="title">河堤监测客户端</view>
+	</view>
 	<view class="icon">
 		<image src="../../assets/imgs/login.png"></image>
 	</view>

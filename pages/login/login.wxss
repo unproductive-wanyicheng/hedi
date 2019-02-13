@@ -49,9 +49,28 @@
 }
 .icon {
 	position: absolute;
-	top: 164rpx;
+	bottom: 54rpx;
 }
 .icon image {
-	width: 380rpx;
-	height: 90rpx;
+	width: 180rpx;
+	height: 50rpx;
+}
+
+.login .header {
+	position: absolute;
+	top: 124rpx;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+
+.login .header image{
+	width: 143rpx;
+	height: 143rpx;
+}
+.login .header .title {
+	font-size: 37rpx;
+	color: #fff;
+	margin-top: 10rpx;
 }

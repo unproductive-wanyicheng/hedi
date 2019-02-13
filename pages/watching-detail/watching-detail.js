@@ -49,7 +49,8 @@ Page({
               vrData: res.data.Result
             })
             
-            app.globalData.setTitle(_this.data.vrData.Note)
+            //app.globalData.setTitle(_this.data.vrData.Note)
+            app.globalData.setDetailTitle("现场监控", _this.data.e.name)
             _this.data.vrData.map((item, index)=>{
               _this.updateChart({
                 item: item,

@@ -18,6 +18,7 @@ Page({
 
   },
   onShow: function () {
+    app.globalData.setTitle()
     this.getWarningList({})
   },
   getWarningList: function (params) {

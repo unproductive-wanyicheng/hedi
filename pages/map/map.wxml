@@ -37,7 +37,7 @@
   	</view>
   	<view class="info-down" bindtap="goSearchPage">
   		<image src="../../assets/imgs/search.png" />
-  		<view>输入关键字</view>
+  		<view>输入河堤名称</view>
   	</view>
   </view>
   <view class="list">
