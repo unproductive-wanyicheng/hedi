@@ -8,7 +8,7 @@ Page({
     warningList: null,
     allPage: 1,
     timeActive: 0,
-    timeList: ['今天', '一周', '一月'],
+    timeList: ['今天', '一周', '一月', '全部'],
     asycDownNums: 0,
     asycMaxNums: 2,
     activeType: 0, // 0, 1, 2, 3

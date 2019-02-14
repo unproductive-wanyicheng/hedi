@@ -212,15 +212,26 @@ Page({
       let h = _this.data.gnssData.h
       let time = _this.data.socketData.DateTime.split('T')[1].split('.')[0]
       let bottomTime = _this.data.socketData.DateTime.split('.')[0].replace('T', ' ')
+      x_interval = Math.floor(time_data.length / 7)
       let bottomName = _this.data.monitorData.ShowText
       //let bottomValue = 'X: ' + _this.data.socketData.X + 'mm ' +'Y: ' +  _this.data.socketData.Y + 'mm ' +'H: ' +  _this.data.socketData.H + 'mm' 
       let bottomValue = [_this.data.socketData.X, _this.data.socketData.Y, _this.data.socketData.H]
-      if (x.length >= 7) {
-        time_data.shift()
-        x.shift()
-        y.shift()
-        h.shift()
-        this.data.bottomDataList.pop()
+      // if (x.length >= 7) {
+      //   time_data.shift()
+      //   x.shift()
+      //   y.shift()
+      //   h.shift()
+      //   this.data.bottomDataList.pop()
+      //   time_data.push(time)
+      //   x.push(_this.data.socketData.X)
+      //   y.push(_this.data.socketData.Y)
+      //   h.push(_this.data.socketData.H)
+      //   this.data.bottomDataList.unshift({
+      //     time: bottomTime,
+      //     name: bottomName,
+      //     value: bottomValue
+      //   })
+      // } else {
         time_data.push(time)
         x.push(_this.data.socketData.X)
         y.push(_this.data.socketData.Y)
@@ -230,17 +241,7 @@ Page({
           name: bottomName,
           value: bottomValue
         })
-      } else {
-        time_data.push(time)
-        x.push(_this.data.socketData.X)
-        y.push(_this.data.socketData.Y)
-        h.push(_this.data.socketData.H)
-        this.data.bottomDataList.unshift({
-          time: bottomTime,
-          name: bottomName,
-          value: bottomValue
-        })
-      }
+      // }
       _this.setData({
         [`gnssData.time`]: time_data,
         [`gnssData.x`]: x,
@@ -366,25 +367,26 @@ Page({
       let y = _this.data.otherData.y
       let time = _this.data.socketData.DateTime.split('T')[1].split('.')[0]
       let bottomTime = _this.data.socketData.DateTime.split('.')[0].replace('T', ' ')
-
-      if (y.length >= 7) {
-        time_data.shift()
-        y.shift()
-        this.data.bottomDataList.shift()
+      x_interval = Math.floor(time_data.length / 7)
+      
+      // if (y.length >= 7) {
+      //   time_data.shift()
+      //   y.shift()
+      //   this.data.bottomDataList.shift()
+      //   time_data.push(time)
+      //   y.push(_this.data.socketData.DataValue)
+      //   this.data.bottomDataList.unshift({
+      //     time: bottomTime,
+      //     value: _this.data.socketData.ShowValue
+      //   })
+      // } else {
         time_data.push(time)
         y.push(_this.data.socketData.DataValue)
         this.data.bottomDataList.unshift({
           time: bottomTime,
           value: _this.data.socketData.ShowValue
         })
-      } else {
-        time_data.push(time)
-        y.push(_this.data.socketData.DataValue)
-        this.data.bottomDataList.unshift({
-          time: bottomTime,
-          value: _this.data.socketData.ShowValue
-        })
-      }
+      // }
       _this.setData({
         [`otherData.time`]: time_data,
         [`gnssData.y`]: y
@@ -541,9 +543,9 @@ Page({
         x_interval = Math.floor(chart_x_data.length / 7)
         y_data.push(chart_y_data[index][1])
         h_data.push(chart_h_data[index][1])
-        if (index > 6) {
-          this.data.bottomDataList.pop()
-        }
+        // if (index > 6) {
+        //   this.data.bottomDataList.pop()
+        // }
         this.data.bottomDataList.unshift({
           time: util.formatTime(time, 'yyyy-MM-dd hh:mm:ss'),
           name: bottomName,
@@ -672,9 +674,9 @@ Page({
         x_data.push(util.formatTime(time, 'hh:mm'))
         y_data.push(item[1])
         x_interval = Math.floor(_this.data.chartData[_this.data.activeIndex].data.length / 7)
-        if (index > 6) {
-          this.data.bottomDataList.pop()
-        }
+        // if (index > 6) {
+        //   this.data.bottomDataList.pop()
+        // }
         this.data.bottomDataList.push({
           time: util.formatTime(time, 'yyyy-MM-dd hh:mm:ss'),
           value: item[1] + 'mm'

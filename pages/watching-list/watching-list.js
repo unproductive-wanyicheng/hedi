@@ -9,8 +9,8 @@ Page({
     timeList: ['24小时', '三天', '一周'],
     activeType: 0, // 0, 1, 2, 3
     activeDate: 0,
-    activeTimeStart: '2018-11-8',
-    activeTimeEnd: '2018-11-8',
+    activeTimeStart: util.formatTime(new Date(), 'yyyy-MM-dd'),
+    activeTimeEnd: util.formatTime(new Date(), 'yyyy-MM-dd'),
     nowPage: 1,
     vrData:[]
   },
@@ -36,11 +36,12 @@ Page({
     const starttime = _this.data.activeTimeStart
     const endtime = _this.data.activeTimeEnd
     const page = _this.data.nowPage
-    const showType = _this.data.timeActive
+    //const showType = _this.data.timeActive
+    const showType = 3
     const pointId = app.globalData.videoPointId ? app.globalData.videoPointId : 0
       
     app.globalData.fetch({
-      url: `reach/mobile/videoimagelist/${id}?starttime/${starttime}/endtime/${endtime}/showtype/${showType}/nowPage/${page}/pointid/${pointId}`,
+      url: `reach/mobile/videoimagelist/${id}?startTime=${starttime}&endTime=${endtime}&showtype=${showType}&nowPage=${page}&pointid=${pointId}`,
       closeLoading: closeLoading,
       cb: (res) => {
         console.log(res)
@@ -98,7 +99,8 @@ Page({
     this.setData({
       timeActive: index,
       activeTimeStart: startDate,
-      activeTimeEnd: endDate
+      activeTimeEnd: endDate,
+      vrData: []
     })
     this.getWarningList({closeLoading: true})    
   },
