@@ -204,6 +204,8 @@ Page({
     let y_data = []
     let x_interval = 0
     let option = null
+    let rotate =  this.data.timeActive == 3 ? -30 : 0 
+    let margin =  this.data.timeActive == 3 ? 20 : 8 
 
     if (dataType === 'socket' && chartType === 'gnss') {
       let time_data = _this.data.gnssData.time
@@ -535,7 +537,7 @@ Page({
       chart_x_data.map((item, index) => {
         const time = new Date(item[0])
         // console.log(util.formatTime(time, 'yyyy-MM-dd hh:mm:ss'))
-        time_data.push(util.formatTime(time, 'hh:mm'))
+        time_data.push(this.data.timeActive == 3 ? util.formatTime(time, 'MM-dd hh:mm') :  util.formatTime(time, 'hh:mm'))
         //let bottomValue = 'X: ' + item[1] + 'mm ' +'Y: ' +  chart_y_data[index][1] + 'mm ' +'H: ' +  chart_h_data[index][1] + 'mm'
         let bottomValue = [item[1], chart_y_data[index][1], chart_h_data[index][1]]
         let bottomName = _this.data.monitorData.ShowText
@@ -587,7 +589,9 @@ Page({
             align: 'center',
             interval: x_interval,
             color: '#000',
-            fontSize: 10
+            fontSize: 10,
+            rotate: rotate,
+            margin: margin
           }
           // show: false
         },
@@ -671,7 +675,7 @@ Page({
       _this.data.chartData[_this.data.activeIndex].data.map((item, index) => {
         const time = new Date(item[0])
         // console.log(util.formatTime(time, 'yyyy-MM-dd hh:mm:ss'))
-        x_data.push(util.formatTime(time, 'hh:mm'))
+        x_data.push(this.data.timeActive == 3 ? util.formatTime(time, 'MM-dd hh:mm') :  util.formatTime(time, 'hh:mm'))
         y_data.push(item[1])
         x_interval = Math.floor(_this.data.chartData[_this.data.activeIndex].data.length / 7)
         // if (index > 6) {
@@ -716,7 +720,9 @@ Page({
             align: 'center',
             interval: x_interval,
             color: '#000',
-            fontSize: 10
+            fontSize: 10,
+            rotate: rotate,
+            margin: margin
           }
           // show: false
         },
@@ -747,24 +753,6 @@ Page({
             }
           }
         ],
-        // visualMap: {
-        //     show: false,
-        //     type: 'continuous',
-        //     max: 30,
-        //     inRange: {
-        //       color: ['red'],
-        //       symbolSize: [20, 30]
-        //     }
-        //     // pieces: [
-        //     // {
-        //     //     min: 30,
-        //     //     color: '#0071FF'
-        //     // },
-        //     // {
-        //     //     max: 30,
-        //     //     color: '#FF5890'
-        //     // }]
-        // },
         series: [{
           name: '水平位移(mm)',
           type: 'line',
@@ -851,7 +839,8 @@ Page({
         if (res.data && res.data.Result) {
           _this.setData({
             monitorData: res.data.Result,
-            ThresholdValue: parseInt(res.data.Result.ThresholdValue.split('mm')[0])
+            ThresholdValue: parseInt(res.data.Result.ThresholdValue.split('mm')[0]),
+            dataType: 'other',
           })
           if (res.data.Result.PointType === 14) {
             let array = [parseInt(res.data.Result.ThresholdValue.split(',')[0].split('mm')[0]), parseInt(res.data.Result.ThresholdValue.split(',')[1].split('mm')[0]), parseInt(res.data.Result.ThresholdValue.split(',')[2].split('mm')[0])]
