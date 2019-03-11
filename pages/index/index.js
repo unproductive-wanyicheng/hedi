@@ -16,6 +16,7 @@ Page({
       AllPointCount: 100,
       GoodCount: 1,
       GoodRatio: 80,
+      SampleRate : 0,
       WindowPointTypeOverviewRealContent: []
     },
     showModal: false,
@@ -97,9 +98,10 @@ Page({
           'mainMonitorInfo.GoodCount': res.data.Result.SensorStatus.GoodCount,
           'mainMonitorInfo.GoodRatio': ratio,
           ratio: ratio,
+          'SampleRate': res.data.Result.SampleRate,
           'mainMonitorInfo.WindowPointTypeOverviewRealContent': res.data.Result.WindowPointTypeOverviewRealContent
         })
-        !_this.data.showModal && _this.initChart_4(ratio)
+        !_this.data.showModal && _this.initChart_4(res.data.Result.SampleRate)
         _this.setData({
           asycDownNums: ++_this.data.asycDownNums
         })
