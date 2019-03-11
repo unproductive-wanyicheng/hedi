@@ -4,19 +4,19 @@ App({
     
   },
   globalData: {
-  	debug: false,
-  	loginInfo: null,
-    userInfo: null,
-    monitorsChooseList: [],
-    monitorList: null,
-    defaultMonitor: null,
-    choosenUserList: [],
-    refreshPage: false,
-    socketOpen: false,
-    canLogin: true,
-    videoPointId: null,
-    watchingDetailEvent: null,
-  	doLogin: function (params) {
+  	debug: false, // 全局调试模式
+  	loginInfo: null, // token信息
+    userInfo: null,	// 登陆后个人信息
+    monitorsChooseList: [], // 监测点可选择的全部数据列表
+    monitorList: null,	// 监测列表列表
+    defaultMonitor: null, // 全局选中的监测点
+    choosenUserList: [],  // 选中的报告人员
+    refreshPage: false,	// 是否刷新页面
+    socketOpen: false,  // 是否开启socket
+    canLogin: true,  // 能够登陆
+    videoPointId: null, // 视频监控id
+    watchingDetailEvent: null, // 视频图片详情全局对象
+  	doLogin: function (params) { // 登陆处罚的实际函数
   		const _this = this
   		const tokenCb = function (res, params) {
   			const { token } = res
@@ -43,7 +43,7 @@ App({
   			tokenCb: tokenCb
   		})
   	},
-  	fetch: function (params) {
+  	fetch: function (params) { // 全局http方法
   		const fetchCb = function (res, originParams) {
   			const baseUrl = 'https://mapi.aeroiot.cn/'
   			const { access_token, token_type } = res
@@ -114,7 +114,7 @@ App({
   			tokenCb: fetchCb
   		})
   	},
-  	getUserInfo: function () {
+  	getUserInfo: function () { // getuserinfo
   		const userInfo = wx.getStorageSync('__HEDI_USER_INFO__')
   		if (userInfo) {
   			return userInfo
@@ -124,7 +124,7 @@ App({
         })
   		}
   	},
-  	getToken: function (params) {
+  	getToken: function (params) { // get token
   		const _this = this
 	  	const url = 'https://sso.aeroiot.cn/Token'
 	  	const loginInfo = wx.getStorageSync('__HEDI_LOGIN_INFO__')
@@ -208,14 +208,14 @@ App({
 		  	}
 	  	}
 	  },
-	  setDetailTitle: function (block, title) {
+	  setDetailTitle: function (block, title) { // set blockName + title
 	  	wx.setNavigationBarTitle({
 	      title: block + '-' + title
 	    })
 	  },
 	  setTitle: function (title) {
 	  	const _this = this
-	  	if ( title || _this.defaultMonitor) {
+	  	if ( title || _this.defaultMonitor) { //set title
 	  		wx.setNavigationBarTitle({
 		      title: title ? title : _this.defaultMonitor ? _this.defaultMonitor.Name : '河堤小程序'
 		    })

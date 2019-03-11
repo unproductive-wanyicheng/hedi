@@ -49,10 +49,17 @@ Page({
     current: 0
   },
   onShow: function () {
-    console.log('app started:')
-    app.globalData.setTitle()
-    this.getMainInfo()
-    this.getWarningInfo()
+    if (!app.globalData.defaultMonitor) {
+      wx.redirectTo({
+        url: '/pages/login/login'
+      })
+    }
+    else{
+      app.globalData.setTitle()
+      this.getMainInfo()
+      this.getWarningInfo()
+    }
+    
   },
   onHide: function () {
     console.log('hide')
